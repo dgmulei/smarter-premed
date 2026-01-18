@@ -81,28 +81,28 @@ export default function Results() {
         </div>
 
         {/* Cohort Selector */}
-        <div className="mb-8 slide-up" style={{ animationDelay: '0.3s' }}>
+        <div className="mb-10 slide-up" style={{ animationDelay: '0.3s' }}>
           <label className="block text-sm font-medium text-gray-400 mb-4 tracking-wide uppercase">
             Select Cohort for Comparison
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {Object.keys(COHORT_ARCHETYPES).map((cohortName) => (
               <button
                 key={cohortName}
                 onClick={() => setSelectedCohort(cohortName)}
-                className={`cohort-card text-left ${
+                className={`cohort-card text-center ${
                   selectedCohort === cohortName ? 'cohort-card-active' : ''
                 }`}
               >
                 <div className="relative z-10">
-                  <div className="text-sm font-semibold mb-1 text-white">
+                  <div className="text-sm font-semibold mb-0.5 text-white leading-tight">
                     {cohortName}
                   </div>
-                  <div className="text-xs text-gray-400">
-                    {cohortName === 'Clinical-Investigative' && 'Research + Clinical'}
+                  <div className="text-xs text-gray-500">
+                    {cohortName === 'Clinical-Investigative' && 'Research'}
                     {cohortName === 'Patient-Centered' && 'Patient Focus'}
                     {cohortName === 'Community-Clinical' && 'Health Equity'}
-                    {cohortName === 'Research-Intensive' && 'Academic Medicine'}
+                    {cohortName === 'Research-Intensive' && 'Academic'}
                     {cohortName === 'Mission-Driven' && 'Social Impact'}
                   </div>
                 </div>
@@ -115,16 +115,16 @@ export default function Results() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Left: Radar Chart */}
           <div className="glass-panel-elevated p-8 slide-up" style={{ animationDelay: '0.4s' }}>
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl font-serif text-white">{selectedCohort}</h3>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2 badge">
-                  <div className="w-2 h-2 rounded-full bg-[rgba(100,181,246,1)]"></div>
-                  <span>Cohort</span>
+            <div className="mb-8">
+              <h3 className="text-2xl font-serif text-white mb-4">{selectedCohort}</h3>
+              <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-sm bg-[rgba(100,181,246,0.8)] border border-[rgba(100,181,246,1)]"></div>
+                  <span className="text-gray-400">Cohort Archetype</span>
                 </div>
-                <div className="flex items-center gap-2 badge">
-                  <div className="w-2 h-2 rounded-full bg-[rgba(216,181,194,1)]"></div>
-                  <span>You</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-sm bg-[rgba(216,181,194,0.8)] border border-[rgba(216,181,194,1)]"></div>
+                  <span className="text-gray-400">Your Profile</span>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function Results() {
               <ul className="space-y-3">
                 {cohortData.strengths.map((strength, index) => (
                   <li key={index} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-                    <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-4 h-4 text-green-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>{strength}</span>
@@ -228,7 +228,7 @@ export default function Results() {
           >
             <span className="flex items-center justify-center gap-2">
               Start New Assessment
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </span>
@@ -238,7 +238,7 @@ export default function Results() {
             className="px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 smooth-transition text-lg font-medium"
           >
             <span className="flex items-center justify-center gap-2">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
               </svg>
               Save Results
