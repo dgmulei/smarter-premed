@@ -107,7 +107,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
 
   const options: ChartOptions<'radar'> = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     scales: {
       r: {
         beginAtZero: true,
@@ -172,7 +172,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto" style={{ height: '400px' }}>
       <Radar data={chartData} options={options} />
     </div>
   );
