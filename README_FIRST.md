@@ -12,10 +12,11 @@ The UI is production-ready with pixel-perfect design and professional polish thr
 
 Students get an interactive exploration experience:
 
-1. **Interactive comparison** - Click any of 5 cohort buttons
+1. **Ranked sidebar** - 5 cohorts ranked by fit (1-5) in a card-based selector
 2. **Dual-overlay radar chart** - Pink (their profile) vs Blue (cohort archetype)
-3. **Rich context** - Fit analysis, strategic guidance, example schools
-4. **Mobile-first responsive design** - Perfect on all devices
+3. **Personalized fit analysis** - Cohort-specific guidance paragraph with actionable recommendations
+4. **Expandable school list** - Button reveals example schools for each cohort
+5. **Mobile-first responsive design** - Perfect on all devices
 
 ### The "Wow!" Moment
 
@@ -32,7 +33,7 @@ When students click through different cohorts:
 ### Complete UI Polish (19-Section Specification)
 - [x] **Landing page** - Atmospheric gradient, form card with glassmorphism
 - [x] **Results page** - Pixel-perfect grid layout, card-based design
-- [x] **Radar chart** - Professional styling with clean legend
+- [x] **Radar chart** - Dual-overlay visualization with smooth animations
 - [x] **Sidebar cohort selector** - Card background, active states
 - [x] **Typography** - Apple-inspired text hierarchy throughout
 - [x] **Animations** - Smooth fadeUp with staggered delays
