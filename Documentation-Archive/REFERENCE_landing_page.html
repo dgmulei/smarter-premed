@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smarter Pre-Med - Reference Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Atmospheric background - warm off-white with subtle gradient */
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(249, 247, 244, 0.9), transparent),
+                linear-gradient(180deg, #fefefe 0%, #fafaf8 50%, #f5f5f3 100%);
+            min-height: 100vh;
+            color: #1d1d1f;
+        }
+
+        .container {
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        /* ============================================
+           HEADER SECTION
+           - Clear hierarchy: Title > Tagline > Description
+           - Centered, generous spacing
+           ============================================ */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+
+        .badge-text {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: #86868b;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+            letter-spacing: -0.01em;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            font-size: 15px;
+            font-weight: 400;
+            color: #86868b;
+            line-height: 1.5;
+            max-width: 36ch;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           FORM CARD
+           - Semi-transparent white with blur
+           - Subtle border and shadow for elevation
+           - Generous padding
+           ============================================ */
+        .form-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 32px;
+            box-shadow: 
+                0 2px 20px rgba(0, 0, 0, 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+
+        /* ============================================
+           FORM FIELDS
+           - Generous vertical spacing (28px between)
+           - Labels are medium weight, good size
+           - Inputs have visible borders, hover/focus states
+           ============================================ */
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group:last-of-type {
+            margin-bottom: 32px;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 10px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: inherit;
+            font-size: 15px;
+            color: #1d1d1f;
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        /* Custom dropdown chevron */
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%2386868b'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 20px;
+            padding-right: 44px;
+            cursor: pointer;
+        }
+
+        /* Hover state - border darkens */
+        select:hover, textarea:hover {
+            border-color: #d1d1d6;
+        }
+
+        /* Focus state - blue border with soft glow */
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+        }
+
+        textarea {
+            resize: none;
+            min-height: 88px;
+        }
+
+        textarea::placeholder {
+            color: #a1a1a6;
+        }
+
+        /* ============================================
+           SUBMIT BUTTON
+           - Full width, pill shape
+           - Blue with tinted shadow
+           - Lifts on hover
+           ============================================ */
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+            background: #0071e3;
+            border: none;
+            border-radius: 980px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.35);
+        }
+
+        .submit-btn:hover {
+            background: #0077ed;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            background: #006edb;
+            transform: translateY(0);
+        }
+
+        .submit-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .submit-btn:hover svg {
+            transform: translateX(2px);
+        }
+
+        /* ============================================
+           FOOTER
+           - Subtle top border for separation
+           - Muted text
+           ============================================ */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: #86868b;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           - Staggered fade-up on load
+           - Smooth easing curve
+           ============================================ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .form-card {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            opacity: 0;
+        }
+
+        .footer {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        .form-group {
+            animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.15s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.25s; }
+        .form-group:nth-child(4) { animation-delay: 0.3s; }
+        .form-group:nth-child(5) { animation-delay: 0.35s; }
+        .form-group:nth-child(6) { animation-delay: 0.4s; }
+        .form-group:nth-child(7) { animation-delay: 0.45s; }
+        .form-group:nth-child(8) { animation-delay: 0.5s; }
+
+        .submit-btn {
+            animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="badge">
+                <div class="badge-dot"></div>
+                <span class="badge-text">Free Assessment</span>
+            </div>
+            <h1>Smarter Pre-Med</h1>
+            <p class="tagline">Find your medical school fit in 60 seconds</p>
+            <p class="description">Answer a few questions about your journey, and we'll show you where you stand across 6 key competencies.</p>
+        </header>
+
+        <div class="form-card">
+            <div class="form-group">
+                <label>What is your current cumulative GPA?</label>
+                <select>
+                    <option>Select your GPA range</option>
+                    <option>Below 3.0</option>
+                    <option>3.0 - 3.3</option>
+                    <option>3.4 - 3.6</option>
+                    <option>3.7 - 3.8</option>
+                    <option>3.9 - 4.0</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Approximately how many clinical volunteer/shadowing hours do you have?</label>
+                <select>
+                    <option>Select hours range</option>
+                    <option>0 - 50 hours</option>
+                    <option>51 - 150 hours</option>
+                    <option>151 - 300 hours</option>
+                    <option>301 - 500 hours</option>
+                    <option>500+ hours</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>What best describes your research experience?</label>
+                <select>
+                    <option>Select your experience</option>
+                    <option>No research experience</option>
+                    <option>Some exposure (coursework or brief projects)</option>
+                    <option>Ongoing research project (1+ semesters)</option>
+                    <option>Research with publication or presentation</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Which best describes your leadership and service activities?</label>
+                <select>
+                    <option>Select your involvement</option>
+                    <option>Minimal involvement</option>
+                    <option>Active member of 1-2 organizations</option>
+                    <option>Leadership role in 1+ organization</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Do you have any paid clinical work experience?</label>
+                <select>
+                    <option>Select your experience</option>
+                    <option>No paid clinical work</option>
+                    <option>Part-time clinical work</option>
+                    <option>Substantial clinical work (1+ years)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Do you have a specific medical specialty in mind?</label>
+                <select>
+                    <option>Select your interest</option>
+                    <option>Still exploring/undecided</option>
+                    <option>General interest in a field</option>
+                    <option>Specific specialty in mind</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Have you worked with underserved populations?</label>
+                <select>
+                    <option>Select your experience</option>
+                    <option>No direct experience</option>
+                    <option>Some exposure through volunteering</option>
+                    <option>Significant involvement (6+ months)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>What makes your pre-med journey unique?</label>
+                <textarea placeholder="Describe any unique experiences, challenges overcome, or distinctive perspectives you bring..."></textarea>
+            </div>
+
+            <button class="submit-btn">
+                See My Results
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+
+        <footer class="footer">
+            <p>Built for pre-med students who want clarity.</p>
+        </footer>
+    </div>
+</body>
+</html>

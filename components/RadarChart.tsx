@@ -12,7 +12,6 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 
-// Register Chart.js components
 ChartJS.register(
   RadialLinearScale,
   PointElement,
@@ -57,7 +56,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
   // Cohort archetype (blue) - render first so it's behind
   if (showComparison && cohortScores) {
     datasets.push({
-      label: 'Clinical-Investigative',
+      label: 'Cohort',
       data: [
         cohortScores.leadership_service,
         cohortScores.technical_skills,
@@ -66,13 +65,12 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
         cohortScores.academic_rigor,
         cohortScores.specialty_preparation,
       ],
-      backgroundColor: 'rgba(100, 181, 246, 0.15)',
-      borderColor: 'rgba(100, 181, 246, 0.8)',
+      backgroundColor: 'rgba(96, 165, 250, 0.12)',
+      borderColor: 'rgba(96, 165, 250, 0.7)',
       borderWidth: 2,
-      pointBackgroundColor: 'rgba(100, 181, 246, 1)',
+      pointBackgroundColor: 'rgba(96, 165, 250, 1)',
       pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(100, 181, 246, 1)',
+      pointBorderWidth: 1.5,
       pointRadius: 4,
       pointHoverRadius: 6,
     });
@@ -80,7 +78,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
 
   // User profile (pink) - render on top
   datasets.push({
-    label: 'Pre-Med',
+    label: 'You',
     data: [
       userScores.leadership_service,
       userScores.technical_skills,
@@ -89,13 +87,12 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
       userScores.academic_rigor,
       userScores.specialty_preparation,
     ],
-    backgroundColor: 'rgba(216, 181, 194, 0.25)',
-    borderColor: 'rgba(216, 181, 194, 0.9)',
+    backgroundColor: 'rgba(244, 114, 182, 0.1)',
+    borderColor: 'rgba(236, 72, 153, 0.7)',
     borderWidth: 2,
-    pointBackgroundColor: 'rgba(216, 181, 194, 1)',
+    pointBackgroundColor: 'rgba(236, 72, 153, 1)',
     pointBorderColor: '#fff',
-    pointHoverBackgroundColor: '#fff',
-    pointHoverBorderColor: 'rgba(216, 181, 194, 1)',
+    pointBorderWidth: 1.5,
     pointRadius: 4,
     pointHoverRadius: 6,
   });
@@ -115,52 +112,44 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
         min: 0,
         ticks: {
           stepSize: 20,
-          color: 'rgba(245, 240, 232, 0.4)',
+          color: 'rgba(0, 0, 0, 0.25)',
           backdropColor: 'transparent',
           font: {
-            size: 11,
+            size: 10,
+            family: 'Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
           },
           display: true,
         },
         grid: {
-          color: 'rgba(245, 240, 232, 0.08)',
+          color: 'rgba(0, 0, 0, 0.04)',
           circular: true,
         },
         pointLabels: {
-          color: 'rgba(245, 240, 232, 0.85)',
+          color: 'rgba(0, 0, 0, 0.45)',
           font: {
-            size: 13,
-            family: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif',
+            size: 11,
+            weight: '500' as const,
+            family: 'Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
           },
-          padding: 20,
+          padding: 16,
         },
         angleLines: {
-          color: 'rgba(245, 240, 232, 0.08)',
+          color: 'rgba(0, 0, 0, 0.04)',
         },
       },
     },
     plugins: {
       legend: {
-        display: showComparison,
-        position: 'bottom',
-        labels: {
-          color: 'rgba(245, 240, 232, 0.8)',
-          font: {
-            size: 13,
-            family: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif',
-          },
-          padding: 15,
-          usePointStyle: true,
-          pointStyle: 'circle',
-        },
+        display: false,
       },
       tooltip: {
-        backgroundColor: 'rgba(26, 26, 31, 0.95)',
-        titleColor: 'rgba(245, 240, 232, 1)',
-        bodyColor: 'rgba(245, 240, 232, 0.8)',
-        borderColor: 'rgba(212, 184, 150, 0.3)',
+        backgroundColor: 'rgba(29, 29, 31, 0.95)',
+        titleColor: '#fff',
+        bodyColor: 'rgba(255, 255, 255, 0.85)',
+        borderColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
         padding: 12,
+        cornerRadius: 10,
         displayColors: true,
         callbacks: {
           label: function(context) {
@@ -172,7 +161,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto" style={{ height: '400px' }}>
+    <div className="w-full max-w-lg mx-auto" style={{ height: '360px' }}>
       <Radar data={chartData} options={options} />
     </div>
   );

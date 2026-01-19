@@ -5,15 +5,47 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+// Updated interface to match new 30-question structure
 interface QuestionnaireResponses {
+  // Research (Q1-5)
+  research_hours_total: string;
+  research_hours_weekly: string;
+  research_types: string[];
+  research_leadership: string;
+  research_outputs: string;
+
+  // Clinical (Q6-12)
+  clinical_hours_hs: string;
+  clinical_hours_college: string;
+  clinical_settings: string[];
+  patient_interaction_intensity: string;
+  underserved_hours: string;
+  certification_plans: string;
+  certification_hours_weekly: string;
+
+  // Academic (Q13-19)
   gpa: string;
-  clinical_hours: string;
-  research_experience: string;
-  leadership: string;
-  clinical_work: string;
-  specialty_interest: string;
-  underserved: string;
-  unique_experience: string;
+  mcat: string;
+  academic_preparedness: string;
+  academic_improvement_areas: string[];
+  academic_strengths: string[];
+  mcat_confidence: string;
+  gpa_confidence: string;
+
+  // Leadership & Service (Q20-23)
+  leadership_roles_count: string;
+  service_scale: string;
+  extracurricular_hours_weekly: string;
+  service_outcomes: string;
+
+  // Vision & Strategy (Q24-30)
+  application_gaps: string[];
+  primary_focus: string[];
+  greatest_weakness: string;
+  future_contributions: string[];
+  target_cycle: string;
+  timeline_flexibility: string;
+  academic_history_flags: string[];
 }
 
 interface CompetencyScores {
@@ -36,75 +68,280 @@ interface AnalysisResult {
   rankedCohorts: CohortRanking[];
 }
 
-// Cohort archetype definitions for the AI to understand
-const COHORT_DEFINITIONS = `
-**Clinical-Investigative Schools**
-- Profile: Integrate clinical practice with research; value both patient care and scientific investigation
-- Typical GPA: 3.70-3.90 | Research: 300+ hours | Clinical: 200+ hours
-- Examples: Duke, Mount Sinai, USC Keck, Stanford, UCSF
-- Key competencies: academic_rigor (85), research_activities (90), clinical_exposure (75), technical_skills (85)
-
-**Research-Intensive Schools**
-- Profile: Emphasize scientific inquiry, research methodology, academic medicine; MD/PhD pathways
-- Typical GPA: 3.80-4.00 | Research: 1,200+ hours with publications | Clinical: variable
-- Examples: Harvard, Johns Hopkins, WashU, Yale, UPenn
-- Key competencies: academic_rigor (90), research_activities (95), technical_skills (90)
-
-**Community-Clinical Schools**
-- Profile: Deep commitment to underserved populations, health disparities, community health
-- Typical GPA: 3.50-3.80 | Community service: extensive | Clinical: 400+ hours
-- Examples: UC Davis, UNM, Morehouse, UWashington, East Carolina
-- Key competencies: clinical_exposure (85), leadership_service (90), specialty_preparation (75)
-
-**Patient-Centered Schools**
-- Profile: Prioritize direct patient interaction, empathy, longitudinal clinical experiences
-- Typical GPA: 3.60-3.85 | Clinical: 500+ hours | Focus: interpersonal skills, patient advocacy
-- Examples: UChicago Pritzker, Case Western, Vanderbilt, Dartmouth, Brown
-- Key competencies: clinical_exposure (90), leadership_service (85), academic_rigor (75)
-
-**Mission-Driven Schools**
-- Profile: Value specific specialty interests, unique populations, mission alignment (primary care, global health, faith-based)
-- Typical GPA: 3.50-3.80 | Focus: service, health equity, social impact, specific career path
-- Examples: VCU, Tulane, Georgetown, Medical College Wisconsin, Creighton
-- Key competencies: leadership_service (85), specialty_preparation (90), clinical_exposure (80)
-`;
-
+// Comprehensive Whitecoat Framework embedded in prompt
 function buildAnalysisPrompt(responses: QuestionnaireResponses): string {
-  return `You are an expert medical school admissions consultant analyzing a pre-med student's profile. Your task is to:
+  return `You are an expert medical school admissions consultant with deep knowledge of the Whitecoat Cohort Framework. You analyze pre-med student profiles with the nuanced judgment of a top-tier advisor who has worked with thousands of applicants.
 
-1. **Calculate 6 competency scores (0-100 scale)** based on their questionnaire responses
-2. **Rank their fit across all 5 medical school cohorts**
-3. **Generate personalized fit analysis** for each cohort
+**Core Philosophy:**
+- Apply professional judgment, not rigid formulas
+- Weight longitudinal commitment over total hours
+- Value quality and depth over quantity and breadth
+- Consider personal context, growth trajectories, and unique circumstances
+- Recognize that different cohorts prioritize different competencies
+- Provide actionable, specific guidance rooted in real benchmarks
 
-## Student's Questionnaire Responses:
+## THE WHITECOAT COHORT FRAMEWORK
+
+### Mission-Driven Cohort
+
+**Institutional Priorities:**
+- Health equity and care for underserved populations
+- Community engagement directly tied to improving local health outcomes
+- Diversity and inclusion in recruitment and curriculum
+
+**Quantitative Benchmarks:**
+- Typical GPA: 3.50-3.80 (Median: ~3.65)
+- Typical MCAT: 505-512 (Median: ~508.5)
+- Clinical Hours: 100-250+ hours, emphasizing community service settings
+- Research: 200-400 hours, emphasizing community health-related research
+- Independent Research Projects: 1-2
+- Publications: 0-1
+- Longitudinal Patient Interaction: 100-250 hours in sustained roles
+- Valued Certifications: CNA, EMT
+- Valued Settings: Community health centers, free clinics, rural healthcare facilities
+
+**Key Insight:** This cohort emphasizes **quality over quantity** in service. Sustained commitment to specific causes matters more than accumulating hours.
+
+**Example Schools:** CUNY, University of Alabama Birmingham, Virginia Commonwealth, Howard, Charles R. Drew, University of New Mexico, Morehouse
+
+---
+
+### Patient-Centered Cohort
+
+**Institutional Priorities:**
+- Curriculum focuses on communication, interpersonal skills, patient engagement
+- Extensive clinical practice scenarios with direct patient interaction
+- Training in culturally competent care
+
+**Quantitative Benchmarks:**
+- Typical GPA: 3.60-3.85 (Median: ~3.725)
+- Typical MCAT: 509-514 (Median: ~511.5)
+- Clinical Hours: 200-400 hours with strong emphasis on patient interaction roles
+- Research: 100-300 hours
+- Independent Research Projects: 1-2
+- Publications: 0-1
+- Longitudinal Patient Interaction: 200-300 hours in continuous contact roles
+- Valued Certifications: Phlebotomy (hands-on patient contact emphasis)
+- Valued Settings: Primary care practices with diverse populations
+
+**Key Insight:** This cohort values **balanced emphasis** on breadth and depth of patient interaction experiences.
+
+**Example Schools:** University of Chicago Pritzker, Loyola University Chicago Stritch, University of Virginia, Ohio State, Case Western Reserve, University of Rochester, Weill Cornell
+
+---
+
+### Community-Clinical Cohort
+
+**Institutional Priorities:**
+- Strong integration of community service in clinical training
+- Programs dedicated to primary care and public health initiatives
+- Community-Based Participatory Research (CBPR)
+
+**Quantitative Benchmarks:**
+- Typical GPA: 3.50-3.80 (Median: ~3.65)
+- Typical MCAT: 505-511 (Median: ~508)
+- Clinical Hours: 150-300 hours, focusing on community health settings
+- Research: 200-500 hours of community-oriented research
+- Independent Research Projects: 1-2
+- Publications: 1
+- Longitudinal Patient Interaction: 300-500 hours in sustained community health role
+- Valued Certifications: EMT, Community Health Worker (CHW)
+- Valued Settings: Community clinics, free clinics serving underserved populations
+
+**Key Insight:** This cohort values **team-based contributions** and sustained community involvement over solo achievements.
+
+**Example Schools:** University of Minnesota, Wayne State, California Northstate, UNC Chapel Hill, Florida State, Georgetown, Boston University, Tulane, UC Davis, University of Pittsburgh
+
+---
+
+### Clinical-Investigative Cohort
+
+**Institutional Priorities:**
+- Clear ties between clinical practice and research outputs
+- Opportunities for students to engage in clinical trials and lab work
+- Interdisciplinary collaboration bringing together various medical and scientific disciplines
+- Integration of research with clinical practice
+
+**Quantitative Benchmarks:**
+- Typical GPA: 3.70-3.90 (Median: ~3.80)
+- Typical MCAT: 512-518 (Median: ~515)
+- Clinical Hours: 150-300 hours in settings supporting investigative practices
+- Research: 400-800 hours in clinical or lab settings
+- Independent Research Projects: 2-3
+- Publications: 1-3
+- Longitudinal Patient Interaction: 300-500 hours in sustained clinical role
+- Valued Certifications: EMT, Community Health Worker (CHW)
+- Valued Settings: Community clinics, free clinics, research-oriented settings
+
+**Key Insight:** This cohort values **both breadth and sustained commitment**—candidates who can demonstrate meaningful involvement in both clinical and research domains.
+
+**Example Schools:** UCSF, Icahn School of Medicine at Mount Sinai, Columbia, Duke, Northwestern Feinberg, Emory, NYU Grossman, Vanderbilt, Cleveland Clinic Lerner, USC Keck
+
+---
+
+### Research-Intensive Cohort
+
+**Institutional Priorities:**
+- High research funding levels (significant NIH funding)
+- Emphasis on scientific inquiry through MD-PhD programs
+- Integration of cutting-edge technologies and methodologies
+- High research output metrics (peer-reviewed publications, active clinical trials)
+
+**Quantitative Benchmarks:**
+- Typical GPA: 3.70-3.95 (Median: ~3.825)
+- Typical MCAT: 515-522 (Median: ~518.5)
+- Clinical Hours: 400-600+ hours (higher engagement expected)
+- Research: 1,200-1,500+ hours, often involving collaboration on meaningful faculty projects
+- Independent Research Projects: 2-3
+- Publications: 2-5
+- Longitudinal Patient Interaction: 500+ hours in longitudinal roles with diverse populations
+- Valued Certifications: Research Assistant certifications
+- Valued Settings: Research hospitals, universities with clinical trials
+
+**Key Insight:** This cohort has the **strongest emphasis on MCAT** alongside GPA. Solo leadership in research is celebrated, but collaborative contributions are equally important.
+
+**Example Schools:** Harvard, Baylor, Mayo Clinic Alix, Washington University in St. Louis, UC San Diego, UT Southwestern, Johns Hopkins, Stanford, University of Wisconsin-Madison, University of Michigan
+
+---
+
+## COHORT-SPECIFIC WEIGHTING INSIGHTS
+
+**Academic Metrics (GPA/MCAT):**
+- Higher GPA Emphasis: Mission-Driven, Community-Clinical (more forgiving on test scores with strong service)
+- Balanced Approach: Patient-Centered (both matter equally)
+- Higher MCAT Emphasis: Clinical-Investigative, Research-Intensive (analytical capability crucial)
+
+**Service & Leadership:**
+- Quality over Quantity: Mission-Driven, Patient-Centered (sustained depth matters)
+- Team-Based Valued: Community-Clinical, Patient-Centered (collaborative efforts highlighted)
+- Solo + Team Balanced: Clinical-Investigative, Research-Intensive (both valued)
+
+**Research Expectations:**
+- Minimal: Mission-Driven (200-400 hours acceptable)
+- Moderate: Patient-Centered, Community-Clinical (100-500 hours)
+- Substantial: Clinical-Investigative (400-800 hours)
+- Extensive: Research-Intensive (1,200-1,500+ hours with publications)
+
+---
+
+## SCORING FRAMEWORK
+
+### Six Competency Dimensions (0-100 scale)
+
+**1. Academic Rigor**
+- Consider: GPA trends, MCAT balance, course rigor/prerequisites
+- Context: Transfer credits, retakes, non-traditional pathways
+
+**2. Clinical Exposure**
+- Consider: Direct patient hours, consistency over time, variety of settings, underserved work
+- Depth over breadth: 300 hours in one sustained role > 300 hours scattered
+
+**3. Research Activities**
+- Consider: Total hours, project engagement, output quality, independence/leadership
+- Growth trajectory: Recent increases in commitment matter
+
+**4. Leadership & Service**
+- Consider: Impact scale, sustained commitment, role progression, tangible outcomes
+- Meaningful few > superficial many
+
+**5. Technical Skills**
+- Consider: Research types (wet lab, data analysis, clinical), certifications, methods training
+- Inferred from research activities and coursework
+
+**6. Specialty Preparation**
+- Consider: Career focus alignment, exposure breadth, planning maturity
+- Flexibility valued: Broad exploration often better than premature specialization
+
+### Scoring Principles:
+
+1. **Weight Recent Experiences More Heavily** - But value sustained early involvement
+2. **Growth Trajectory Thinking** - Reward consistent progression
+3. **Time Horizon** - Adjust for target application cycle (2026 vs 2028 = different runway)
+4. **Holistic Context** - Non-traditional pathways, personal circumstances
+5. **Cohort-Specific Lens** - Same profile may score differently for different cohorts
+
+**Score Ranges:**
+- 40-60: Developing (significant gaps, needs substantial work)
+- 60-75: Emerging (on track but needs strengthening)
+- 75-85: Competitive (solid foundation, minor gaps)
+- 85-95: Exceptional (exceeds benchmarks, strong differentiator)
+- 95-100: Outstanding (top-tier, rare)
+
+---
+
+## STUDENT'S QUESTIONNAIRE RESPONSES
+
+**Research Experience:**
+- Total hours: ${responses.research_hours_total}
+- Weekly commitment: ${responses.research_hours_weekly}
+- Types: ${responses.research_types.join(', ')}
+- Leadership level: ${responses.research_leadership}
+- Outputs: ${responses.research_outputs}
+
+**Clinical Experience:**
+- High school hours: ${responses.clinical_hours_hs}
+- College hours: ${responses.clinical_hours_college}
+- Settings: ${responses.clinical_settings.join(', ')}
+- Patient interaction: ${responses.patient_interaction_intensity}
+- Underserved population hours: ${responses.underserved_hours}
+- Certification status: ${responses.certification_plans}
+- Weekly clinical hours (if certified): ${responses.certification_hours_weekly}
 
 **Academic Performance:**
 - GPA: ${responses.gpa}
-
-**Clinical Experience:**
-- Volunteer/shadowing hours: ${responses.clinical_hours}
-- Paid clinical work: ${responses.clinical_work}
-- Work with underserved populations: ${responses.underserved}
-
-**Research & Technical Skills:**
-- Research experience: ${responses.research_experience}
+- MCAT: ${responses.mcat}
+- Academic preparedness: ${responses.academic_preparedness}/5
+- Areas needing improvement: ${responses.academic_improvement_areas.join(', ')}
+- Academic strengths: ${responses.academic_strengths.join(', ')}
+- MCAT confidence: ${responses.mcat_confidence}/5
+- GPA confidence: ${responses.gpa_confidence}/5
 
 **Leadership & Service:**
-- Leadership activities: ${responses.leadership}
+- Leadership roles: ${responses.leadership_roles_count}
+- Service scale: ${responses.service_scale}
+- Weekly extracurricular hours: ${responses.extracurricular_hours_weekly}
+- Tangible outcomes: ${responses.service_outcomes}
 
-**Career Focus:**
-- Specialty interest: ${responses.specialty_interest}
+**Vision & Strategy:**
+- Perceived gaps: ${responses.application_gaps.join(', ')}
+- Primary focus areas: ${responses.primary_focus.join(', ')}
+- Greatest weakness: ${responses.greatest_weakness}
+- Future contributions: ${responses.future_contributions.join(', ')}
+- Target application cycle: ${responses.target_cycle}
+- Timeline flexibility: ${responses.timeline_flexibility}
+- Academic history flags: ${responses.academic_history_flags.join(', ')}
 
-**Unique Background:**
-${responses.unique_experience}
+---
 
-## Medical School Cohort Archetypes:
+## YOUR TASK
 
-${COHORT_DEFINITIONS}
+Analyze this student's profile and provide:
 
-## Required Output Format:
+### 1. Six Competency Scores (0-100)
+Apply professional judgment to score each dimension based on where they stand TODAY, considering growth trajectory and time until application.
 
-Provide your analysis in this EXACT JSON structure (no markdown, no code blocks, just valid JSON):
+### 2. Cohort Fit Rankings (0-100)
+Rank fit across all 5 cohorts with meaningful differentiation. Consider both quantitative benchmarks AND qualitative alignment.
+
+**Fit Score Ranges:**
+- 75-95: Strong fit (top 1-2 cohorts)
+- 60-74: Moderate fit (possible with strategic work)
+- 40-59: Lower fit (significant gaps, achievable with focused effort)
+
+### 3. Personalized Fit Analysis (2-3 sentences, 60-90 words each)
+
+For each cohort:
+- **Opening:** Acknowledge specific strengths ("Your 350 research hours...")
+- **Middle:** Cite framework benchmarks ("Research-Intensive expects 1,200+ hours...")
+- **Closing:** Provide 1-2 concrete, actionable recommendations
+
+**Tone:** Encouraging but honest. Like a trusted advisor.
+
+---
+
+## OUTPUT FORMAT
+
+Return ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {
   "competency_scores": {
@@ -119,55 +356,32 @@ Provide your analysis in this EXACT JSON structure (no markdown, no code blocks,
     {
       "name": "Clinical-Investigative",
       "fitScore": <0-100>,
-      "fitAnalysis": "<2-3 sentence personalized analysis explaining their fit, specific strengths, and 1-2 concrete recommendations to improve alignment>"
+      "fitAnalysis": "<analysis>"
     },
     {
       "name": "Research-Intensive",
       "fitScore": <0-100>,
-      "fitAnalysis": "<personalized analysis>"
+      "fitAnalysis": "<analysis>"
     },
     {
       "name": "Community-Clinical",
       "fitScore": <0-100>,
-      "fitAnalysis": "<personalized analysis>"
+      "fitAnalysis": "<analysis>"
     },
     {
       "name": "Patient-Centered",
       "fitScore": <0-100>,
-      "fitAnalysis": "<personalized analysis>"
+      "fitAnalysis": "<analysis>"
     },
     {
       "name": "Mission-Driven",
       "fitScore": <0-100>,
-      "fitAnalysis": "<personalized analysis>"
+      "fitAnalysis": "<analysis>"
     }
   ]
 }
 
-## Scoring Guidelines:
-
-**Competency Scores (0-100):**
-- Use the questionnaire responses to calculate realistic scores
-- GPA ranges: below-3.0 (50-60), 3.0-3.3 (60-70), 3.4-3.6 (70-80), 3.7-3.8 (80-90), 3.9-4.0 (90-100)
-- Clinical hours: 0-50 (40-50), 51-150 (50-65), 151-300 (65-80), 301-500 (80-90), 500+ (90-100)
-- Research: none (30-40), some (40-55), ongoing (55-75), publication (75-90), extensive (90-100)
-- Leadership: minimal (40-50), member (50-65), officer (65-80), founder (80-90), extensive (90-100)
-- Factor in their unique experiences and holistic profile
-
-**Cohort Fit Scores (0-100):**
-- Calculate how well their competency profile matches each cohort's archetype
-- Consider both the competency scores AND the qualitative aspects (unique experiences, goals, values)
-- Highest fit should be 75-95 range, lowest fit should be 40-60 range
-- Create meaningful differentiation between cohorts
-
-**Fit Analysis:**
-- Start by acknowledging their specific strengths relevant to that cohort
-- Reference their actual questionnaire responses (e.g., "Your X hours of clinical experience...")
-- Provide 1-2 concrete, actionable recommendations to strengthen fit
-- Keep tone encouraging but realistic
-- Each analysis should be 2-3 sentences, roughly 60-90 words
-
-Return ONLY the JSON object, no additional text.`;
+Remember: You are not a calculator. You are an expert advisor applying nuanced judgment based on deep framework knowledge. Trust your analysis. Be specific. Be actionable. Be honest.`;
 }
 
 export async function POST(request: NextRequest) {
@@ -192,10 +406,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Call Anthropic API with the analysis prompt
+    // Call Anthropic API with comprehensive framework-based prompt
+    console.log('Calling Anthropic API with model: claude-sonnet-4-5-20250929');
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 4096,
+      max_tokens: 8192, // Increased for detailed analyses
       temperature: 0.7,
       messages: [
         {
@@ -204,6 +419,7 @@ export async function POST(request: NextRequest) {
         },
       ],
     });
+    console.log('Received response from Anthropic API');
 
     // Extract the text content from Claude's response
     const textContent = message.content.find((block) => block.type === 'text');
@@ -212,11 +428,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse the JSON response from Claude
+    // Strip markdown code blocks if present (```json ... ``` or ``` ... ```)
+    let jsonText = textContent.text.trim();
+    if (jsonText.startsWith('```')) {
+      // Remove opening code fence (```json or ```)
+      jsonText = jsonText.replace(/^```(?:json)?\s*\n?/, '');
+      // Remove closing code fence
+      jsonText = jsonText.replace(/\n?```\s*$/, '');
+    }
+
     let analysisData;
     try {
-      analysisData = JSON.parse(textContent.text);
+      analysisData = JSON.parse(jsonText);
     } catch (parseError) {
-      console.error('Failed to parse Claude response:', textContent.text);
+      console.error('Failed to parse Claude response. Raw text:', textContent.text);
+      console.error('Cleaned text:', jsonText);
+      console.error('Parse error:', parseError);
       throw new Error('Invalid JSON response from AI');
     }
 
@@ -234,8 +461,9 @@ export async function POST(request: NextRequest) {
     const userScores: CompetencyScores = analysisData.competency_scores;
 
     // Sort cohorts by fit score (highest to lowest)
-    const rankedCohorts: CohortRanking[] = analysisData.cohort_rankings
-      .sort((a: CohortRanking, b: CohortRanking) => b.fitScore - a.fitScore);
+    const rankedCohorts: CohortRanking[] = analysisData.cohort_rankings.sort(
+      (a: CohortRanking, b: CohortRanking) => b.fitScore - a.fitScore
+    );
 
     const result: AnalysisResult = {
       userScores,
@@ -248,10 +476,7 @@ export async function POST(request: NextRequest) {
 
     // Return a more specific error message
     if (error instanceof Error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json(
