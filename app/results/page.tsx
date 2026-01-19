@@ -5,251 +5,282 @@ import { useRouter } from 'next/navigation';
 import RadarChart from '@/components/RadarChart';
 import { COHORT_ARCHETYPES, MOCK_USER_PROFILE } from '@/lib/cohortData';
 
-const COHORT_COLORS: Record<string, string> = {
-  'Clinical-Investigative': 'rgba(100, 181, 246, 0.15)',
-  'Patient-Centered': 'rgba(150, 200, 212, 0.15)',
-  'Community-Clinical': 'rgba(180, 212, 150, 0.15)',
-  'Research-Intensive': 'rgba(212, 150, 180, 0.15)',
-  'Mission-Driven': 'rgba(200, 150, 212, 0.15)',
-};
+interface CohortRanking {
+  name: string;
+  fitScore: number;
+  fitAnalysis: string;
+}
+
+interface UserScores {
+  academic_rigor: number;
+  clinical_exposure: number;
+  research_activities: number;
+  leadership_service: number;
+  technical_skills: number;
+  specialty_preparation: number;
+}
+
+interface AnalysisData {
+  userScores: UserScores;
+  rankedCohorts: CohortRanking[];
+}
 
 export default function Results() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedCohort, setSelectedCohort] = useState<string>('Clinical-Investigative');
+  const [showSchools, setShowSchools] = useState(false);
+  const [isTextTransitioning, setIsTextTransitioning] = useState(false);
 
-  const userProfile = MOCK_USER_PROFILE;
+  // State for AI analysis results
+  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
+
+  const handleCohortChange = (cohortName: string) => {
+    if (cohortName === selectedCohort) return;
+    setIsTextTransitioning(true);
+    setTimeout(() => {
+      setSelectedCohort(cohortName);
+      setShowSchools(false);
+      setIsTextTransitioning(false);
+    }, 150);
+  };
+
+  // Use real data if available, otherwise fall back to mock data
+  const userProfile = analysisData ? { scores: analysisData.userScores } : MOCK_USER_PROFILE;
   const cohortData = COHORT_ARCHETYPES[selectedCohort];
 
+  const rankedCohorts = analysisData?.rankedCohorts || [
+    { name: 'Clinical-Investigative', fitScore: 0, fitAnalysis: '' },
+    { name: 'Research-Intensive', fitScore: 0, fitAnalysis: '' },
+    { name: 'Community-Clinical', fitScore: 0, fitAnalysis: '' },
+    { name: 'Patient-Centered', fitScore: 0, fitAnalysis: '' },
+    { name: 'Mission-Driven', fitScore: 0, fitAnalysis: '' },
+  ];
+
+  // Build fit analyses from API data
+  const fitAnalyses: Record<string, string> = {};
+  rankedCohorts.forEach(cohort => {
+    fitAnalyses[cohort.name] = cohort.fitAnalysis;
+  });
+
   useEffect(() => {
-    // Check if user came from questionnaire
-    const responses = sessionStorage.getItem('questionnaireResponses');
+    const fetchAnalysis = async () => {
+      const responses = sessionStorage.getItem('questionnaireResponses');
+      if (!responses) {
+        router.push('/');
+        return;
+      }
 
-    if (!responses) {
-      // No questionnaire data, redirect to home
-      router.push('/');
-      return;
-    }
+      try {
+        const parsedResponses = JSON.parse(responses);
 
-    // Simulate loading for premium feel
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+        // Call the analysis API
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ responses: parsedResponses }),
+        });
 
-    // TODO: Later, send responses to API and get real results
-    // const data = JSON.parse(responses);
-    // const apiResults = await fetch('/api/analyze', { ... });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to analyze profile');
+        }
+
+        const data: AnalysisData = await response.json();
+        setAnalysisData(data);
+
+        // Set the first ranked cohort as selected by default
+        if (data.rankedCohorts.length > 0) {
+          setSelectedCohort(data.rankedCohorts[0].name);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Analysis error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to analyze profile');
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnalysis();
   }, [router]);
 
   if (isLoading) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center fade-in">
-          <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin mx-auto mb-6"></div>
-          <p className="text-xl text-gray-300">Analyzing your profile...</p>
-          <p className="text-sm text-gray-500 mt-2">Comparing across 6 competency dimensions</p>
+      <main className="min-h-screen flex items-center justify-center bg-atmosphere">
+        <div className="text-center animate-fadeUp">
+          <div className="w-8 h-8 border-[1.5px] border-gray-200 border-t-gray-600 rounded-full animate-spin mx-auto mb-5"></div>
+          <p className="text-[15px] text-[#86868b]">Analyzing your profile</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-atmosphere px-6">
+        <div className="max-w-md text-center animate-fadeUp">
+          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-2">Analysis Error</h2>
+          <p className="text-[15px] text-[#515154] mb-6">{error}</p>
+          <button
+            onClick={() => router.push('/')}
+            className="px-5 py-3 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:bg-[#006edb] text-white text-[15px] font-medium transition-all duration-200 shadow-[0_2px_8px_rgba(0,113,227,0.35)]"
+          >
+            Start Over
+          </button>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen p-4 sm:p-8 py-12">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6">
-            <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></div>
-            <span className="text-sm font-medium text-indigo-300">Analysis Complete</span>
+    <main className="min-h-screen bg-atmosphere">
+      <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-8 lg:py-12">
+
+        {/* Mobile Header */}
+        <header className="lg:hidden mb-6 animate-fadeUp">
+          <div className="flex items-center gap-1.5 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+            <span className="text-xs font-medium tracking-wide text-[#86868b]">Analysis Complete</span>
           </div>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif mb-6 tracking-tight gradient-text">
-            Your Competitive Profile
-          </h1>
-          <p className="text-xl sm:text-2xl text-gray-300 font-light max-w-3xl mx-auto leading-relaxed">
-            {userProfile.summary}
-          </p>
-        </div>
+          <h1 className="text-4xl font-semibold tracking-tight text-[#1d1d1f]">Your Results</h1>
+        </header>
 
-        {/* Top 3 Cohorts Overview */}
-        <div className="glass-panel p-8 sm:p-10 mb-12 slide-up" style={{ animationDelay: '0.2s' }}>
-          <h2 className="text-3xl sm:text-4xl font-serif mb-6 text-center">
-            Exploring the Cohorts
-          </h2>
-          <p className="text-center text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            After spending time clicking through the Cohort Comparison Dashboard, Zach begins to sense where he might fit best. Among the five cohorts, three stand out as the strong possibilities: <span className="font-semibold text-white bg-white/5 px-2 py-0.5 rounded">Patient-Centered</span>, <span className="font-semibold text-white bg-white/5 px-2 py-0.5 rounded">Clinical-Investigative</span>, and <span className="font-semibold text-white bg-white/5 px-2 py-0.5 rounded">Community-Clinical</span>. Their priorities resonate with him—he feels a natural alignment with his goals and values.
-          </p>
-        </div>
-
-        {/* Cohort Selector */}
-        <div className="mb-10 slide-up" style={{ animationDelay: '0.3s' }}>
-          <label className="block text-sm font-medium text-gray-400 mb-4 tracking-wide uppercase">
-            Select Cohort for Comparison
-          </label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {Object.keys(COHORT_ARCHETYPES).map((cohortName) => (
-              <button
-                key={cohortName}
-                onClick={() => setSelectedCohort(cohortName)}
-                className={`cohort-card text-center ${
-                  selectedCohort === cohortName ? 'cohort-card-active' : ''
-                }`}
-              >
-                <div className="relative z-10">
-                  <div className="text-sm font-semibold mb-0.5 text-white leading-tight">
-                    {cohortName}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    {cohortName === 'Clinical-Investigative' && 'Research'}
-                    {cohortName === 'Patient-Centered' && 'Patient Focus'}
-                    {cohortName === 'Community-Clinical' && 'Health Equity'}
-                    {cohortName === 'Research-Intensive' && 'Academic'}
-                    {cohortName === 'Mission-Driven' && 'Social Impact'}
-                  </div>
-                </div>
-              </button>
-            ))}
+        {/* Desktop Header */}
+        <header className="hidden lg:block mb-8 animate-fadeUp">
+          <div className="flex items-center gap-1.5 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+            <span className="text-xs font-medium tracking-wide text-[#86868b]">Analysis Complete</span>
           </div>
-        </div>
+          <h1 className="text-[44px] font-semibold tracking-tight text-[#1d1d1f]">Your Results</h1>
+        </header>
 
-        {/* Main Comparison View */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Left: Radar Chart */}
-          <div className="glass-panel-elevated p-8 slide-up" style={{ animationDelay: '0.4s' }}>
-            <div className="mb-8">
-              <h3 className="text-2xl font-serif text-white mb-4">{selectedCohort}</h3>
-              <div className="flex items-center gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-[rgba(100,181,246,0.8)] border border-[rgba(100,181,246,1)]"></div>
-                  <span className="text-gray-400">Cohort Archetype</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-[rgba(216,181,194,0.8)] border border-[rgba(216,181,194,1)]"></div>
-                  <span className="text-gray-400">Your Profile</span>
-                </div>
+        {/* Main Grid */}
+        <div className="flex flex-col lg:grid lg:grid-cols-[240px_1fr] gap-8 lg:gap-10">
+
+          {/* Sidebar */}
+          <aside className="order-2 lg:order-1 animate-fadeUp" style={{ animationDelay: '0.08s' }}>
+            <div className="form-card">
+              <p className="text-xs font-medium tracking-wide text-[#86868b] uppercase mb-4">Ranked by fit</p>
+              <div className="flex flex-col gap-1.5">
+              {rankedCohorts.map((cohort, index) => (
+                <button
+                  key={cohort.name}
+                  onClick={() => handleCohortChange(cohort.name)}
+                  className={`
+                    flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-colors duration-200
+                    ${selectedCohort === cohort.name
+                      ? 'bg-[#1d1d1f]'
+                      : 'hover:bg-black/[0.04]'
+                    }
+                  `}
+                >
+                  <span className={`text-[13px] tabular-nums min-w-[16px] ${selectedCohort === cohort.name ? 'text-white/50' : 'text-[#86868b]'}`}>
+                    {index + 1}
+                  </span>
+                  <span className={`text-[15px] ${selectedCohort === cohort.name ? 'text-white font-medium' : 'text-[#1d1d1f]'}`}>
+                    {cohort.name}
+                  </span>
+                </button>
+              ))}
               </div>
             </div>
-            <RadarChart
-              userScores={userProfile.scores}
-              cohortScores={cohortData.scores}
-              showComparison={true}
-            />
-          </div>
+          </aside>
 
-          {/* Right: Cohort Details */}
-          <div className="space-y-6">
-            {/* Profile Alignment */}
-            <div className="glass-panel p-8 slide-up" style={{ animationDelay: '0.5s' }}>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></div>
-                <h3 className="text-xl font-serif text-white">
-                  Your Profile Aligns with {selectedCohort} Schools
-                </h3>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                {cohortData.description}
-              </p>
-            </div>
+          {/* Content */}
+          <div className="order-1 lg:order-2 flex flex-col">
 
-            {/* Why This Cohort Fits */}
-            <div className="glass-panel p-8 slide-up" style={{ animationDelay: '0.6s' }}>
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></div>
-                <h4 className="text-lg font-serif text-white">
-                  Why This Cohort is a Strong Fit for You
-                </h4>
-              </div>
-              <ul className="space-y-3">
-                {cohortData.strengths.map((strength, index) => (
-                  <li key={index} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-                    <svg className="w-4 h-4 text-green-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>{strength}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Chart Card */}
+            <div className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
+              <RadarChart
+                userScores={userProfile.scores}
+                cohortScores={cohortData.scores}
+                showComparison={true}
+              />
 
-            {/* What Schools Prioritize */}
-            <div className="glass-panel p-8 slide-up" style={{ animationDelay: '0.7s' }}>
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full"></div>
-                <h4 className="text-lg font-serif text-white">
-                  What {selectedCohort} Schools Prioritize
-                </h4>
-              </div>
-              <ul className="space-y-3 mb-6">
-                {cohortData.whatSchoolsPrioritize.map((priority, index) => (
-                  <li key={index} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"></div>
-                    <span>{priority}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-xs text-gray-400 mb-3 uppercase tracking-wide font-medium">Example Schools</p>
-                <div className="flex flex-wrap gap-2">
-                  {cohortData.exampleSchools.map((school, index) => (
-                    <span key={index} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300">
-                      {school}
-                    </span>
-                  ))}
+              {/* Legend */}
+              <div className="flex items-center justify-center gap-8 mt-6 pt-5 border-t border-black/[0.06]">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
+                  <span className="text-xs text-[#86868b]">You</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-400"></div>
+                  <span className="text-xs text-[#86868b]">Cohort</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Strategic Guidance */}
-        <div className="glass-panel p-8 sm:p-12 mb-12 slide-up" style={{ animationDelay: '0.8s' }}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-              <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-serif text-white">Recognizing a Gap</h3>
-          </div>
-          <p className="text-gray-300 leading-relaxed mb-6">
-            As Zach explores Smarter Pre-Med, the Radar Charts and High-Impact Action Plans confirm what he's been suspecting for some time—he will need to gain meaningful patient interaction experience. This insight sparks a critical next question in Zach's mind.
-          </p>
-          <div className="p-6 bg-gradient-to-br from-amber-500/5 to-orange-500/5 rounded-xl border border-amber-500/20">
-            <p className="text-gray-200 leading-relaxed italic">
-              {cohortData.strategicGuidance}
+            {/* Analysis Text */}
+            <p
+              className="text-[16px] leading-relaxed text-[#515154] mt-8 max-w-[62ch] animate-fadeUp"
+              style={{
+                animationDelay: '0.2s',
+                opacity: isTextTransitioning ? 0 : 1,
+                transition: 'opacity 0.15s ease'
+              }}
+            >
+              {fitAnalyses[selectedCohort]}
             </p>
+
+            {/* School Tags */}
+            <div
+              className={`flex flex-wrap gap-2 overflow-hidden transition-all duration-300 ${showSchools ? 'mt-8 max-h-40 opacity-100' : 'mt-0 max-h-0 opacity-0'}`}
+            >
+              {cohortData.exampleSchools.map((school, index) => (
+                <span
+                  key={index}
+                  className="px-3.5 py-2 bg-black/[0.04] text-[#1d1d1f] text-[13px] rounded-[10px]"
+                >
+                  {school}
+                </span>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-wrap items-center gap-4 mt-8 animate-fadeUp" style={{ animationDelay: '0.28s' }}>
+              <button
+                onClick={() => setShowSchools(!showSchools)}
+                className="px-5 py-3 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:bg-[#006edb] text-white text-[15px] font-medium transition-all duration-200 inline-flex items-center gap-2 shadow-[0_2px_8px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_12px_rgba(0,113,227,0.3)] hover:-translate-y-px active:translate-y-0"
+              >
+                {showSchools ? 'Hide' : 'View'} example schools
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${showSchools ? 'rotate-90' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => router.push('/')}
+                className="px-4 py-3 text-[#86868b] hover:text-[#1d1d1f] text-[15px] transition-colors duration-200"
+              >
+                Start Over
+              </button>
+            </div>
+
+            {/* Footer */}
+            <footer className="mt-12 pt-6 border-t border-black/[0.06] animate-fadeUp" style={{ animationDelay: '0.36s' }}>
+              <p className="text-[13px] text-[#86868b]">
+                SPM helps students understand where they fit best.
+              </p>
+            </footer>
+
           </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center slide-up" style={{ animationDelay: '0.9s' }}>
-          <button
-            onClick={() => router.push('/')}
-            className="group px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 border border-indigo-500/50 smooth-transition text-lg font-medium shadow-lg shadow-indigo-500/20"
-          >
-            <span className="flex items-center justify-center gap-2">
-              Start New Assessment
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
-          <button
-            onClick={() => window.print()}
-            className="px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 smooth-transition text-lg font-medium"
-          >
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-              </svg>
-              Save Results
-            </span>
-          </button>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-12 text-sm text-gray-500 fade-in" style={{ animationDelay: '1s' }}>
-          <p>SPM helps students understand where they fit best, removing guesswork from the application process.</p>
-        </div>
       </div>
     </main>
   );
