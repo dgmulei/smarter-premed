@@ -43,42 +43,16 @@ All 19 sections of the polish specification have been implemented with pixel-per
 
 ## ✨ Core Features Built
 
-### 1. **Cohort Comparison Dashboard**
-The centerpiece feature from your mockups:
+### **Results Page Architecture**
+Clean, focused layout with interactive cohort exploration:
 
-- **Interactive cohort selector** - 5 buttons to switch between cohorts
-- **Real-time chart updates** - Chart redraws when you select different cohorts
-- **Side-by-side comparison** - See your profile vs any cohort archetype
+- **Ranked sidebar** - 5 cohort buttons ranked by fit (1-5), card-based design
+- **Dual-overlay radar chart** - Pink user profile vs blue cohort archetype
+- **Personalized fit analysis** - Paragraph of guidance specific to each cohort
+- **Expandable school list** - "View example schools" button reveals school tags
+- **Smooth transitions** - Chart updates and text fades when switching cohorts
 
-### 2. **Dual-Overlay Radar Chart**
-Exactly like your mockups:
-
-- **Pink shape** = Your pre-med profile (rgba(216, 181, 194))
-- **Blue shape** = Selected cohort archetype (rgba(100, 181, 246))
-- **Legend shows both** - "Pre-Med" and cohort name
-- **Smooth animations** - Professional, polished feel
-
-### 3. **Rich Cohort Context Panels**
-
-**Panel 1: "Your Profile Aligns with [Cohort] Schools"**
-- Full description of what the cohort represents
-- How your profile matches their priorities
-
-**Panel 2: "Why This Cohort is a Strong Fit for You"**
-- 5 specific strengths with checkmarks (✓)
-- Evidence from mock profile (300+ clinical hours, research, GPA, etc.)
-
-**Panel 3: "What [Cohort] Schools Prioritize"**
-- Bullet points of school priorities
-- **Example Schools listed** - Duke, Mount Sinai, USC Keck, etc.
-
-**Panel 4: "Recognizing a Gap"**
-- Strategic guidance section
-- Actionable next steps specific to each cohort
-
----
-
-## 📊 All 5 Cohorts - Fully Populated
+### **5 Cohort Archetypes - Fully Defined**
 
 ### Clinical-Investigative
 - **Archetype scores:** Academic 85, Clinical 75, Research 90, Leadership 70, Technical 85, Specialty 80
@@ -166,95 +140,58 @@ Exactly like your mockups:
 
 ---
 
-## 📁 New File Structure
+## 📁 File Structure
 
 ```
 smarter-premed/
-├── lib/
-│   └── cohortData.ts          ← NEW: All cohort archetypes & mock data
-├── components/
-│   └── RadarChart.tsx         ← UPDATED: Dual-overlay support
 ├── app/
-│   └── results/
-│       └── page.tsx           ← REBUILT: Cohort comparison dashboard
+│   ├── page.tsx                    ← Landing page with 8-question form
+│   ├── results/page.tsx            ← Results dashboard (sidebar + chart + analysis)
+│   └── globals.css                 ← All styling (bg-atmosphere, form-card, animations)
+├── components/
+│   ├── QuestionnaireForm.tsx       ← 8-question form with validation
+│   └── RadarChart.tsx              ← Dual-overlay radar chart component
+└── lib/
+    └── cohortData.ts               ← Cohort archetypes + mock user profile
 ```
 
----
-
-## 🚀 User Flow
-
-1. **Fill out 8-question form** (unchanged)
-2. **Submit** → Loading animation
-3. **Results page loads:**
-   - See "Exploring the Cohorts" narrative
-   - Top 3 cohorts mentioned (Patient-Centered, Clinical-Investigative, Community-Clinical)
-   - Cohort selector with 5 buttons
-   - **Default: Clinical-Investigative selected**
-
-4. **Click different cohorts:**
-   - Radar chart updates instantly
-   - Blue overlay changes to new cohort's archetype
-   - Right-side panels update with new cohort data
-   - Example schools change
-   - Strategic guidance updates
-
-5. **Compare and explore:**
-   - See where you match well
-   - See where you have gaps
-   - Read specific school examples
-   - Understand what each cohort prioritizes
+**Key patterns:**
+- `MOCK_USER_PROFILE` - Placeholder user scores (to be replaced by API)
+- `COHORT_ARCHETYPES` - 5 cohort definitions with scores and school lists
+- `fitAnalyses` - Personalized guidance text for each cohort (hardcoded placeholders)
+- `rankedCohorts` - Hardcoded ranking order (will come from API on Day Two)
 
 ---
 
-## 🎯 What This Achieves
+## 🚀 Current User Flow
 
-### From Your Mockups:
-✅ "Zach begins to sense where he might fit best"
-✅ Multiple cohorts shown as possibilities
-✅ Dual-overlay comparison (user vs archetype)
-✅ Rich contextual explanations
-✅ Example schools listed
-✅ Strategic, actionable guidance
-✅ "Recognizing a Gap" narrative
+1. **Landing page** - Fill out 8-question form with validation
+2. **Submit** - 800ms delay with loading animation, stores responses in sessionStorage
+3. **Results page loads** - Shows mock user profile vs Clinical-Investigative (default)
+4. **Explore cohorts:**
+   - Click any of 5 ranked cohort buttons in sidebar
+   - Radar chart updates (blue overlay changes to new cohort)
+   - Fit analysis text fades and updates (150ms transition)
+   - Click "View example schools" to expand school tags
+5. **Start Over** button returns to landing page
 
-### The "Holy Shit!" Moment:
-- **Interactive exploration** - Not just "here's your result"
-- **Visual comparison** - See exactly where you match/differ
-- **Specific evidence** - Not generic advice
-- **Real schools** - Concrete targets to research
-- **Actionable** - Know what to do next
+**Note:** All data is currently placeholder. Cohort ranking, user scores, and fit analyses are hardcoded and will be replaced with real AI analysis on Day Two.
 
 ---
 
-## 🧪 Test It
+## 📊 Placeholder Data System
 
-```bash
-cd ~/Desktop/smarter-premed
-npm run dev
-```
+All mock data lives in `/lib/cohortData.ts`:
 
-1. Go to http://localhost:3000
-2. Fill out all 8 questions (all required)
-3. Click "See My Results"
-4. Watch loading animation
-5. **Results page:**
-   - Try clicking each cohort button
-   - Watch the chart update
-   - Read the different "Why This Cohort Fits" sections
-   - See example schools change
+- **MOCK_USER_PROFILE**: `{ scores: { academic_rigor: 85, clinical_exposure: 72, ... } }`
+- **COHORT_ARCHETYPES**: Object with 5 cohorts, each with archetype scores and example schools
+- **fitAnalyses**: Hardcoded strings in `results/page.tsx` (lines 36-42)
+- **rankedCohorts**: Static array `['Clinical-Investigative', 'Research-Intensive', ...]`
 
----
-
-## 📊 Still Using Placeholder Data
-
-**This is intentional - UI first, logic later:**
-
-- Mock user scores: 85, 72, 90, 68, 78, 65
-- Mock cohort archetypes: 5 different score patterns
-- Mock top 3 cohorts classification
-- Mock strengths/evidence (will come from real questionnaire)
-
-**Next step:** Wire in your meticulously ordered data with Anthropic API to replace placeholders with real analysis.
+**Day Two Goal:** Replace with:
+- Real user scores from API analysis
+- Real cohort ranking based on fit algorithm
+- AI-generated personalized fit analyses
 
 ---
 
