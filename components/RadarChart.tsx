@@ -131,7 +131,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
             weight: 500,
             family: 'Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
           },
-          padding: 3,
+          padding: 16,
         },
         angleLines: {
           color: 'rgba(0, 0, 0, 0.04)',
@@ -161,7 +161,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
   };
 
   return (
-    <div className="w-full mx-auto" style={{ height: '325px', maxWidth: '325px' }}>
+    <div className="w-full max-w-lg mx-auto" style={{ height: '360px' }}>
       <Radar data={chartData} options={options} />
     </div>
   );
