@@ -373,7 +373,35 @@ For each school type, use the friendly name (Discover, Translate, Bedside, Commu
 Return ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {
-  "profile_summary": "<2-3 sentences, max 75 words. Lead with best-fit school type (or top 2 if close in fit score). Use ONLY friendly school type names: Discover, Translate, Bedside, Community, Mission. Call them 'school types' or 'schools', NEVER 'cohorts'. Explain WHY they fit with INSIGHT, not restatement of data. Synthesize holistically - connect dots they might not see. Consider: What does their combination of experiences suggest about their trajectory? What strategic patterns emerge? What does their timeline mean for next steps? DO NOT list scores. DO NOT simply restate questionnaire responses. Example: 'You're positioned for Translate schools - your research depth combined with patient-facing work suggests translational medicine capability. The gap isn't clinical hours, but breadth of settings and longitudinal commitment that builds judgment. Your 2029+ timeline allows you to deepen one sustained clinical role rather than accumulating scattered hours.'>",
+  "profile_summary": "<2-3 sentences, max 75 words. TONE: Observational and validating, NOT prescriptive. Make the student feel SEEN and UNDERSTOOD. Connect dots between their experiences to reveal capabilities they might not recognize. Lead with best-fit school type (or top 2 if close). Use ONLY friendly names: Discover, Translate, Bedside, Community, Mission. Call them 'school types' or 'schools', NEVER 'cohorts'.
+
+STRUCTURE:
+- Sentence 1: Observe their specific experiences with numbers/details and what capability this reveals
+- Sentence 2: Connect different areas of their profile (research + clinical, academic + service, etc.) to show pattern
+- Sentence 3: Acknowledge their timeline/stage as context (not judgment) and note their foundation strengths
+
+DO:
+✅ Cite specific numbers (hours, GPA ranges, types of work)
+✅ Name what their combination reveals about capability ('translational capability', 'community health insight', 'research depth')
+✅ Connect dots between different competencies
+✅ Acknowledge timeline as neutral context
+✅ Use 'reveals', 'demonstrates', 'positions', 'shows', 'suggests capability in'
+
+DON'T:
+❌ Give advice or recommendations ('focus on', 'you should', 'you need to')
+❌ Use prescriptive language ('the gap is', 'work on', 'build', 'develop')
+❌ Tell them what to do next
+❌ Label them as a type/archetype ('you're a research-intensive student')
+❌ List scores without context
+❌ Simply restate questionnaire data
+
+EXAMPLE (Good - Observational):
+'Your 800 research hours in computational biology, combined with 150 clinical hours across hospital and community clinic settings, reveal emerging translational capability. Your academic strength (GPA 3.7, MCAT 515) supports analytical work while your patient-facing experience grounds you in clinical realities. You're building toward the 2028 cycle with foundation strengths in research depth and academic metrics.'
+
+EXAMPLE (Bad - Prescriptive):
+'You're positioned for Translate schools but need more clinical hours. Focus on building breadth of settings and longitudinal commitment. Your 2029+ timeline allows you to deepen one sustained clinical role.'
+
+The goal: Student reads this and thinks 'They really SEE me and what I've built' - not 'Here's my to-do list'.>",
   "competency_scores": {
     "academic_rigor": <0-100>,
     "clinical_exposure": <0-100>,
