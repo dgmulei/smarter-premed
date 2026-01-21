@@ -83,6 +83,26 @@ function buildAnalysisPrompt(responses: QuestionnaireResponses): string {
 - Recognize that different cohorts prioritize different competencies
 - Provide actionable, specific guidance rooted in real benchmarks
 
+## CRITICAL: USER-FACING TERMINOLOGY
+
+When generating ANY user-facing text (profile_summary and fitAnalysis), you MUST use:
+- Friendly names: Discover, Translate, Bedside, Community, Mission
+- Call them "school types" or "schools", NEVER "cohorts" or "programs"
+- Examples:
+  ✅ "You're positioned for Translate schools..."
+  ✅ "Discover-type schools typically expect..."
+  ✅ "Your profile aligns with Bedside and Community school types..."
+  ❌ "Clinical-Investigative cohort..."
+  ❌ "Research-Intensive programs..."
+  ❌ "Mission-Driven cohort..."
+
+MAPPING:
+- Discover = Research-Intensive
+- Translate = Clinical-Investigative
+- Bedside = Patient-Centered
+- Community = Community-Clinical
+- Mission = Mission-Driven
+
 ## THE WHITECOAT COHORT FRAMEWORK
 
 ### Mission-Driven Cohort
@@ -335,10 +355,12 @@ Rank fit across all 5 cohorts with meaningful differentiation. Consider both qua
 
 ### 3. Personalized Fit Analysis (2-3 sentences, max 75 words each)
 
-For each cohort:
+For each school type, use the friendly name (Discover, Translate, Bedside, Community, Mission) throughout:
 - **Opening:** Acknowledge specific strengths ("Your 350 research hours...")
-- **Middle:** Cite framework benchmarks ("Research-Intensive expects 1,200+ hours...")
+- **Middle:** Cite framework benchmarks using friendly names ("Discover schools typically expect 1,200+ hours...")
 - **Closing:** Provide 1-2 concrete, actionable recommendations
+
+**Example:** "Your 800 research hours position you well for Translate schools. However, Translate-type programs typically expect 400-800 hours combined with 150-300 clinical hours. Focus on building your clinical exposure through an EMT certification within the next year."
 
 **Tone:** Encouraging but honest. Like a trusted advisor.
 
@@ -351,7 +373,7 @@ For each cohort:
 Return ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {
-  "profile_summary": "<2-3 sentences, max 75 words. Lead with best-fit cohort (or top 2 if close in fit score). Explain WHY they fit with INSIGHT, not restatement of data. Synthesize holistically - connect dots they might not see. Consider: What does their combination of experiences suggest about their trajectory? What strategic patterns emerge? What does their timeline mean for next steps? DO NOT list scores. DO NOT simply restate questionnaire responses. Example: 'You're positioned for Clinical-Investigative programs - your research depth combined with patient-facing work suggests translational medicine capability. The gap isn't clinical hours, but breadth of settings and longitudinal commitment that builds judgment. Your 2029+ timeline allows you to deepen one sustained clinical role rather than accumulating scattered hours.'>",
+  "profile_summary": "<2-3 sentences, max 75 words. Lead with best-fit school type (or top 2 if close in fit score). Use ONLY friendly school type names: Discover, Translate, Bedside, Community, Mission. Call them 'school types' or 'schools', NEVER 'cohorts'. Explain WHY they fit with INSIGHT, not restatement of data. Synthesize holistically - connect dots they might not see. Consider: What does their combination of experiences suggest about their trajectory? What strategic patterns emerge? What does their timeline mean for next steps? DO NOT list scores. DO NOT simply restate questionnaire responses. Example: 'You're positioned for Translate schools - your research depth combined with patient-facing work suggests translational medicine capability. The gap isn't clinical hours, but breadth of settings and longitudinal commitment that builds judgment. Your 2029+ timeline allows you to deepen one sustained clinical role rather than accumulating scattered hours.'>",
   "competency_scores": {
     "academic_rigor": <0-100>,
     "clinical_exposure": <0-100>,
