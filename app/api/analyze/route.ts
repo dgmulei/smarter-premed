@@ -408,35 +408,69 @@ The goal: Student reads this and thinks "They actually analyzed my numbers again
 Return ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {
-  "profile_summary": "<2-3 sentences, max 75 words. TONE: Observational and validating, NOT prescriptive. Make the student feel SEEN and UNDERSTOOD. Connect dots between their experiences to reveal capabilities they might not recognize. Lead with best-fit school type (or top 2 if close). Use ONLY friendly names: Discover, Translate, Bedside, Community, Mission. Call them 'school types' or 'schools', NEVER 'cohorts'.
+  "profile_summary": "<ABSOLUTE LIMIT: 75 words maximum. Count every word. If over 75, you have FAILED.
 
-STRUCTURE:
-- Sentence 1: Observe their specific experiences with numbers/details and what capability this reveals
-- Sentence 2: Connect different areas of their profile (research + clinical, academic + service, etc.) to show pattern
-- Sentence 3: Acknowledge their timeline/stage as context (not judgment) and note their foundation strengths
+PURPOSE: Make the student feel SEEN and UNDERSTOOD for who they are RIGHT NOW. Zero advice-giving.
 
-DO:
-✅ Cite specific numbers (hours, GPA ranges, types of work)
-✅ Name what their combination reveals about capability ('translational capability', 'community health insight', 'research depth')
-✅ Connect dots between different competencies
-✅ Acknowledge timeline as neutral context
-✅ Use 'reveals', 'demonstrates', 'positions', 'shows', 'suggests capability in'
+STRUCTURE (2-3 sentences, 65-72 words total):
+Sentence 1: Cite their specific numbers (hours, GPA range, settings) + name the capability this reveals
+Sentence 2: Connect different areas (research + clinical, academic + service) to show a pattern
+Sentence 3: Note their timeline as neutral context + their current foundation strengths
 
-DON'T:
-❌ Give advice or recommendations ('focus on', 'you should', 'you need to')
-❌ Use prescriptive language ('the gap is', 'work on', 'build', 'develop')
-❌ Tell them what to do next
-❌ Label them as a type/archetype ('you're a research-intensive student')
-❌ List scores without context
-❌ Simply restate questionnaire data
+TONE: Observational journalist. Evidence-based recognition. Like describing a photograph, not giving a to-do list.
 
-EXAMPLE (Good - Observational):
-'Your 800 research hours in computational biology, combined with 150 clinical hours across hospital and community clinic settings, reveal emerging translational capability. Your academic strength (GPA 3.7, MCAT 515) supports analytical work while your patient-facing experience grounds you in clinical realities. You're building toward the 2028 cycle with foundation strengths in research depth and academic metrics.'
+MANDATORY ELEMENTS:
+✅ Lead with best-fit school type name: Discover, Translate, Bedside, Community, or Mission
+✅ Use \"schools\" or \"school types\" - NEVER \"cohorts\" or \"programs\"
+✅ Cite specific numbers from their responses
+✅ Name capabilities: \"translational capability,\" \"community health insight,\" \"research depth,\" \"clinical foundation,\" \"analytical capability\"
+✅ Connection words: \"combined with,\" \"alongside,\" \"while,\" \"grounds you in,\" \"positions you for\"
+✅ Descriptive verbs only: \"reveals,\" \"demonstrates,\" \"positions,\" \"shows,\" \"suggests,\" \"represents\"
 
-EXAMPLE (Bad - Prescriptive):
-'You're positioned for Translate schools but need more clinical hours. Focus on building breadth of settings and longitudinal commitment. Your 2029+ timeline allows you to deepen one sustained clinical role.'
+FORBIDDEN ELEMENTS:
+❌ Advice language: \"focus on,\" \"you should,\" \"you need to,\" \"work on,\" \"build,\" \"develop,\" \"strengthen,\" \"consider\"
+❌ Gap language: \"however,\" \"but,\" \"the gap is,\" \"you're missing\"
+❌ Future directives: \"next steps,\" \"to improve,\" \"prioritize\"
+❌ Labels: \"you're a research-intensive student,\" \"you're mission-driven\"
+❌ Data dumps without insight: listing numbers without connecting them to capability
 
-The goal: Student reads this and thinks 'They really SEE me and what I've built' - not 'Here's my to-do list'.>",
+WORD COUNT DISCIPLINE:
+Target exactly 68-72 words. Plan before writing. If draft exceeds 75 words, DELETE entire clauses - do not just compress. Ruthless cutting required.
+
+EXAMPLE 1 - Research Depth (68 words):
+\"Your 1,200 research hours with 3 publications position you as a research-depth applicant for Discover schools. Your academic metrics (GPA 3.9, MCAT 520) support high-level analytical work, though your 100 clinical hours represent emerging patient care foundation. You're targeting the 2027 cycle with exceptional research credentials and developing clinical experience that grounds scientific inquiry in medical practice.\"
+
+EXAMPLE 2 - Community Service (71 words):
+\"Your 800+ clinical hours across community health centers and free clinics, combined with sustained leadership in health equity initiatives (10+ tangible outcomes), demonstrate deep commitment to underserved populations. Your community college transfer and non-traditional pathway context your GPA of 3.6 within a growth trajectory. You're building toward the 2026 cycle with foundation strengths in community engagement and longitudinal patient relationships.\"
+
+EXAMPLE 3 - Balanced Breadth (74 words):
+\"Your combination of 300 research hours, 400 clinical hours, and 2-3 leadership roles reveals breadth across multiple competencies without singular depth. Your GPA of 3.5 and pending MCAT position you academically within competitive ranges for several school types. Your 2029+ timeline provides runway to strengthen specific areas. You're building a well-rounded foundation with flexibility to emphasize research, clinical, or community focus based on emerging interests.\"
+
+EXAMPLE 4 - Translational (67 words):
+\"Your 800 research hours in computational biology, combined with 150 clinical hours across hospital and community clinic settings, reveal emerging translational capability. Your academic strength (GPA 3.7, MCAT 515) supports analytical work while your patient-facing experience grounds you in clinical realities. You're building toward the 2028 cycle with foundation strengths in research depth and academic metrics.\"
+
+EXAMPLE 5 - Mission-Driven (70 words):
+\"Your 600 clinical hours serving underserved populations in free clinics, combined with leadership in community health education programs (200+ people reached), reveal commitment to health equity. Your GPA of 3.5 and MCAT 506 position you within Mission school ranges. Your Spanish fluency and experience with immigrant communities align with schools prioritizing cultural competency. You're targeting the 2026 cycle with strengths in community engagement and health advocacy.\"
+
+WHY THESE WORK:
+- All 67-74 words (under limit)
+- Lead with school type match
+- Cite specific student numbers
+- Name capability revealed by their experiences
+- Connect multiple areas to show pattern
+- Zero prescriptive language - pure observation
+- Timeline mentioned as context, not pressure
+- Student reaction: \"They really SEE who I am right now\"
+
+SELF-CHECK BEFORE FINALIZING:
+1. Word count ≤ 75? (Count them: [your count here])
+2. Zero advice words? (No \"focus,\" \"should,\" \"need to,\" \"build\")
+3. Specific numbers cited? (Hours, GPA range, settings)
+4. Capability named? (Not just \"you have X hours\" but \"X hours reveals Y capability\")
+5. School type named? (Using friendly name, not cohort)
+6. Student would feel seen? (Recognition, not judgment or prescription)
+
+If ANY check fails, REWRITE before submitting.>",
   "competency_scores": {
     "academic_rigor": <0-100>,
     "clinical_exposure": <0-100>,
