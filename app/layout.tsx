@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: "Positioned by Smarter Premed | Medical School Assessment",
+  title: "What's Your Med School Fit?",
   description: "See where you stand. Focus on what matters. Free assessment analyzing your strengths across 6 core competencies and 5 school types.",
 };
 
