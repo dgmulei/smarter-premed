@@ -387,14 +387,52 @@ export default function Results() {
 
           {/* Profile Summary */}
           {analysisData?.profileSummary && (
-            <div className="form-card mb-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-              <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-4 text-center" style={{ fontFamily: 'Georgia, serif' }}>
-                Where You Stand
-              </h2>
-              <p className="text-[17px] leading-relaxed text-[#1d1d1f]" style={{ fontFamily: 'Georgia, serif' }}>
-                {analysisData.profileSummary}
-              </p>
-            </div>
+            <>
+              <div className="form-card mb-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
+                <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-4 text-center" style={{ fontFamily: 'Georgia, serif' }}>
+                  Where You Stand
+                </h2>
+                <p className="text-[17px] leading-relaxed text-[#1d1d1f]" style={{ fontFamily: 'Georgia, serif' }}>
+                  {analysisData.profileSummary}
+                </p>
+              </div>
+
+              {/* Scroll nudge bar */}
+              <div
+                className="animate-fadeUp"
+                style={{
+                  animationDelay: '0.11s',
+                  backgroundColor: '#86cac4',
+                  height: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+                }}
+              >
+                <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
+                  <path d="M12 16l6-6H6z" />
+                </svg>
+
+                <p style={{
+                  color: 'white',
+                  fontSize: '10px',
+                  fontWeight: '500',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  margin: 0,
+                  lineHeight: 1,
+                  opacity: 0.7
+                }}>
+                  COMPARE YOUR FIT ACROSS 5 SCHOOL TYPES
+                </p>
+
+                <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
+                  <path d="M12 16l6-6H6z" />
+                </svg>
+              </div>
+            </>
           )}
 
           {/* Chart Card */}
@@ -557,9 +595,45 @@ export default function Results() {
             </div>
           </div>
 
+          {/* Scroll nudge bar */}
+          <div
+            className="animate-fadeUp"
+            style={{
+              animationDelay: '0.14s',
+              backgroundColor: '#86cac4',
+              height: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+            }}
+          >
+            <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
+              <path d="M12 16l6-6H6z" />
+            </svg>
+
+            <p style={{
+              color: 'white',
+              fontSize: '10px',
+              fontWeight: '500',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              margin: 0,
+              lineHeight: 1,
+              opacity: 0.7
+            }}>
+              SEE YOUR FIT ANALYSIS FOR EACH TYPE
+            </p>
+
+            <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
+              <path d="M12 16l6-6H6z" />
+            </svg>
+          </div>
+
           {/* Cohort Analysis Card */}
           <div
-            className="form-card mt-8 animate-fadeUp"
+            className="form-card animate-fadeUp"
             style={{
               animationDelay: '0.16s',
               borderLeft: `4px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
