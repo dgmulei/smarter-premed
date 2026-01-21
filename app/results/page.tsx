@@ -298,7 +298,7 @@ export default function Results() {
 
   return (
     <main className="min-h-screen bg-atmosphere">
-      <div className="max-w-[540px] mx-auto px-8 sm:px-6 py-16 sm:py-20">
+      <div className="max-w-[540px] mx-auto px-4 sm:px-6 py-16 sm:py-20">
 
         {/* Content */}
         <div className="flex flex-col">
