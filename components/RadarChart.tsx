@@ -48,7 +48,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
     'Clinical Exposure',
     'Research Activities',
     'Academics',
-    'Specialty Focus',
+    'Path Clarity',
   ];
 
   const datasets = [];
