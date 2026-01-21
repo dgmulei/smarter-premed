@@ -44,7 +44,7 @@ interface RadarChartProps {
 export default function RadarChart({ userScores, cohortScores, showComparison = false }: RadarChartProps) {
   const labels = [
     'Leadership & Service',
-    'Clinical & Lab Skills',
+    'Clinical/Lab Skills',
     'Clinical Exposure',
     'Research Activities',
     'Academic Rigor',
