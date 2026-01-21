@@ -366,10 +366,10 @@ const questions: QuestionConfig[] = [
     type: 'select',
     options: [
       { value: '', label: 'Select target cycle' },
-      { value: '2026', label: '2026 cycle (applications due 2025)' },
       { value: '2027', label: '2027 cycle (applications due 2026)' },
       { value: '2028', label: '2028 cycle (applications due 2027)' },
-      { value: '2029+', label: '2029 or later' },
+      { value: '2029', label: '2029 cycle (applications due 2028)' },
+      { value: '2030+', label: '2030 or later' },
       { value: 'unsure', label: 'Unsure/Flexible' },
     ],
   },

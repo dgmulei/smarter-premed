@@ -374,7 +374,7 @@ MANDATORY ELEMENTS:
 ✅ Comparative language: "meets," "exceeds," "falls short of," "aligns with," "below the X-Y benchmark," "within range"
 ✅ Specify TYPE of experience: "EMT certification," "clinical research coordinator role," "first-author publication," "longitudinal community health role," "translational medicine lab position"
 ✅ Explain WHY for this school type: "Discover schools need clinical foundation to assess medical commitment," "Mission schools prioritize sustained equity work over research hours"
-✅ Reference timeline when urgent (2026 = act now, 2029 = have runway)
+✅ Reference timeline when urgent (2027 = act now, 2029+ = have runway)
 
 FORBIDDEN ELEMENTS:
 ❌ Generic advice: "get more clinical hours," "do more research," "build leadership," "gain experience"
@@ -497,7 +497,7 @@ EXAMPLE 1 - Research Depth (68 words):
 \"Your 1,200 research hours with 3 publications position you as a research-depth applicant for Discover schools. Your academic metrics (GPA 3.9, MCAT 520) support high-level analytical work, though your 100 clinical hours represent emerging patient care foundation. You're targeting the 2027 cycle with exceptional research credentials and developing clinical experience that grounds scientific inquiry in medical practice.\"
 
 EXAMPLE 2 - Community Service (71 words):
-\"Your 800+ clinical hours across community health centers and free clinics, combined with sustained leadership in health equity initiatives (10+ tangible outcomes), demonstrate deep commitment to underserved populations. Your community college transfer and non-traditional pathway context your GPA of 3.6 within a growth trajectory. You're building toward the 2026 cycle with foundation strengths in community engagement and longitudinal patient relationships.\"
+\"Your 800+ clinical hours across community health centers and free clinics, combined with sustained leadership in health equity initiatives (10+ tangible outcomes), demonstrate deep commitment to underserved populations. Your community college transfer and non-traditional pathway context your GPA of 3.6 within a growth trajectory. You're building toward the 2027 cycle with foundation strengths in community engagement and longitudinal patient relationships.\"
 
 EXAMPLE 3 - Balanced Breadth (74 words):
 \"Your combination of 300 research hours, 400 clinical hours, and 2-3 leadership roles reveals breadth across multiple competencies without singular depth. Your GPA of 3.5 and pending MCAT position you academically within competitive ranges for several school types. Your 2029+ timeline provides runway to strengthen specific areas. You're building a well-rounded foundation with flexibility to emphasize research, clinical, or community focus based on emerging interests.\"
@@ -506,7 +506,7 @@ EXAMPLE 4 - Translational (67 words):
 \"Your 800 research hours in computational biology, combined with 150 clinical hours across hospital and community clinic settings, reveal emerging translational capability. Your academic strength (GPA 3.7, MCAT 515) supports analytical work while your patient-facing experience grounds you in clinical realities. You're building toward the 2028 cycle with foundation strengths in research depth and academic metrics.\"
 
 EXAMPLE 5 - Mission-Driven (70 words):
-\"Your 600 clinical hours serving underserved populations in free clinics, combined with leadership in community health education programs (200+ people reached), reveal commitment to health equity. Your GPA of 3.5 and MCAT 506 position you within Mission school ranges. Your Spanish fluency and experience with immigrant communities align with schools prioritizing cultural competency. You're targeting the 2026 cycle with strengths in community engagement and health advocacy.\"
+\"Your 600 clinical hours serving underserved populations in free clinics, combined with leadership in community health education programs (200+ people reached), reveal commitment to health equity. Your GPA of 3.5 and MCAT 506 position you within Mission school ranges. Your Spanish fluency and experience with immigrant communities align with schools prioritizing cultural competency. You're targeting the 2027 cycle with strengths in community engagement and health advocacy.\"
 
 WHY THESE WORK:
 - All 67-74 words (under limit)
