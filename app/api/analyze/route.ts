@@ -353,18 +353,53 @@ Rank fit across all 5 cohorts with meaningful differentiation. Consider both qua
 - 60-74: Moderate fit (possible with strategic work)
 - 40-59: Lower fit (significant gaps, achievable with focused effort)
 
-### 3. Personalized Fit Analysis (2-3 sentences, max 75 words each)
+### 3. Personalized Fit Analysis (3-4 sentences, max 100 words each)
 
-For each school type, use the friendly name (Discover, Translate, Bedside, Community, Mission) throughout:
-- **Opening:** Acknowledge specific strengths ("Your 350 research hours...")
-- **Middle:** Cite framework benchmarks using friendly names ("Discover schools typically expect 1,200+ hours...")
-- **Closing:** Provide 1-2 concrete, actionable recommendations
+For each school type, write an analytical assessment that compares the student's profile against specific benchmarks:
 
-**Example:** "Your 800 research hours position you well for Translate schools. However, Translate-type programs typically expect 400-800 hours combined with 150-300 clinical hours. Focus on building your clinical exposure through an EMT certification within the next year."
+STRUCTURE:
+- Sentence 1: State the fit level (strong/moderate/lower) and cite 2-3 specific data points from their responses that support it, comparing to benchmark ranges
+  Example: "Your profile aligns strongly with Translate schools. Your GPA of 3.7 exceeds the typical 3.70-3.90 range, and your 800 research hours meet the 400-800 benchmark."
 
-**Tone:** Encouraging but honest. Like a trusted advisor.
+- Sentence 2: Identify specific gaps by comparing their numbers to benchmarks, naming what TYPE of experience is missing
+  Example: "However, Translate schools typically expect 150-300 clinical hours in settings that support investigative practices—you currently have 120 hours, primarily in observation roles rather than hands-on patient care."
 
-**Length:** Keep tight - max 75 words per cohort to match profile_summary length.
+- Sentence 3-4: Provide strategic guidance that is SPECIFIC to this school type's values and explains WHY it matters for THIS cohort
+  Example: "To strengthen your fit, focus on securing an EMT certification or clinical research coordinator role that combines patient interaction with research protocols. This demonstrates the translational capability that Translate schools prioritize—the ability to bridge bench science with bedside care."
+
+TONE: Analytical advisor conducting gap analysis. Evidence-based and specific.
+
+USE THROUGHOUT:
+- Friendly school type names: Discover, Translate, Bedside, Community, Mission
+- Call them "schools" or "school types" or "programs", never "cohorts"
+- Cite specific numbers from questionnaire responses with benchmark comparisons
+- Reference specific benchmarks from the framework sections above
+- Name the TYPE of experience needed with precision (not just "more hours")
+
+DO:
+✅ Compare their actual numbers to benchmark ranges ("your 800 hours meets the 400-800 benchmark")
+✅ Use comparative language: "meets", "exceeds", "falls short of", "aligns with", "above/below the typical range"
+✅ Name specific gaps with precision ("EMT certification", "longitudinal patient role in underserved setting", "first-author publication", "community health project leadership")
+✅ Explain WHY the recommendation matters for THIS school type specifically
+✅ Be specific about settings/roles ("clinical research coordinator role", "free clinic with underserved populations", "translational medicine lab", "community health center")
+✅ Reference their timeline and adjust advice accordingly (2026 cycle vs 2029 cycle = different urgency)
+
+DON'T:
+❌ Give generic advice ("get more clinical hours", "build leadership", "do more research")
+❌ Make vague recommendations without specifying TYPE of experience
+❌ Ignore their actual numbers from the questionnaire
+❌ Forget to tie advice back to what THIS school type specifically values
+❌ Use language like "you should" or "you need to" - instead use "to strengthen fit" or "consider" or "focus on"
+
+EXAMPLES:
+
+GOOD (Analytical, Specific, Evidence-Based):
+"Your 1,200 research hours and 2 publications position you well for Discover schools, which typically expect 1,200-1,500+ hours and 2-5 publications. However, your 50 clinical hours fall significantly below the 400-600 benchmark that Discover programs use to assess commitment to clinical medicine alongside research. To strengthen your fit, consider a gap year in a clinical role that combines research with patient contact—such as a clinical research coordinator position at a translational medicine lab or working as an EMT while maintaining research involvement. This demonstrates both research excellence and sustained clinical engagement, which Discover schools prioritize to identify future physician-scientists."
+
+BAD (Vague, Generic, No Numbers):
+"You have strong research experience which is good for Discover schools. However, you need more clinical hours to be competitive. Focus on getting patient interaction experience through volunteering at a hospital or shadowing physicians. This will show your commitment to medicine."
+
+The goal: Student reads this and thinks "They actually analyzed my numbers against what these schools expect" and gets ACTIONABLE, SPECIFIC next steps tied to school type priorities.
 
 ---
 
