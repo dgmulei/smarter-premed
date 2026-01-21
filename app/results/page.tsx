@@ -327,29 +327,36 @@ export default function Results() {
 
           {/* Chart Card */}
           <div className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
-            {/* Best Fit Header */}
-            <h2
-              className="text-2xl font-semibold mb-12 text-center"
+            {/* Brand Overline */}
+            <p className="text-[10px] text-[#86868b] uppercase tracking-[0.2em] text-center mb-3">
+              Smarter Premed
+            </p>
+
+            {/* Best Fit Header - Three Lines */}
+            <div
+              className="text-center mb-12"
               style={{
-                fontFamily: 'Georgia, serif',
                 opacity: isTextTransitioning ? 0 : 1,
                 transition: 'opacity 0.15s ease'
               }}
             >
-              {getRankLabel(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}:{' '}
-              <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
-                "
-                <button
-                  onClick={() => setShowCohortModal(true)}
-                  className="font-bold underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
-                  style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
-                >
-                  {getShortCohortName(selectedCohort)}
-                </button>
-                "
-              </span>
-              {' '}Med Schools
-            </h2>
+              <p className="text-xl font-semibold text-[#1d1d1f] mb-1" style={{ fontFamily: 'Georgia, serif' }}>
+                {getRankLabel(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}:
+              </p>
+              <button
+                onClick={() => setShowCohortModal(true)}
+                className="text-3xl font-bold underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200 cursor-pointer mb-1"
+                style={{
+                  fontFamily: 'Georgia, serif',
+                  color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)
+                }}
+              >
+                {getShortCohortName(selectedCohort)}
+              </button>
+              <p className="text-base text-[#86868b]" style={{ fontFamily: 'Georgia, serif' }}>
+                Med Schools
+              </p>
+            </div>
 
             {/* Legend */}
             <div className="flex justify-center mb-8">
