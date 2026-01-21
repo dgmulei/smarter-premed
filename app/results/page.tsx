@@ -341,7 +341,7 @@ export default function Results() {
                 "
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className="underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
+                  className="font-bold underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
                   style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
                 >
                   {getShortCohortName(selectedCohort)}
@@ -499,7 +499,7 @@ export default function Results() {
                 "
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className="underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
+                  className="font-bold underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
                   style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
                 >
                   {getShortCohortName(selectedCohort)}
