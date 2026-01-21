@@ -16,7 +16,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className="pt-[40px]">
+        <div
+          style={{
+            paddingTop: 'calc(40px + env(safe-area-inset-top, 0px))'
+          }}
+        >
           {children}
         </div>
       </body>
