@@ -343,7 +343,7 @@ export default function Results() {
 
             {/* Legend */}
             <div className="flex justify-center mb-8">
-              <div className="inline-flex items-center gap-8 px-4 py-3 border border-black/[0.08] rounded-lg">
+              <div className="inline-flex items-center gap-8 px-4 py-3 border border-black/[0.08] rounded-none">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
                   <span className="text-xs text-[#86868b]">You</span>
@@ -564,7 +564,7 @@ export default function Results() {
           onClick={() => setShowCohortModal(false)}
         >
           <div
-            className="bg-white rounded-2xl max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-none max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
           >
@@ -594,7 +594,7 @@ export default function Results() {
               {/* Content */}
               <div className="space-y-6">
                 {/* Description */}
-                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                <div className="bg-black/[0.02] rounded-none" style={{ padding: '24px' }}>
                   <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
                     What These Schools Prioritize
                   </h4>
@@ -604,7 +604,7 @@ export default function Results() {
                 </div>
 
                 {/* Example Schools */}
-                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                <div className="bg-black/[0.02] rounded-none" style={{ padding: '24px' }}>
                   <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
                     Example Schools (by selectivity)
                   </h4>
@@ -619,7 +619,7 @@ export default function Results() {
                 </div>
 
                 {/* Doctor Archetype */}
-                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                <div className="bg-black/[0.02] rounded-none" style={{ padding: '24px' }}>
                   <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
                     The Type
                   </h4>

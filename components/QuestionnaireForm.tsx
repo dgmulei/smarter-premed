@@ -505,7 +505,7 @@ export default function QuestionnaireForm({
                 {question.options?.map((option) => (
                   <label
                     key={option.value}
-                    className="flex items-start gap-3 cursor-pointer p-3 rounded-lg hover:bg-black/[0.02] transition-colors"
+                    className="flex items-start gap-3 cursor-pointer p-3 rounded-none hover:bg-black/[0.02] transition-colors"
                   >
                     <input
                       type="checkbox"
@@ -543,7 +543,7 @@ export default function QuestionnaireForm({
                       key={value}
                       type="button"
                       onClick={() => handleChange(question.id, value.toString())}
-                      className={`flex-1 h-12 rounded-lg border-2 transition-all ${
+                      className={`flex-1 h-12 rounded-none border-2 transition-all ${
                         formData[question.id] === value.toString()
                           ? 'border-[#0071e3] bg-[#0071e3]/5 text-[#0071e3] font-medium'
                           : 'border-gray-200 hover:border-gray-300 text-[#86868b]'
@@ -588,7 +588,7 @@ export default function QuestionnaireForm({
           placeholder="Share anything else about your plans, goals, or circumstances that helps us understand your premed story..."
           rows={4}
           maxLength={500}
-          className="w-full px-4 py-3 text-[15px] text-[#1d1d1f] bg-white border border-[#d2d2d7] rounded-lg
+          className="w-full px-4 py-3 text-[15px] text-[#1d1d1f] bg-white border border-[#d2d2d7] rounded-none
             focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent
             transition-all duration-200 resize-none"
         />
