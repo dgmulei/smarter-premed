@@ -161,7 +161,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
   };
 
   return (
-    <div className="w-full mx-auto" style={{ height: '342px', maxWidth: '342px' }}>
+    <div className="w-full mx-auto" style={{ height: '325px', maxWidth: '325px' }}>
       <Radar data={chartData} options={options} />
     </div>
   );
