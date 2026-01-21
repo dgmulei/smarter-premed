@@ -19,6 +19,7 @@ interface QuestionConfig {
   type: 'select' | 'checkbox' | 'scale';
   options?: SelectOption[];
   scale?: { min: number; max: number };
+  optional?: boolean;
 }
 
 const questions: QuestionConfig[] = [
@@ -227,6 +228,7 @@ const questions: QuestionConfig[] = [
     id: 'academic_improvement_areas',
     label: 'Which academic area do you feel requires the most immediate improvement? (Select up to two):',
     type: 'checkbox',
+    optional: true,
     options: [
       { value: 'science-prereqs', label: 'Science Prerequisites (e.g., physics, chemistry, biology)' },
       { value: 'quantitative', label: 'Quantitative Skills (e.g., math, biostatistics)' },
@@ -250,13 +252,7 @@ const questions: QuestionConfig[] = [
   },
   {
     id: 'mcat_confidence',
-    label: 'How confident are you in preparing for the MCAT by summer/fall 2027?',
-    type: 'scale',
-    scale: { min: 1, max: 5 },
-  },
-  {
-    id: 'gpa_confidence',
-    label: 'How confident are you that your GPA reflects your ability to succeed in medical school?',
+    label: 'How confident are you in preparing for the MCAT?',
     type: 'scale',
     scale: { min: 1, max: 5 },
   },
@@ -276,14 +272,14 @@ const questions: QuestionConfig[] = [
   },
   {
     id: 'service_scale',
-    label: 'How would you describe the scale of your service or volunteer efforts?',
+    label: 'What is the reach of your service and volunteer work?',
     type: 'select',
     options: [
-      { value: '', label: 'Select service scale' },
-      { value: 'small', label: 'Small-scale (direct impact on 1–10 people)' },
-      { value: 'moderate', label: 'Moderate-scale (11–50 people)' },
-      { value: 'large', label: 'Large-scale (51–100 people)' },
-      { value: 'community', label: 'Community-wide or organizational-level impact (100+ people)' },
+      { value: '', label: 'Select service reach' },
+      { value: 'small', label: 'Direct impact on 1–10 people' },
+      { value: 'moderate', label: 'Impact on 11–50 people' },
+      { value: 'large', label: 'Impact on 51–100 people' },
+      { value: 'community', label: 'Community-wide impact (100+ people)' },
     ],
   },
   {
@@ -328,9 +324,10 @@ const questions: QuestionConfig[] = [
   },
   {
     id: 'primary_focus',
-    label: 'What is your primary area of focus in your pre-med journey? (Select up to two):',
-    type: 'checkbox',
+    label: 'What is your primary area of focus in your pre-med journey? (Pick one):',
+    type: 'select',
     options: [
+      { value: '', label: 'Select your primary focus' },
       { value: 'academic', label: 'Academic Excellence (e.g., GPA improvement, excelling in prerequisites)' },
       { value: 'clinical', label: 'Clinical Experience (e.g., patient interaction, certifications)' },
       { value: 'research', label: 'Research Impact (e.g., publications, independent projects)' },
@@ -446,6 +443,9 @@ export default function QuestionnaireForm({
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
     questions.forEach((q) => {
+      // Skip validation for optional questions
+      if (q.optional) return;
+
       const value = formData[q.id];
       if (q.type === 'checkbox') {
         if (!value || (Array.isArray(value) && value.length === 0)) {
@@ -482,9 +482,9 @@ export default function QuestionnaireForm({
           >
             <label
               htmlFor={`input-${question.id}`}
-              className="block text-[15px] font-medium text-[#1d1d1f] mb-2.5"
+              className="block text-[15px] text-[#1d1d1f] mb-2.5"
             >
-              {question.label}
+              <span className="font-semibold">{index + 1}. {question.label}</span>
             </label>
 
             {question.type === 'select' ? (
@@ -568,6 +568,35 @@ export default function QuestionnaireForm({
         ))}
       </div>
 
+      {/* Free Response Field */}
+      <div className="mt-10 pt-10 border-t border-black/[0.06] animate-fadeUp" style={{ animationDelay: '0.75s' }}>
+        <label
+          htmlFor="additional_context"
+          className="block text-[15px] text-[#1d1d1f] mb-2.5"
+        >
+          <span className="font-semibold">30. Say more about yourself?</span>
+        </label>
+        <textarea
+          id="additional_context"
+          value={formData.additional_context || ''}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value.length <= 500) {
+              handleChange('additional_context', value);
+            }
+          }}
+          placeholder="Share anything else about your plans, goals, or circumstances that helps us understand your premed story..."
+          rows={4}
+          maxLength={500}
+          className="w-full px-4 py-3 text-[15px] text-[#1d1d1f] bg-white border border-[#d2d2d7] rounded-lg
+            focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent
+            transition-all duration-200 resize-none"
+        />
+        <p className="mt-2 text-[13px] text-[#86868b] text-right">
+          {(formData.additional_context?.length || 0)}/500 characters
+        </p>
+      </div>
+
       <div className="mt-8 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
         <button
           type="submit"
@@ -579,7 +608,7 @@ export default function QuestionnaireForm({
             ${
               isSubmitting
                 ? 'bg-[#e8e8ed] cursor-not-allowed text-[#86868b]'
-                : 'bg-[#0071e3] hover:bg-[#0077ed] active:bg-[#006edb] text-white shadow-[0_2px_8px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_12px_rgba(0,113,227,0.3)] hover:-translate-y-px active:translate-y-0'
+                : 'bg-[#0d9488] hover:bg-[#0f766e] active:bg-[#115e59] text-white shadow-[0_2px_8px_rgba(13,148,136,0.35)] hover:shadow-[0_4px_12px_rgba(13,148,136,0.3)] hover:-translate-y-px active:translate-y-0'
             }
           `}
         >
@@ -608,20 +637,7 @@ export default function QuestionnaireForm({
               <span>Analyzing</span>
             </>
           ) : (
-            <>
-              <span>See My Results</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </>
+            <span>See My Results</span>
           )}
         </button>
       </div>

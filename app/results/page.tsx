@@ -21,6 +21,7 @@ interface UserScores {
 }
 
 interface AnalysisData {
+  profileSummary: string;
   userScores: UserScores;
   rankedCohorts: CohortRanking[];
 }
@@ -32,9 +33,161 @@ export default function Results() {
   const [selectedCohort, setSelectedCohort] = useState<string>('Clinical-Investigative');
   const [showSchools, setShowSchools] = useState(false);
   const [isTextTransitioning, setIsTextTransitioning] = useState(false);
+  const [showCohortModal, setShowCohortModal] = useState(false);
+  const [showMethodology, setShowMethodology] = useState(false);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+
+  // Loading messages that rotate during AI analysis
+  const loadingMessages = [
+    "Understanding your profile...",
+    "Comparing to 173 medical school mission statements...",
+    "Assessing your strengths against matriculated students...",
+    "Analyzing competency gaps...",
+    "Calculating fit scores...",
+    "Crafting personalized insights...",
+    "Finalizing your results..."
+  ];
+
+  // Rotate loading messages every 3.5 seconds
+  useEffect(() => {
+    if (!isLoading) return;
+
+    const interval = setInterval(() => {
+      setLoadingMessageIndex((prev) => (prev + 1) % loadingMessages.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isLoading, loadingMessages.length]);
 
   // State for AI analysis results
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
+
+  // Color mapping for rank indicators (Teal to Warm Neutrals)
+  const getRankColor = (rank: number): string => {
+    const colors = {
+      1: '#0d9488', // brand teal
+      2: '#0891b2', // cyan-teal
+      3: '#6b7280', // cool gray
+      4: '#78716c', // warm gray
+      5: '#a8a29e', // light warm gray
+    };
+    return colors[rank as keyof typeof colors] || colors[5];
+  };
+
+  const getRankLabel = (rank: number): string => {
+    const labels = {
+      1: 'Your Best Fit',
+      2: 'Second Fit',
+      3: 'Third Fit',
+      4: 'Fourth Fit',
+      5: 'Least Fit',
+    };
+    return labels[rank as keyof typeof labels] || '';
+  };
+
+  const getShortCohortName = (cohortName: string): string => {
+    const shortNames: Record<string, string> = {
+      'Research-Intensive': 'Discover',
+      'Clinical-Investigative': 'Translate',
+      'Community-Clinical': 'Community',
+      'Patient-Centered': 'Bedside',
+      'Mission-Driven': 'Mission',
+    };
+    return shortNames[cohortName] || cohortName;
+  };
+
+  // Cohort information for modal
+  const getCohortInfo = (cohortName: string) => {
+    const cohortInfo: Record<string, { description: string; schools: string[]; archetype: string; superpower: string }> = {
+      'Research-Intensive': {
+        description: 'Research powerhouses with high NIH funding, MD-PhD programs, and cutting-edge technologies. These schools train physician-scientists who advance medical knowledge through investigation.',
+        schools: [
+          'Harvard Medical School',
+          'Johns Hopkins University',
+          'Stanford University',
+          'Yale School of Medicine',
+          'Washington University in St. Louis',
+          'University of Pennsylvania Perelman',
+          'UCSF',
+          'University of Michigan',
+          'Duke University',
+          'University of Wisconsin-Madison'
+        ],
+        archetype: 'Dr. Paul Farmer (global health pioneer), Dr. Atul Gawande (surgeon-writer), Dr. Siddhartha Mukherjee (oncologist-author), Dr. Jennifer Doudna (CRISPR pioneer), Dr. Gregory House (House M.D.)',
+        superpower: 'These are **scientific investigators** who push the boundaries of medical knowledge. Their superpower: asking "why?" and "what if?" until they unlock breakthroughs that change how we treat disease.'
+      },
+      'Clinical-Investigative': {
+        description: 'Bridge builders between bench and bedside. These schools integrate clinical trials with patient care, training physicians who apply research discoveries directly to treatment.',
+        schools: [
+          'UCSF',
+          'Columbia University',
+          'Duke University',
+          'Northwestern Feinberg',
+          'University of Pennsylvania Perelman',
+          'NYU Grossman',
+          'Vanderbilt University',
+          'Icahn School of Medicine at Mount Sinai',
+          'Emory University',
+          'USC Keck'
+        ],
+        archetype: 'Dr. Eric Topol (digital medicine innovator), Dr. Vivek Murthy (U.S. Surgeon General), Dr. Lisa Sanders (diagnostician-writer), Dr. Cristina Yang (Grey\'s Anatomy), Dr. Shaun Murphy (The Good Doctor)',
+        superpower: 'These are **bridge builders** who take discoveries from the lab and bring them to patients\' bedsides. Their superpower: seeing how research and real-world care strengthen each other.'
+      },
+      'Patient-Centered': {
+        description: 'Master communicators and empathetic caregivers. These schools emphasize patient relationships, cultural competency, and longitudinal clinical experiences from day one.',
+        schools: [
+          'University of Chicago Pritzker',
+          'University of Virginia',
+          'Case Western Reserve',
+          'Dartmouth Geisel',
+          'University of Rochester',
+          'Weill Cornell Medicine',
+          'Wake Forest',
+          'Ohio State University',
+          'Loyola Stritch',
+          'Penn State College of Medicine'
+        ],
+        archetype: 'Dr. Abraham Verghese (bedside advocate), Dr. Danielle Ofri (narrative medicine), Dr. Lucy Kalanithi (palliative care), Dr. Meredith Grey (Grey\'s Anatomy), Dr. John Carter (ER)',
+        superpower: 'These are **master healers** who understand that medicine is as much about listening as diagnosing. Their superpower: building trust and connection that makes patients feel truly seen and cared for.'
+      },
+      'Community-Clinical': {
+        description: 'Community health champions focused on primary care, public health, and addressing local health needs through service and research partnerships.',
+        schools: [
+          'University of Washington',
+          'UNC Chapel Hill',
+          'University of Pittsburgh',
+          'UC Davis',
+          'University of Minnesota',
+          'University of Colorado',
+          'Oregon Health & Science',
+          'Tulane University',
+          'Georgetown University',
+          'University of Massachusetts'
+        ],
+        archetype: 'Dr. Jim Withers (street medicine founder), Dr. Nadine Burke Harris (ACEs researcher), Dr. Leana Wen (public health leader), Dr. Miranda Bailey (Grey\'s Anatomy), Dr. Kerry Weaver (ER)',
+        superpower: 'These are **community champions** who meet patients where they are and address health at the neighborhood level. Their superpower: seeing the social forces shaping health and organizing care that reaches the hardest-to-reach.'
+      },
+      'Mission-Driven': {
+        description: 'Health equity warriors dedicated to eliminating disparities. These schools train physicians committed to serving underserved communities and addressing systemic healthcare injustice.',
+        schools: [
+          'Howard University',
+          'Morehouse School of Medicine',
+          'University of New Mexico',
+          'Virginia Commonwealth University',
+          'CUNY School of Medicine',
+          'UC Riverside',
+          'Charles R. Drew University',
+          'Meharry Medical College',
+          'University of Arizona',
+          'University of Alabama Birmingham'
+        ],
+        archetype: 'Dr. Regina Benjamin (rural health advocate), Dr. Camara Phyllis Jones (health equity researcher), Dr. Jim Yong Kim (global health leader), Dr. Mark Greene (ER), Dr. Peter Benton (ER)',
+        superpower: 'These are **equity warriors** who fight systemic injustice in healthcare. Their superpower: unwavering commitment to serving communities that the system has failed, transforming compassion into action.'
+      }
+    };
+
+    return cohortInfo[cohortName] || { description: '', schools: [], archetype: '', superpower: '' };
+  };
 
   const handleCohortChange = (cohortName: string) => {
     if (cohortName === selectedCohort) return;
@@ -113,7 +266,9 @@ export default function Results() {
       <main className="min-h-screen flex items-center justify-center bg-atmosphere">
         <div className="text-center animate-fadeUp">
           <div className="w-8 h-8 border-[1.5px] border-gray-200 border-t-gray-600 rounded-full animate-spin mx-auto mb-5"></div>
-          <p className="text-[15px] text-[#86868b]">Analyzing your profile</p>
+          <p className="text-[15px] text-[#86868b] transition-opacity duration-300">
+            {loadingMessages[loadingMessageIndex]}
+          </p>
         </div>
       </main>
     );
@@ -143,145 +298,345 @@ export default function Results() {
 
   return (
     <main className="min-h-screen bg-atmosphere">
-      <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-8 lg:py-12">
+      <div className="max-w-[540px] mx-auto px-8 sm:px-6 py-16 sm:py-20">
 
-        {/* Mobile Header */}
-        <header className="lg:hidden mb-6 animate-fadeUp">
-          <div className="flex items-center gap-1.5 mb-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-            <span className="text-xs font-medium tracking-wide text-[#86868b]">Analysis Complete</span>
-          </div>
-          <h1 className="text-4xl font-semibold tracking-tight text-[#1d1d1f]">Your Results</h1>
-        </header>
+        {/* Content */}
+        <div className="flex flex-col">
 
-        {/* Desktop Header */}
-        <header className="hidden lg:block mb-8 animate-fadeUp">
-          <div className="flex items-center gap-1.5 mb-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-            <span className="text-xs font-medium tracking-wide text-[#86868b]">Analysis Complete</span>
-          </div>
-          <h1 className="text-[44px] font-semibold tracking-tight text-[#1d1d1f]">Your Results</h1>
-        </header>
-
-        {/* Main Grid */}
-        <div className="flex flex-col lg:grid lg:grid-cols-[240px_1fr] gap-8 lg:gap-10">
-
-          {/* Sidebar */}
-          <aside className="order-2 lg:order-1 animate-fadeUp" style={{ animationDelay: '0.08s' }}>
-            <div className="form-card">
-              <p className="text-xs font-medium tracking-wide text-[#86868b] uppercase mb-4">Ranked by fit</p>
-              <div className="flex flex-col gap-1.5">
-              {rankedCohorts.map((cohort, index) => (
-                <button
-                  key={cohort.name}
-                  onClick={() => handleCohortChange(cohort.name)}
-                  className={`
-                    flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-colors duration-200
-                    ${selectedCohort === cohort.name
-                      ? 'bg-[#1d1d1f]'
-                      : 'hover:bg-black/[0.04]'
-                    }
-                  `}
-                >
-                  <span className={`text-[13px] tabular-nums min-w-[16px] ${selectedCohort === cohort.name ? 'text-white/50' : 'text-[#86868b]'}`}>
-                    {index + 1}
-                  </span>
-                  <span className={`text-[15px] ${selectedCohort === cohort.name ? 'text-white font-medium' : 'text-[#1d1d1f]'}`}>
-                    {cohort.name}
-                  </span>
-                </button>
-              ))}
-              </div>
+          {/* Profile Summary */}
+          {analysisData?.profileSummary && (
+            <div className="form-card mb-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
+              <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-4 text-center" style={{ fontFamily: 'Georgia, serif' }}>
+                Where You Stand
+              </h2>
+              <p className="text-[17px] leading-relaxed text-[#1d1d1f]" style={{ fontFamily: 'Georgia, serif' }}>
+                {analysisData.profileSummary}
+              </p>
             </div>
-          </aside>
+          )}
 
-          {/* Content */}
-          <div className="order-1 lg:order-2 flex flex-col">
+          {/* Chart Card */}
+          <div className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
+            {/* Best Fit Header */}
+            <h2
+              className="text-2xl font-semibold mb-12 text-center"
+              style={{
+                fontFamily: 'Georgia, serif',
+                opacity: isTextTransitioning ? 0 : 1,
+                transition: 'opacity 0.15s ease'
+              }}
+            >
+              {getRankLabel(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}:{' '}
+              <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
+                "
+                <button
+                  onClick={() => setShowCohortModal(true)}
+                  className="underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
+                  style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
+                >
+                  {getShortCohortName(selectedCohort)}
+                </button>
+                "
+              </span>
+              {' '}Med Schools
+            </h2>
 
-            {/* Chart Card */}
-            <div className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
-              <RadarChart
-                userScores={userProfile.scores}
-                cohortScores={cohortData.scores}
-                showComparison={true}
-              />
-
-              {/* Legend */}
-              <div className="flex items-center justify-center gap-8 mt-6 pt-5 border-t border-black/[0.06]">
+            {/* Legend */}
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex items-center gap-8 px-4 py-3 border border-black/[0.08] rounded-lg">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
                   <span className="text-xs text-[#86868b]">You</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-blue-400"></div>
-                  <span className="text-xs text-[#86868b]">Cohort</span>
+                  <span className="text-xs text-[#86868b]">School Type</span>
                 </div>
               </div>
             </div>
 
-            {/* Analysis Text */}
-            <p
-              className="text-[16px] leading-relaxed text-[#515154] mt-8 max-w-[62ch] animate-fadeUp"
+            <RadarChart
+              userScores={userProfile.scores}
+              cohortScores={cohortData.scores}
+              showComparison={true}
+            />
+
+            {/* Radio Button Selector */}
+            <div className="mt-8">
+              <p className="text-[15px] text-[#0d9488] font-semibold mb-12 text-center">Compare with other school types</p>
+
+              {/* Mobile: Stack vertically */}
+              <div className="flex flex-col gap-2.5 sm:hidden">
+                {rankedCohorts.map((cohort, index) => {
+                  const rank = index + 1;
+                  const rankColor = getRankColor(rank);
+                  const isSelected = selectedCohort === cohort.name;
+                  const shortName = getShortCohortName(cohort.name);
+                  return (
+                    <button
+                      key={cohort.name}
+                      onClick={() => handleCohortChange(cohort.name)}
+                      className={`
+                        flex items-center gap-2 px-4 py-2.5 rounded-lg text-[14px] font-medium transition-all duration-200 w-full
+                        ${isSelected
+                          ? 'bg-[#1d1d1f] text-white'
+                          : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                        }
+                      `}
+                    >
+                      <span
+                        className="font-bold"
+                        style={{ color: isSelected ? '#ffffff' : rankColor }}
+                      >
+                        {rank}
+                      </span>
+                      <span>
+                        {shortName}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Tablet/Desktop: 2+3 grid */}
+              <div className="hidden sm:flex flex-col items-center gap-2.5">
+                {/* First row - top 2 */}
+                <div className="flex justify-center gap-2.5">
+                  {rankedCohorts.slice(0, 2).map((cohort, index) => {
+                    const rank = index + 1;
+                    const rankColor = getRankColor(rank);
+                    const isSelected = selectedCohort === cohort.name;
+                    const shortName = getShortCohortName(cohort.name);
+                    return (
+                      <button
+                        key={cohort.name}
+                        onClick={() => handleCohortChange(cohort.name)}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200
+                          ${isSelected
+                            ? 'bg-[#1d1d1f] text-white'
+                            : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                          }
+                        `}
+                      >
+                        <span
+                          className="font-bold"
+                          style={{ color: isSelected ? '#ffffff' : rankColor }}
+                        >
+                          {rank}
+                        </span>
+                        <span className="whitespace-nowrap">
+                          {shortName}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {/* Second row - bottom 3 */}
+                <div className="flex justify-center gap-2.5">
+                  {rankedCohorts.slice(2, 5).map((cohort, index) => {
+                    const rank = index + 3;
+                    const rankColor = getRankColor(rank);
+                    const isSelected = selectedCohort === cohort.name;
+                    const shortName = getShortCohortName(cohort.name);
+                    return (
+                      <button
+                        key={cohort.name}
+                        onClick={() => handleCohortChange(cohort.name)}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200
+                          ${isSelected
+                            ? 'bg-[#1d1d1f] text-white'
+                            : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                          }
+                        `}
+                      >
+                        <span
+                          className="font-bold"
+                          style={{ color: isSelected ? '#ffffff' : rankColor }}
+                        >
+                          {rank}
+                        </span>
+                        <span className="whitespace-nowrap">
+                          {shortName}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Cohort Analysis Card */}
+          <div
+            className="form-card mt-8 animate-fadeUp"
+            style={{
+              animationDelay: '0.16s',
+              borderLeft: `4px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
+              opacity: isTextTransitioning ? 0 : 1,
+              transition: 'opacity 0.15s ease, border-left-color 0.15s ease'
+            }}
+          >
+            <h3
+              className="text-xl font-semibold mb-4 text-center"
               style={{
-                animationDelay: '0.2s',
-                opacity: isTextTransitioning ? 0 : 1,
-                transition: 'opacity 0.15s ease'
+                fontFamily: 'Georgia, serif',
+              }}
+            >
+              How{' '}
+              <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
+                "
+                <button
+                  onClick={() => setShowCohortModal(true)}
+                  className="underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
+                  style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
+                >
+                  {getShortCohortName(selectedCohort)}
+                </button>
+                "
+              </span>
+              {' '}Fits You
+            </h3>
+            <p
+              className="text-[17px] leading-relaxed text-[#515154]"
+              style={{
+                fontFamily: 'Georgia, serif',
               }}
             >
               {fitAnalyses[selectedCohort]}
             </p>
+          </div>
 
-            {/* School Tags */}
-            <div
-              className={`flex flex-wrap gap-2 overflow-hidden transition-all duration-300 ${showSchools ? 'mt-8 max-h-40 opacity-100' : 'mt-0 max-h-0 opacity-0'}`}
+          {/* Actions */}
+          <div className="flex justify-center mt-8 animate-fadeUp" style={{ animationDelay: '0.2s' }}>
+            <button
+              onClick={() => router.push('/')}
+              className="flex items-center gap-2 px-4 py-3 text-[#86868b] hover:text-[#1d1d1f] text-[15px] transition-colors duration-200"
             >
-              {cohortData.exampleSchools.map((school, index) => (
-                <span
-                  key={index}
-                  className="px-3.5 py-2 bg-black/[0.04] text-[#1d1d1f] text-[13px] rounded-[10px]"
-                >
-                  {school}
-                </span>
-              ))}
-            </div>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Questionnaire
+            </button>
+          </div>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-4 mt-8 animate-fadeUp" style={{ animationDelay: '0.28s' }}>
+          {/* Methodology Expandable */}
+          <div className="mt-6 animate-fadeUp" style={{ animationDelay: '0.24s' }}>
+            <div className="flex justify-end">
               <button
-                onClick={() => setShowSchools(!showSchools)}
-                className="px-5 py-3 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:bg-[#006edb] text-white text-[15px] font-medium transition-all duration-200 inline-flex items-center gap-2 shadow-[0_2px_8px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_12px_rgba(0,113,227,0.3)] hover:-translate-y-px active:translate-y-0"
+                onClick={() => setShowMethodology(!showMethodology)}
+                className="flex items-center gap-2 px-4 py-2 text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-lg bg-white hover:bg-black/[0.02] transition-all duration-200"
               >
-                {showSchools ? 'Hide' : 'View'} example schools
+                About the Whitecoat Framework
                 <svg
-                  className={`w-4 h-4 transition-transform duration-200 ${showSchools ? 'rotate-90' : ''}`}
+                  className={`w-4 h-4 transition-transform duration-200 ${showMethodology ? 'rotate-180' : ''}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
-
-              <button
-                onClick={() => router.push('/')}
-                className="px-4 py-3 text-[#86868b] hover:text-[#1d1d1f] text-[15px] transition-colors duration-200"
-              >
-                Start Over
               </button>
             </div>
 
-            {/* Footer */}
-            <footer className="mt-12 pt-6 border-t border-black/[0.06] animate-fadeUp" style={{ animationDelay: '0.36s' }}>
-              <p className="text-[13px] text-[#86868b]">
-                SPM helps students understand where they fit best.
-              </p>
-            </footer>
-
+            {showMethodology && (
+              <div className="form-card mt-4 animate-fadeUp">
+                <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  About the Whitecoat Cohort System
+                </h3>
+                <p className="text-[13px] text-[#515154] leading-relaxed italic" style={{ fontFamily: 'Georgia, serif' }}>
+                  The Whitecoat Framework is a research-based classification system developed through systematic analysis of 173 AAMC-accredited U.S. and Canadian medical schools. Using data from the Medical School Admission Requirements (MSAR) database, institutional websites, and published mission statements, Smarter Premed categorized schools into five cohorts based on measurable institutional priorities and applicant expectations. Each cohort reflects what schools actually prioritize—not prestige rankings. Mission-Driven ("Mission") schools emphasize health equity and community engagement. Patient-Centered ("Bedside") schools focus on communication and longitudinal clinical experiences. Community-Clinical ("Community") schools integrate primary care with public health. Clinical-Investigative ("Translate") schools bridge research and patient care. Research-Intensive ("Discover") schools advance medical science through high NIH funding and MD-PhD programs. Schools were validated against quantitative benchmarks (median GPA/MCAT ranges, expected clinical hours, research outputs, NIH funding levels) and qualitative institutional indicators (curriculum structure, research programs, community partnerships). This evidence-based system helps students identify schools aligned with their demonstrated strengths and career goals.
+                </p>
+              </div>
+            )}
           </div>
+
         </div>
 
       </div>
+
+      {/* Cohort Info Modal */}
+      {showCohortModal && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 animate-fadeUp"
+          onClick={() => setShowCohortModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+          >
+            <div className="p-6 sm:p-8">
+              {/* Header */}
+              <div className="flex items-start justify-between mb-6">
+                <h3
+                  className="text-2xl font-semibold"
+                  style={{ fontFamily: 'Georgia, serif' }}
+                >
+                  About{' '}
+                  <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
+                    "{getShortCohortName(selectedCohort)}"
+                  </span>
+                  {' '}Med Schools
+                </h3>
+                <button
+                  onClick={() => setShowCohortModal(false)}
+                  className="text-[#86868b] hover:text-[#1d1d1f] transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-6">
+                {/* Description */}
+                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                  <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
+                    What These Schools Prioritize
+                  </h4>
+                  <p className="text-[15px] text-[#515154] leading-relaxed">
+                    {getCohortInfo(selectedCohort).description}
+                  </p>
+                </div>
+
+                {/* Example Schools */}
+                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                  <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
+                    Example Schools (by selectivity)
+                  </h4>
+                  <ul className="space-y-2.5">
+                    {getCohortInfo(selectedCohort).schools.map((school, index) => (
+                      <li key={index} className="text-[14px] text-[#515154] flex items-start">
+                        <span className="text-[#86868b] mr-2.5">•</span>
+                        {school}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Doctor Archetype */}
+                <div className="bg-black/[0.02] rounded-lg" style={{ padding: '24px' }}>
+                  <h4 className="text-[15px] font-semibold text-[#1d1d1f]" style={{ marginBottom: '16px' }}>
+                    The Type
+                  </h4>
+                  <p className="text-[14px] text-[#515154] leading-relaxed" style={{ marginBottom: '16px' }}>
+                    Think {getCohortInfo(selectedCohort).archetype}
+                  </p>
+                  <p className="text-[14px] text-[#515154] leading-relaxed">
+                    {getCohortInfo(selectedCohort).superpower.split('**').map((part, index) =>
+                      index % 2 === 1 ? <strong key={index}>{part}</strong> : part
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

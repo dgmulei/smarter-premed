@@ -23,29 +23,31 @@ interface QuestionnaireResponses {
   certification_plans: string;
   certification_hours_weekly: string;
 
-  // Academic (Q13-19)
+  // Academic (Q13-18)
   gpa: string;
   mcat: string;
   academic_preparedness: string;
   academic_improvement_areas: string[];
   academic_strengths: string[];
   mcat_confidence: string;
-  gpa_confidence: string;
 
-  // Leadership & Service (Q20-23)
+  // Leadership & Service (Q19-22)
   leadership_roles_count: string;
   service_scale: string;
   extracurricular_hours_weekly: string;
   service_outcomes: string;
 
-  // Vision & Strategy (Q24-30)
+  // Vision & Strategy (Q23-29)
   application_gaps: string[];
-  primary_focus: string[];
+  primary_focus: string;
   greatest_weakness: string;
   future_contributions: string[];
   target_cycle: string;
   timeline_flexibility: string;
   academic_history_flags: string[];
+
+  // Free Response (optional)
+  additional_context?: string;
 }
 
 interface CompetencyScores {
@@ -64,6 +66,7 @@ interface CohortRanking {
 }
 
 interface AnalysisResult {
+  profileSummary: string;
   userScores: CompetencyScores;
   rankedCohorts: CohortRanking[];
 }
@@ -294,7 +297,6 @@ function buildAnalysisPrompt(responses: QuestionnaireResponses): string {
 - Areas needing improvement: ${responses.academic_improvement_areas.join(', ')}
 - Academic strengths: ${responses.academic_strengths.join(', ')}
 - MCAT confidence: ${responses.mcat_confidence}/5
-- GPA confidence: ${responses.gpa_confidence}/5
 
 **Leadership & Service:**
 - Leadership roles: ${responses.leadership_roles_count}
@@ -304,14 +306,17 @@ function buildAnalysisPrompt(responses: QuestionnaireResponses): string {
 
 **Vision & Strategy:**
 - Perceived gaps: ${responses.application_gaps.join(', ')}
-- Primary focus areas: ${responses.primary_focus.join(', ')}
+- Primary focus area: ${responses.primary_focus}
 - Greatest weakness: ${responses.greatest_weakness}
 - Future contributions: ${responses.future_contributions.join(', ')}
 - Target application cycle: ${responses.target_cycle}
 - Timeline flexibility: ${responses.timeline_flexibility}
 - Academic history flags: ${responses.academic_history_flags.join(', ')}
 
----
+${responses.additional_context ? `**Additional Context (Student's Own Words):**
+${responses.additional_context}
+
+` : ''}---
 
 ## YOUR TASK
 
@@ -328,7 +333,7 @@ Rank fit across all 5 cohorts with meaningful differentiation. Consider both qua
 - 60-74: Moderate fit (possible with strategic work)
 - 40-59: Lower fit (significant gaps, achievable with focused effort)
 
-### 3. Personalized Fit Analysis (2-3 sentences, 60-90 words each)
+### 3. Personalized Fit Analysis (2-3 sentences, max 75 words each)
 
 For each cohort:
 - **Opening:** Acknowledge specific strengths ("Your 350 research hours...")
@@ -337,6 +342,8 @@ For each cohort:
 
 **Tone:** Encouraging but honest. Like a trusted advisor.
 
+**Length:** Keep tight - max 75 words per cohort to match profile_summary length.
+
 ---
 
 ## OUTPUT FORMAT
@@ -344,6 +351,7 @@ For each cohort:
 Return ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {
+  "profile_summary": "<2-3 sentences, max 75 words. Lead with best-fit cohort (or top 2 if close in fit score). Explain WHY they fit with INSIGHT, not restatement of data. Synthesize holistically - connect dots they might not see. Consider: What does their combination of experiences suggest about their trajectory? What strategic patterns emerge? What does their timeline mean for next steps? DO NOT list scores. DO NOT simply restate questionnaire responses. Example: 'You're positioned for Clinical-Investigative programs - your research depth combined with patient-facing work suggests translational medicine capability. The gap isn't clinical hours, but breadth of settings and longitudinal commitment that builds judgment. Your 2029+ timeline allows you to deepen one sustained clinical role rather than accumulating scattered hours.'>",
   "competency_scores": {
     "academic_rigor": <0-100>,
     "clinical_exposure": <0-100>,
@@ -397,6 +405,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Migration: Handle old data where primary_focus was an array
+    if (Array.isArray(responses.primary_focus)) {
+      responses.primary_focus = responses.primary_focus[0] || '';
+    }
+
+    // Migration: Handle old data where array fields might be undefined
+    if (!responses.academic_improvement_areas) {
+      responses.academic_improvement_areas = [];
+    }
+    if (!responses.academic_strengths) {
+      responses.academic_strengths = [];
+    }
+    if (!responses.research_types) {
+      responses.research_types = [];
+    }
+    if (!responses.clinical_settings) {
+      responses.clinical_settings = [];
+    }
+    if (!responses.application_gaps) {
+      responses.application_gaps = [];
+    }
+    if (!responses.future_contributions) {
+      responses.future_contributions = [];
+    }
+    if (!responses.academic_history_flags) {
+      responses.academic_history_flags = [];
+    }
+
     // Check for API key
     if (!process.env.ANTHROPIC_API_KEY) {
       console.error('ANTHROPIC_API_KEY is not set');
@@ -406,45 +442,58 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Call Anthropic API with comprehensive framework-based prompt
-    console.log('Calling Anthropic API with model: claude-sonnet-4-5-20250929');
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 8192, // Increased for detailed analyses
-      temperature: 0.7,
-      messages: [
-        {
-          role: 'user',
-          content: buildAnalysisPrompt(responses),
-        },
-      ],
-    });
-    console.log('Received response from Anthropic API');
-
-    // Extract the text content from Claude's response
-    const textContent = message.content.find((block) => block.type === 'text');
-    if (!textContent || textContent.type !== 'text') {
-      throw new Error('No text content in response');
-    }
-
-    // Parse the JSON response from Claude
-    // Strip markdown code blocks if present (```json ... ``` or ``` ... ```)
-    let jsonText = textContent.text.trim();
-    if (jsonText.startsWith('```')) {
-      // Remove opening code fence (```json or ```)
-      jsonText = jsonText.replace(/^```(?:json)?\s*\n?/, '');
-      // Remove closing code fence
-      jsonText = jsonText.replace(/\n?```\s*$/, '');
-    }
-
+    // Call Anthropic API with retry logic for JSON parsing failures
+    const MAX_RETRIES = 2;
     let analysisData;
-    try {
-      analysisData = JSON.parse(jsonText);
-    } catch (parseError) {
-      console.error('Failed to parse Claude response. Raw text:', textContent.text);
-      console.error('Cleaned text:', jsonText);
-      console.error('Parse error:', parseError);
-      throw new Error('Invalid JSON response from AI');
+    let lastError: Error | null = null;
+
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      console.log(`Calling Anthropic API (attempt ${attempt}/${MAX_RETRIES}) with model: claude-sonnet-4-5-20250929`);
+
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 8192,
+        temperature: 0.7,
+        messages: [
+          {
+            role: 'user',
+            content: buildAnalysisPrompt(responses),
+          },
+        ],
+      });
+      console.log('Received response from Anthropic API');
+
+      // Extract the text content from Claude's response
+      const textContent = message.content.find((block) => block.type === 'text');
+      if (!textContent || textContent.type !== 'text') {
+        lastError = new Error('No text content in response');
+        console.error(`Attempt ${attempt}: No text content`);
+        continue;
+      }
+
+      // Parse the JSON response from Claude
+      // Strip markdown code blocks if present (```json ... ``` or ``` ... ```)
+      let jsonText = textContent.text.trim();
+      if (jsonText.startsWith('```')) {
+        jsonText = jsonText.replace(/^```(?:json)?\s*\n?/, '');
+        jsonText = jsonText.replace(/\n?```\s*$/, '');
+      }
+
+      try {
+        analysisData = JSON.parse(jsonText);
+        // Success - break out of retry loop
+        break;
+      } catch (parseError) {
+        console.error(`Attempt ${attempt}: Failed to parse JSON. Raw text:`, textContent.text.substring(0, 500));
+        console.error('Parse error:', parseError);
+        lastError = new Error('Invalid JSON response from AI');
+        // Continue to next attempt
+      }
+    }
+
+    // If we exhausted retries without success, throw the last error
+    if (!analysisData) {
+      throw lastError || new Error('Failed to get valid response from AI');
     }
 
     // Validate the response structure
@@ -452,12 +501,27 @@ export async function POST(request: NextRequest) {
       !analysisData.competency_scores ||
       !analysisData.cohort_rankings ||
       !Array.isArray(analysisData.cohort_rankings) ||
-      analysisData.cohort_rankings.length !== 5
+      analysisData.cohort_rankings.length < 1
     ) {
+      console.error('Invalid analysis structure. Received:', JSON.stringify({
+        hasCompetencyScores: !!analysisData.competency_scores,
+        hasCohortRankings: !!analysisData.cohort_rankings,
+        isArray: Array.isArray(analysisData.cohort_rankings),
+        length: analysisData.cohort_rankings?.length,
+        keys: Object.keys(analysisData),
+        cohortNames: analysisData.cohort_rankings?.map((c: { name?: string }) => c.name)
+      }, null, 2));
       throw new Error('Invalid analysis structure from AI');
     }
 
+    // Warn if we didn't get exactly 5 cohorts (but still proceed)
+    if (analysisData.cohort_rankings.length !== 5) {
+      console.warn(`Expected 5 cohorts, got ${analysisData.cohort_rankings.length}:`,
+        analysisData.cohort_rankings.map((c: { name?: string }) => c.name));
+    }
+
     // Transform the response to match our frontend interface
+    const profileSummary: string = analysisData.profile_summary || '';
     const userScores: CompetencyScores = analysisData.competency_scores;
 
     // Sort cohorts by fit score (highest to lowest)
@@ -466,6 +530,7 @@ export async function POST(request: NextRequest) {
     );
 
     const result: AnalysisResult = {
+      profileSummary,
       userScores,
       rankedCohorts,
     };

@@ -1,185 +1,199 @@
-# Smarter Pre-Med
+# Fitfinder by Smarter Premed
 
-**AI-powered cohort fit analysis for pre-medical students using the proprietary Whitecoat Framework.**
+**See Where You Stand. Focus On What Matters.**
 
-A focused assessment tool that helps pre-med students discover their medical school cohort profile and competitive standing across 6 key competencies in under 10 minutes.
-
----
-
-## Overview
-
-Smarter Pre-Med analyzes student profiles through a comprehensive 30-question questionnaire and provides:
-
-- **Personalized Cohort Fit Analysis**: Ranking across 5 medical school cohorts based on real AAMC/MSAR data
-- **6-Competency Radar Chart**: Visual representation of competitive profile
-- **Actionable Recommendations**: Specific, framework-based guidance for each cohort
-- **Professional Judgment AI**: Claude Sonnet 4.5 applies "jazz charts" philosophy—nuanced analysis over rigid formulas
-
-**No document upload required.** The questionnaire captures all essential data points for accurate cohort matching.
+A free 10-minute assessment that helps pre-med students discover which medical school cohorts align with their strengths and career goals.
 
 ---
 
-## The Whitecoat Cohort Framework
+## What is Fitfinder?
 
-A proprietary, data-driven classification system that categorizes 173 US and Canadian medical schools into 5 distinct cohorts based on institutional priorities and applicant expectations.
+Fitfinder uses the **Whitecoat Framework**—a research-based classification system analyzing 173 AAMC-accredited U.S. and Canadian medical schools—to help students identify schools where their profile naturally fits.
 
-### The 5 Cohorts
+Built on data from the Medical School Admission Requirements (MSAR) database, institutional websites, and published mission statements, the framework categorizes schools into five cohorts based on measurable institutional priorities and applicant expectations.
 
-1. **Mission-Driven**
-   - **Focus**: Health equity, underserved populations, community engagement
-   - **GPA**: 3.50-3.80 (Median: ~3.65) | **MCAT**: 505-512 (Median: ~508.5)
-   - **Example Schools**: CUNY, Howard, Morehouse, UAB, VCU
+### What You Get
 
-2. **Patient-Centered**
-   - **Focus**: Communication skills, patient engagement, culturally competent care
-   - **GPA**: 3.60-3.85 (Median: ~3.725) | **MCAT**: 509-514 (Median: ~511.5)
-   - **Example Schools**: UChicago Pritzker, Loyola Stritch, UVA, Case Western
-
-3. **Community-Clinical**
-   - **Focus**: Primary care, public health, community-based participatory research
-   - **GPA**: 3.50-3.80 (Median: ~3.65) | **MCAT**: 505-511 (Median: ~508)
-   - **Example Schools**: UNC Chapel Hill, Boston University, Georgetown, UC Davis
-
-4. **Clinical-Investigative**
-   - **Focus**: Integration of clinical practice with research, clinical trials
-   - **GPA**: 3.70-3.90 (Median: ~3.80) | **MCAT**: 512-518 (Median: ~515)
-   - **Example Schools**: UCSF, Columbia, Duke, Northwestern, Emory, NYU Grossman
-
-5. **Research-Intensive**
-   - **Focus**: High NIH funding, MD-PhD programs, cutting-edge research
-   - **GPA**: 3.70-3.95 (Median: ~3.825) | **MCAT**: 515-522 (Median: ~518.5)
-   - **Example Schools**: Harvard, Johns Hopkins, Stanford, WashU, Mayo Clinic
-
-### The 6 Competencies (0-100 scale)
-
-Each student receives personalized scores across:
-
-1. **Academic Rigor** - GPA trends, MCAT performance, course rigor
-2. **Clinical Exposure** - Direct patient hours, settings diversity, longitudinal commitment
-3. **Research Activities** - Project engagement, outputs, independence/leadership
-4. **Leadership & Service** - Impact scale, sustained commitment, tangible outcomes
-5. **Technical Skills** - Certifications, data analysis, healthcare-specific competencies
-6. **Specialty Preparation** - Exposure breadth, career planning maturity
+- **Your Personal Profile**: Analysis across 6 core competencies
+- **Cohort Rankings**: See which of 5 school types best match your strengths
+- **School Examples**: 10 specific schools for each cohort, sorted by selectivity
+- **Doctor Archetypes**: Understand the type of physician each cohort cultivates
 
 ---
 
-## How It Works
+## The Five Cohorts
 
-### Student Experience (8-10 minutes)
+### 1. Discover (Research-Intensive)
+**Color:** Teal (#0d9488)
+**Schools:** Harvard, Johns Hopkins, Stanford, Yale, WashU, Penn Perelman, UCSF, Michigan, Duke, Wisconsin-Madison
+**Archetype:** Scientific investigators who push the boundaries of medical knowledge
 
-1. **Answer 30 Questions**: Comprehensive assessment across research, clinical, academic, leadership, and vision
-2. **Submit for Analysis**: AI processes responses using Whitecoat Framework benchmarks
-3. **View Results**: Interactive radar chart + ranked cohort cards with personalized fit analyses
+### 2. Translate (Clinical-Investigative)
+**Color:** Cyan-Teal (#0891b2)
+**Schools:** UCSF, Columbia, Duke, Northwestern, Penn Perelman, NYU Grossman, Vanderbilt, Mount Sinai, Emory, USC Keck
+**Archetype:** Bridge builders who take discoveries from lab to bedside
 
-### Behind the Scenes
+### 3. Bedside (Patient-Centered)
+**Color:** Cool Gray (#6b7280)
+**Schools:** UChicago Pritzker, UVA, Case Western, Dartmouth Geisel, Rochester, Weill Cornell, Wake Forest, Ohio State, Loyola Stritch, Penn State
+**Archetype:** Master healers who build trust through communication
 
-```
-30-Question Responses
-  ↓
-Anthropic Claude Sonnet 4.5
-(Embedded Whitecoat Framework + Professional Judgment)
-  ↓
-Competency Scores (6 dimensions, 0-100)
-+
-Cohort Rankings (5 cohorts with fit scores & analyses)
-  ↓
-Interactive Results Dashboard
-```
+### 4. Community (Community-Clinical)
+**Color:** Warm Gray (#78716c)
+**Schools:** UWashington, UNC, UPittsburgh, UC Davis, Minnesota, Colorado, Oregon Health & Science, Tulane, Georgetown, UMass
+**Archetype:** Community champions who address health at neighborhood level
 
-**Analysis Time**: ~8-15 seconds
-**Cost per Analysis**: ~$0.08-$0.10
+### 5. Mission (Mission-Driven)
+**Color:** Light Warm Gray (#a8a29e)
+**Schools:** Howard, Morehouse, UNM, VCU, CUNY, UC Riverside, Charles R. Drew, Meharry, Arizona, UAB
+**Archetype:** Equity warriors fighting systemic healthcare injustice
+
+---
+
+## Six Competency Dimensions
+
+The assessment evaluates students across:
+
+1. **Academic Rigor** - GPA, coursework difficulty, academic achievements
+2. **Clinical Exposure** - Patient interaction hours, clinical settings
+3. **Research Activities** - Publications, lab work, research projects
+4. **Leadership & Service** - Community engagement, volunteer work, leadership roles
+5. **Clinical & Lab Skills** - Technical proficiency, hands-on experience
+6. **Specialty Focus** - Clear direction toward specific medical specialties
+
+---
+
+## Current Status
+
+**Version:** End of Day Three (MVP Complete)
+
+### What's Working
+✅ Landing page with clear value proposition
+✅ 30-question questionnaire with free response field
+✅ Results page with radar chart visualization
+✅ Five cohort modals with detailed school information
+✅ Methodology section explaining the framework
+✅ Responsive design (540px max-width, mobile-optimized)
+
+### What's Next (Day Four)
+⏳ Claude API integration for real analysis
+⏳ Personalized profile summaries
+⏳ Dynamic cohort fit scoring
+⏳ Loading states and error handling
+
+See `PROJECT-STATUS.md` for detailed status.
 
 ---
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (React 19, App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Charts**: Chart.js + react-chartjs-2
-- **AI**: Anthropic Claude API (Sonnet 4.5)
-- **Deployment**: Vercel-ready
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Charts:** D3.js
+- **AI:** Claude API (Anthropic) - *integration pending*
 
 ---
 
-## Project Status
+## Getting Started
 
-**Current Version**: MVP Complete (Day Two)
+### Prerequisites
+- Node.js 18+
+- npm or pnpm
+- Anthropic API key (for AI features)
 
-✅ **Completed**
-- Premium Apple-inspired UI with glassmorphism
-- 30-question comprehensive assessment
-- Full Whitecoat Framework integration (all 5 cohorts)
-- AI-powered analysis with Claude Sonnet 4.5
-- Interactive radar chart visualization
-- Cohort-specific fit analyses with actionable recommendations
+### Installation
 
-🚧 **Planned Enhancements**
-- Transcript upload and parsing (Phase 2)
-- Resume/CV upload for contextual depth (Phase 3)
-- Three personalized follow-up questions (Phase 4)
-- Progress tracking over time
-- School-specific matching (beyond cohort classification)
-- PDF report generation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd smarter-premed
 
----
+# Install dependencies
+npm install
 
-## Quick Links
+# Set up environment variables
+cp .env.local.example .env.local
+# Add your ANTHROPIC_API_KEY to .env.local
 
-- **[Setup Guide](SETUP.md)** - Get running in 3 minutes
-- **[Architecture](ARCHITECTURE.md)** - How the system works
-- **[Development Guide](DEVELOPMENT.md)** - Testing, deployment, contributing
-- **[Questionnaire Specification](docs/QUESTIONNAIRE.md)** - All 30 questions detailed
-- **[Cohort Framework](docs/COHORT_FRAMEWORK.md)** - Complete framework reference
-- **[Changelog](docs/CHANGELOG.md)** - Version history
+# Run development server
+npm run dev
+```
+
+Visit `http://localhost:3000`
 
 ---
 
-## Core Philosophy
+## Project Structure
 
-### "Jazz Charts" Approach
-
-The AI doesn't use rigid formulas—it applies **professional judgment** like a top-tier advisor:
-
-- **Quality over quantity**: 300 hours in one sustained role > 300 scattered hours
-- **Longitudinal commitment**: Sustained involvement weighted heavily
-- **Growth trajectories**: Recent progression and improvement valued
-- **Holistic context**: Non-traditional pathways, personal circumstances considered
-- **Cohort-specific lens**: Same profile scored differently for different cohorts
-
-### Why This Matters
-
-Pre-med advising is an art informed by data, not pure mathematics. The Whitecoat Framework provides quantitative benchmarks, but the AI synthesizes these with qualitative insights—just like the best human advisors.
+```
+smarter-premed/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── results/page.tsx      # Results page
+│   └── api/                  # API routes (to be built)
+├── components/
+│   ├── QuestionnaireForm.tsx # Main questionnaire
+│   └── RadarChart.tsx        # D3 radar chart
+├── lib/
+│   └── cohortData.ts         # Cohort definitions
+├── docs/
+│   ├── DAY-FOUR-PLAN.md      # Development roadmap
+│   ├── COHORT_FRAMEWORK.md   # Framework documentation
+│   ├── QUESTIONNAIRE.md      # Question design
+│   └── API_DESIGN.md         # API architecture
+└── PROJECT-STATUS.md         # Current status & roadmap
+```
 
 ---
 
-## Example Use Cases
+## Documentation
 
-**Student A**: Strong research (500 hrs, 2 publications), weak clinical (50 hrs)
-- **Top Cohort**: Research-Intensive (85/100 fit)
-- **Recommendation**: "Build clinical hours to 200+ over next year via EMT certification"
+- **Project Status:** `PROJECT-STATUS.md`
+- **Day Four Plan:** `docs/DAY-FOUR-PLAN.md`
+- **Architecture:** `ARCHITECTURE.md`
+- **Development Setup:** `DEVELOPMENT.md`
+- **Whitecoat Framework:** `docs/COHORT_FRAMEWORK.md`
+- **Questionnaire Design:** `docs/QUESTIONNAIRE.md`
+- **API Design:** `docs/API_DESIGN.md`
+- **Changelog:** `docs/CHANGELOG.md`
 
-**Student B**: Extensive community service (800 hrs underserved), moderate academics (GPA 3.5, MCAT 508)
-- **Top Cohort**: Mission-Driven (92/100 fit)
-- **Recommendation**: "Your sustained community commitment aligns perfectly with Mission-Driven schools like Howard and Morehouse"
+---
 
-**Student C**: Balanced profile (GPA 3.75, MCAT 512, 300 clinical, 400 research)
-- **Top Cohort**: Clinical-Investigative (88/100 fit)
-- **Recommendation**: "Continue balanced approach; consider clinical research roles to strengthen integration narrative"
+## Design Philosophy
+
+### Aesthetic
+- **Typography:** Georgia serif for editorial feel
+- **Colors:** Teal accent (#0d9488) with gradient ranking system
+- **Layout:** 540px max-width, card-based, generous padding
+- **Tone:** Professional but approachable, educational without being academic
+
+### UX Principles
+- **Transparency:** Methodology clearly explained
+- **Credibility:** Data sources cited (173 schools, MSAR database)
+- **Personalization:** Results tailored to individual strengths
+- **Education:** Help students understand medical school landscape
+
+---
+
+## Contributing
+
+This is currently a private project. For questions or collaboration inquiries, please contact the project owner.
 
 ---
 
 ## License
 
-Proprietary - Whitecoat Framework
+Proprietary - All rights reserved
 
 ---
 
-## Contact
+## Acknowledgments
 
-For questions about the Whitecoat Framework or implementation:
-- Email: dgmulei@gmail.com
+- Built on AAMC MSAR data
+- Powered by Claude AI (Anthropic)
+- Inspired by the need for better med school guidance tools
 
 ---
 
-**Built for pre-med students who want clarity, not confusion.**
+**Last Updated:** January 20, 2025 (End of Day Three)

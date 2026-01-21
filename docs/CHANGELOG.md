@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2025-01-20
+
+### 🎯 Day Three & Four: Polish + Reliability
+
+**Day Three: Rebranding & UX Polish**
+
+### Changed
+- Rebranded from "Whitecoat Profile" to **Fitfinder**
+- Updated tagline: "See Where You Stand. Focus On What Matters."
+- Header card redesign with generous padding
+- Cohort short names: Discover, Translate, Bedside, Community, Mission
+
+### Added
+- Expandable methodology section (both landing and results pages)
+- "Back to Questionnaire" button with arrow icon
+- Finalized cohort modal content:
+  - Vivid archetype descriptions
+  - "Think:" doctor personality examples
+  - Superpower language for each cohort
+  - 10 ranked example schools per cohort
+
+**Day Four: AI Reliability & UX Improvements**
+
+### Added
+- **Rotating loading messages** during AI analysis (~25 second wait)
+  - 7 messages cycling every 3.5 seconds
+  - Reinforces framework credibility ("Comparing to 173 medical schools...")
+- **API retry logic** for JSON parsing failures (up to 2 attempts)
+- Null-safe array handling for all questionnaire fields
+
+### Fixed
+- `TypeError: Cannot read properties of undefined (reading 'join')` when optional arrays missing
+- Malformed JSON responses from Claude now trigger automatic retry
+
+### Documentation
+- Updated PROJECT-STATUS.md to reflect AI integration complete
+- Archived DAY-FOUR-KICKOFF.md
+- Created DAY-FIVE-PLAN.md (deployment roadmap)
+- Updated DOCUMENTATION-INDEX.md with Phase 4 complete
+
+---
+
 ## [1.0.0] - 2025-01-19
 
 ### 🎉 Initial MVP Release
@@ -195,4 +237,4 @@ Changes are grouped into:
 ---
 
 **Maintained by**: David Mulei (dgmulei@gmail.com)
-**Last Updated**: January 19, 2025
+**Last Updated**: January 20, 2025

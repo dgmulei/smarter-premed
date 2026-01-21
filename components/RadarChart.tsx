@@ -44,11 +44,11 @@ interface RadarChartProps {
 export default function RadarChart({ userScores, cohortScores, showComparison = false }: RadarChartProps) {
   const labels = [
     'Leadership & Service',
-    'Technical Skills',
+    'Clinical & Lab Skills',
     'Clinical Exposure',
     'Research Activities',
     'Academic Rigor',
-    'Specialty Preparation',
+    'Specialty Focus',
   ];
 
   const datasets = [];
@@ -128,7 +128,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
           color: 'rgba(0, 0, 0, 0.45)',
           font: {
             size: 11,
-            weight: '500' as const,
+            weight: 500,
             family: 'Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
           },
           padding: 16,
