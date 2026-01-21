@@ -47,7 +47,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
     'Clinical/Lab Skills',
     'Clinical Exposure',
     'Research Activities',
-    'Academic Rigor',
+    'Academics',
     'Specialty Focus',
   ];
 
