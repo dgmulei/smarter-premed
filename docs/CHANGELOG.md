@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-01-21
+
+### 📱 Screenshot Virality Optimizations
+
+**Goal**: Make the results card Instagram Stories-ready without major redesign.
+
+### Added
+
+#### Results Card Branding
+- **Brand overline**: "SMARTER PREMED" above headline (small, gray, uppercase, letter-spaced)
+- **Three-line headline structure**:
+  - "Your Best Fit:" (standard size)
+  - Cohort name (text-3xl, bold, teal — the identity moment)
+  - "Med Schools" (smaller, gray)
+- **Bold cohort name** in both chart header and "How X Fits You" header
+
+#### Defensive Error Handling
+- `typeof window` guard for SSR/hydration timing issues
+- try-catch around `sessionStorage.getItem()` (handles private browsing)
+- Separate try-catch for `JSON.parse` (clears corrupted data, redirects)
+- try-catch around error response parsing
+- Optional chaining on `rankedCohorts?.length`
+
+### Changed
+
+#### Radar Chart Labels (Mobile Fit)
+- Reduced label padding: 16px → 4px (labels closer to chart)
+- Shortened labels for mobile screens:
+  - "Clinical & Lab Skills" → "Hands-On"
+  - "Clinical Exposure" → "Clinical"
+  - "Research Activities" → "Research"
+  - "Academic Rigor" → "Academics"
+  - "Specialty Focus" → "Path Clarity"
+
+### Fixed
+- **Mobile label clipping**: Side labels no longer cut off on iPhone screens
+- **Intermittent client-side errors**: Added defensive guards for hydration timing issues
+
+### Not Implemented (Deferred)
+- Personalized phrase with refresh (future feature)
+- Footer branding (gets cropped in screenshots)
+- Share button infrastructure
+
+---
+
 ## [1.3.0] - 2026-01-21
 
 ### 🎯 Rebranding: Fitfinder → Positioned
@@ -333,4 +378,4 @@ Changes are grouped into:
 ---
 
 **Maintained by**: David Mulei (dgmulei@gmail.com)
-**Last Updated**: January 20, 2025
+**Last Updated**: January 21, 2026

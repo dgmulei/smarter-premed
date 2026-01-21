@@ -2,7 +2,7 @@
 
 **by Smarter Premed**
 
-Last Updated: January 21, 2026 (Rebranding to Positioned)
+Last Updated: January 21, 2026 (Screenshot Virality Optimizations)
 
 ---
 
@@ -98,13 +98,13 @@ Last Updated: January 21, 2026 (Rebranding to Positioned)
    - Schools: Howard, Morehouse, UNM, VCU, etc.
    - Focus: Health equity warriors
 
-**Six Competency Dimensions:**
-1. Academic Rigor
-2. Clinical Exposure
-3. Research Activities
-4. Leadership & Service
-5. Clinical & Lab Skills
-6. Specialty Focus
+**Six Competency Dimensions (Radar Chart Labels):**
+1. Leadership & Service
+2. Hands-On (technical/lab skills)
+3. Clinical (clinical exposure)
+4. Research
+5. Academics (academic rigor)
+6. Path Clarity (specialty focus)
 
 ---
 
@@ -115,7 +115,7 @@ Last Updated: January 21, 2026 (Rebranding to Positioned)
 - **Styling:** Tailwind CSS
 - **Charts:** D3.js
 - **AI:** Claude API (Anthropic) - claude-sonnet-4-5-20250929
-- **Deployment:** Not yet deployed
+- **Deployment:** Vercel (https://smarter-premed.vercel.app/)
 - **Analytics:** None yet
 
 ---
@@ -248,22 +248,45 @@ smarter-premed/
 
 ---
 
-## Next Steps (v1.2 - Prompt Engineering Focus)
+## Day Six Accomplishments
 
-**Phase:** Refinement and iteration based on real user feedback
+**Primary Goal:** ✅ Screenshot virality optimization for Instagram Stories
 
-1. **Monitor prompt quality** - Review actual AI-generated analyses
-2. **Test with diverse profiles** - Edge cases, non-traditional students
-3. **Word count compliance** - Verify 75-word limits being respected
-4. **Benchmark accuracy** - Ensure numbers cited match framework
-5. **Tone consistency** - Profile summary = observational, Fit analysis = analytical
+### Radar Chart Mobile Fixes
+1. ✅ Reduced label padding (16px → 4px) for mobile visibility
+2. ✅ Shortened labels for mobile fit:
+   - "Clinical & Lab Skills" → "Hands-On"
+   - "Clinical Exposure" → "Clinical"
+   - "Research Activities" → "Research"
+   - "Academic Rigor" → "Academics"
+   - "Specialty Focus" → "Path Clarity"
 
-**Future enhancements (v1.3+):**
-1. Result sharing (URL-based)
-2. Vercel Analytics integration
-3. Meta tags and OG images
-4. User feedback collection
-5. Performance optimizations (streaming, caching)
+### Results Card Branding
+1. ✅ Added "SMARTER PREMED" overline (small, gray, uppercase, letter-spaced)
+2. ✅ Restructured headline into three lines:
+   - "Your Best Fit:" (standard size)
+   - Cohort name (large, bold, teal — the identity moment)
+   - "Med Schools" (smaller, gray)
+3. ✅ Made cohort name bold in both chart header and fit analysis header
+
+### Stability Improvements
+1. ✅ Added defensive guards for mobile client-side errors:
+   - `typeof window` check for SSR/hydration timing
+   - try-catch around sessionStorage access
+   - Separate JSON.parse error handling
+   - Optional chaining on API response data
+
+---
+
+## Next Steps (v1.5+)
+
+**Future enhancements:**
+1. Personalized phrase with refresh (slot machine engagement)
+2. Result sharing (URL-based)
+3. Vercel Analytics integration
+4. Meta tags and OG images
+5. User feedback collection
+6. Performance optimizations (streaming, caching)
 
 ---
 
@@ -287,16 +310,6 @@ smarter-premed/
 ```
 ANTHROPIC_API_KEY=sk-ant-...
 ```
-
----
-
-## Questions for Day Four Kickoff
-
-1. **AI Prompt Strategy:** Should we use a single comprehensive prompt or break into multiple API calls?
-2. **Data Model:** Do we want to store results server-side, or keep everything client-side?
-3. **Sharing:** Should we build result sharing on Day Four, or defer to later?
-4. **Analytics:** What metrics matter most (completion rate, cohort distribution, time-to-complete)?
-5. **Error UX:** How should we handle API failures gracefully?
 
 ---
 
