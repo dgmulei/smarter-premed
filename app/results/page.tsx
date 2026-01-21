@@ -219,15 +219,36 @@ export default function Results() {
 
   useEffect(() => {
     const fetchAnalysis = async () => {
-      const responses = sessionStorage.getItem('questionnaireResponses');
+      // Guard against SSR/hydration issues
+      if (typeof window === 'undefined') {
+        return;
+      }
+
+      let responses: string | null = null;
+      try {
+        responses = sessionStorage.getItem('questionnaireResponses');
+      } catch {
+        // sessionStorage access failed (private browsing, etc.)
+        router.push('/');
+        return;
+      }
+
       if (!responses) {
         router.push('/');
         return;
       }
 
+      let parsedResponses;
       try {
-        const parsedResponses = JSON.parse(responses);
+        parsedResponses = JSON.parse(responses);
+      } catch {
+        // Corrupted sessionStorage data
+        sessionStorage.removeItem('questionnaireResponses');
+        router.push('/');
+        return;
+      }
 
+      try {
         // Call the analysis API
         const response = await fetch('/api/analyze', {
           method: 'POST',
@@ -238,15 +259,21 @@ export default function Results() {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to analyze profile');
+          let errorMessage = 'Failed to analyze profile';
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorMessage;
+          } catch {
+            // Response wasn't valid JSON
+          }
+          throw new Error(errorMessage);
         }
 
         const data: AnalysisData = await response.json();
         setAnalysisData(data);
 
         // Set the first ranked cohort as selected by default
-        if (data.rankedCohorts.length > 0) {
+        if (data.rankedCohorts?.length > 0) {
           setSelectedCohort(data.rankedCohorts[0].name);
         }
 
