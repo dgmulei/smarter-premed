@@ -40,8 +40,8 @@ export default function Results() {
   // Loading messages that rotate during AI analysis
   const loadingMessages = [
     "Understanding your profile...",
-    "Comparing to 173 medical school mission statements...",
-    "Assessing your strengths against matriculated students...",
+    "Comparing to 173 AAMC mission statements...",
+    "Assessing your strengths...",
     "Analyzing competency gaps...",
     "Calculating fit scores...",
     "Crafting personalized insights...",
