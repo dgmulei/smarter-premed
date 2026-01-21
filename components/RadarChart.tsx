@@ -129,7 +129,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
           font: {
             size: 11,
             weight: 500,
-            family: 'Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+            family: '"Arial Narrow", Inter, -apple-system, sans-serif',
           },
           padding: 4,
         },
