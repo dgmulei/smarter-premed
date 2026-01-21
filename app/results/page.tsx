@@ -249,14 +249,46 @@ export default function Results() {
       }
 
       try {
-        // Call the analysis API
-        const response = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ responses: parsedResponses }),
-        });
+        // Call the analysis API with 90-second timeout and retry logic
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 second timeout
+
+        let lastError: Error | null = null;
+        let response: Response | null = null;
+        const MAX_RETRIES = 2;
+
+        for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+          try {
+            console.log(`API request attempt ${attempt}/${MAX_RETRIES}`);
+
+            response = await fetch('/api/analyze', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ responses: parsedResponses }),
+              signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+            break; // Success - exit retry loop
+          } catch (fetchError) {
+            console.error(`Attempt ${attempt} failed:`, fetchError);
+            lastError = fetchError instanceof Error ? fetchError : new Error('Network error');
+
+            // If it's the last attempt, throw
+            if (attempt === MAX_RETRIES) {
+              throw lastError;
+            }
+
+            // Wait 2 seconds before retry (allows cold start to complete)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        }
+
+        if (!response) {
+          throw lastError || new Error('Failed to get response');
+        }
 
         if (!response.ok) {
           let errorMessage = 'Failed to analyze profile';
@@ -280,7 +312,20 @@ export default function Results() {
         setIsLoading(false);
       } catch (err) {
         console.error('Analysis error:', err);
-        setError(err instanceof Error ? err.message : 'Failed to analyze profile');
+
+        // Better error messages for users
+        let userMessage = 'Failed to analyze profile';
+        if (err instanceof Error) {
+          if (err.name === 'AbortError') {
+            userMessage = 'Analysis timed out. Please try again - it should be faster on the second attempt.';
+          } else if (err.message.includes('fetch')) {
+            userMessage = 'Network error. Please check your connection and try again.';
+          } else {
+            userMessage = err.message;
+          }
+        }
+
+        setError(userMessage);
         setIsLoading(false);
       }
     };

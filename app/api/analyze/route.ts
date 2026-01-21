@@ -311,6 +311,9 @@ If any check fails, revise before outputting JSON.
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  console.log('[ANALYZE] Request started at', new Date().toISOString());
+
   try {
     const body = await request.json();
     const responses = body.responses as QuestionnaireResponses;
@@ -366,7 +369,8 @@ export async function POST(request: NextRequest) {
     let lastError: Error | null = null;
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-      console.log(`Calling Anthropic API (attempt ${attempt}/${MAX_RETRIES}) with model: claude-sonnet-4-5-20250929`);
+      const apiStartTime = Date.now();
+      console.log(`[ANALYZE] Calling Anthropic API (attempt ${attempt}/${MAX_RETRIES}) with model: claude-sonnet-4-5-20250929`);
 
       const message = await anthropic.messages.create({
         model: 'claude-sonnet-4-5-20250929',
@@ -379,7 +383,9 @@ export async function POST(request: NextRequest) {
           },
         ],
       });
-      console.log('Received response from Anthropic API');
+
+      const apiDuration = Date.now() - apiStartTime;
+      console.log(`[ANALYZE] Received response from Anthropic API in ${apiDuration}ms (${(apiDuration/1000).toFixed(1)}s)`);
 
       // Extract the text content from Claude's response
       const textContent = message.content.find((block) => block.type === 'text');
@@ -453,9 +459,13 @@ export async function POST(request: NextRequest) {
       rankedCohorts,
     };
 
+    const totalDuration = Date.now() - startTime;
+    console.log(`[ANALYZE] Request completed successfully in ${totalDuration}ms (${(totalDuration/1000).toFixed(1)}s)`);
+
     return NextResponse.json(result);
   } catch (error) {
-    console.error('Analysis error:', error);
+    const totalDuration = Date.now() - startTime;
+    console.error(`[ANALYZE] Request failed after ${totalDuration}ms (${(totalDuration/1000).toFixed(1)}s):`, error);
 
     // Return a more specific error message
     if (error instanceof Error) {
