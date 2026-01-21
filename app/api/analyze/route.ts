@@ -406,7 +406,7 @@ MANDATORY ELEMENTS:
 ✅ Comparative language: "meets," "exceeds," "falls short of," "aligns with," "below the X-Y benchmark," "within range"
 ✅ Specify TYPE of experience: "EMT certification," "clinical research coordinator role," "first-author publication," "longitudinal community health role," "translational medicine lab position"
 ✅ Explain WHY for this school type: "Discover schools need clinical foundation to assess medical commitment," "Mission schools prioritize sustained equity work over research hours"
-✅ Reference timeline when urgent (2027 = act now, 2029+ = have runway)
+✅ Reference timeline using urgency level from TIMELINE URGENCY ASSESSMENT section (HIGH urgency = act now, LOW urgency = have runway)
 
 FORBIDDEN ELEMENTS:
 ❌ Generic advice: "get more clinical hours," "do more research," "build leadership," "gain experience"
