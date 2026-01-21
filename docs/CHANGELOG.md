@@ -7,6 +7,84 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-01-21
+
+### 🚀 Day Five: Production Launch + Prompt Engineering
+
+**Status**: ✅ DEPLOYED to https://smarter-premed.vercel.app/
+
+### Added
+
+#### Production Infrastructure
+- **Vercel deployment** with auto-deploy from GitHub main branch
+- **Environment configuration** for production/preview/development
+- **Pro plan** (60s function timeout for 20-25s AI responses)
+- **iOS safe area support** for iPhone notch/dynamic island compatibility
+
+#### Prompt Engineering (Major Refinements)
+- **Profile Summary prompt** (~80 lines, up from ~30):
+  - ABSOLUTE 75 WORD LIMIT enforcement
+  - 5 concrete examples (67-74 words) covering different applicant types
+  - Observational tone ("like describing a photograph")
+  - 6-point self-check before finalizing
+  - Target: 65-72 words with ruthless deletion over compression
+
+- **Fit Analysis prompt** (~85 lines, up from ~35):
+  - Changed from "max 100 words" to "75 WORDS MAXIMUM" per school type
+  - 6 concrete examples (65-74 words) showing different fit scenarios
+  - Focus on ONE primary gap (not multiple)
+  - Must compare student numbers to benchmark ranges
+  - 7-point self-check per school type
+
+- **Final Requirements Check** (NEW):
+  - 25-line quality gate before JSON generation
+  - Reinforces deletion strategy
+  - Clear INVALID RESPONSES list
+  - Final reminder: "Brevity is mandatory"
+
+- **Dynamic Date Awareness** (NEW):
+  - Current date injection (YYYY-MM-DD, year, month)
+  - TIMELINE URGENCY ASSESSMENT section
+  - Auto-calculates HIGH/MODERATE/LOW urgency based on target cycle
+  - Self-updating as time passes (no hardcoded years)
+
+#### UI/UX Improvements
+- **Header system**: 24px teal accent bar (lighter #86cac4, 50% opacity → solid)
+- **Branded header card** on results page ("Fitfinder by Smarter Premed")
+- **Square card edges** (replaced rounded corners for flush stacking)
+- **iOS-specific fixes** for notch/dynamic island cutoff issues
+
+#### Content Updates
+- **Application cycles updated**:
+  - Removed outdated 2026 cycle (due 2025)
+  - Added current options: 2027, 2028, 2029, 2030+
+- **Terminology enforcement**: Friendly names (Discover/Translate/Bedside/Community/Mission) throughout
+- **Loading messages shortened** to prevent mobile text overflow
+
+### Changed
+- Prompt length: ~450 lines → ~600 lines (33% increase for quality)
+- Card design: Rounded corners → Square edges for architectural aesthetic
+- Header/footer: Initially with text → Simplified to plain bars → Footer removed
+- Top padding: 24px → 40px to prevent content cutoff
+
+### Fixed
+- **iPhone cutoff issues** with safe-area-inset-top implementation
+- **Hardcoded year references** in prompt (now references dynamic urgency system)
+- **Terminology inconsistencies** (cohorts/programs → school types)
+- **Loading message overflow** on mobile devices
+
+### Documentation
+- Created DAY-FIVE-COMPLETE.md (comprehensive Day 5 summary)
+- Updated CHANGELOG.md (this file)
+- Prepared PROMPT-ENGINEERING.md for focused iteration work
+
+### Performance
+- API response time: 20-25 seconds (acceptable with Pro plan)
+- Mobile tested on real iPhone (fully responsive)
+- Desktop and mobile both production-ready
+
+---
+
 ## [1.1.0] - 2025-01-20
 
 ### 🎯 Day Three & Four: Polish + Reliability
