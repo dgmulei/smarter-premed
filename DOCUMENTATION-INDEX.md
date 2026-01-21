@@ -1,6 +1,6 @@
 # Fitfinder Documentation Index
 
-**Last Updated:** January 21, 2026 (Day Five - Production Launch Complete)
+**Last Updated:** January 21, 2026 (Documentation hygiene cleanup)
 
 ---
 
@@ -27,6 +27,7 @@ New to the project? Start here:
 | `DEVELOPMENT.md` | Development setup and workflows | Setting up dev environment |
 | `SETUP.md` | Installation and configuration | Initial project setup |
 | `TEST_PROFILES.md` | Sample user profiles for testing | Testing AI prompts and outputs |
+| `test-and-save.js` | Testing infrastructure for prompt engineering | Running collaborative tests |
 
 ---
 
@@ -36,6 +37,7 @@ New to the project? Start here:
 |------|---------|-------------|
 | `DAY-FIVE-COMPLETE.md` | Day Five summary (deployment + prompt engineering) | Reference for production launch |
 | `PROMPT-ENGINEERING.md` | AI prompt design and iteration guide | Refining prompt quality |
+| `TESTING.md` | Testing workflow and prompt validation | Testing AI outputs collaboratively |
 | `COHORT_FRAMEWORK.md` | Whitecoat Framework specifications | Understanding the 5 cohorts |
 | `QUESTIONNAIRE.md` | Question design and rationale | Understanding assessment logic |
 | `API_DESIGN.md` | API architecture and endpoints | Building/modifying API routes |
@@ -57,6 +59,11 @@ Archived content from development iterations:
 - `METHODOLOGY-SECTION.md` - Final methodology text
 - `DOCUMENTATION_AUDIT.md` - Old documentation audit
 - `DOCUMENTATION_INDEX.md` - Previous index (replaced by this file)
+- `PROFILE_SUMMARY_REVISION.txt` - First draft of Dr. Deb voice examples
+- `PROFILE_SUMMARY_REVISION_V2.txt` - Final Dr. Deb voice examples (implemented)
+- `DEPLOYMENT-SUMMARY.md` - Initial deployment notes (superseded by DAY-FIVE-COMPLETE)
+- `VERCEL-DEPLOYMENT-GUIDE.md` - Deployment guide (completed)
+- `route.ts.backup` - Backup of pre-Dr. Deb prompt
 
 **When to use archives:** Reference old decisions, see content evolution, recover deleted text.
 

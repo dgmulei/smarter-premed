@@ -1,0 +1,26 @@
+INSTRUCTIONS FOR CLAUDE CODE:
+Replace the "**Examples:**" section under "## PROFILE SUMMARY" in route.ts (approximately lines 330-345) with the content below.
+
+====== NEW PROFILE SUMMARY EXAMPLES ======
+
+**Examples:**
+
+*Research-depth applicant (applying soon):*
+"You're positioned as a research-depth applicant. Nearly a thousand lab hours with a publication shows you can execute scientific work, not just rotate through. Your 200 clinical hours and strong stats (3.8 GPA, 517 MCAT) keep medicine in the picture. Applying in four months with narrow clinical exposure—that's your story right now."
+
+*Community-medicine focus (applying in a year):*
+"You've built credibility in community medicine. Five hundred hours serving underserved populations, EMT certified and still working shifts, plus you founded a service organization with real impact. Your 3.6 GPA and 509 MCAT land you in Mission school territory. Almost no research. One year to apps means this is essentially your application."
+
+*Strategic flexibility (balanced, moderate timeline):*
+"You've got strategic flexibility—solid everywhere without dominating anywhere. Four hundred clinical hours, 350 research hours, strong leadership outcomes. Your 3.8 GPA and 513 MCAT open multiple doors. Applying in a year means choosing which story to emphasize with your school list."
+
+*Research-heavy, delayed timeline:*
+"You're built for schools that value research depth. A thousand hours with your name on a paper shows real scientific contribution. Your 150 clinical hours won't convince top research schools you've confirmed medicine over pure science. Strong stats (3.8 GPA, 517 MCAT) but thin clinical story. Applying in sixteen months means time to address the clinical credibility question."
+
+*Service-oriented, immediate application:*
+"You've put in serious clinical time—750 hours working with underserved patients, EMT certified, still grinding 12 hours weekly. You didn't just volunteer; you founded a health program with documented outcomes. That's commitment. Your 3.6 GPA and 509 MCAT land you squarely in Mission and Community ranges. Minimal research. Four months to apps means schools will question if you can handle the analytical rigor of medical school."
+
+*Well-rounded, exploring options:*
+"You've built balanced preparation—400 clinical with EMT cert, 350 research with manuscript in progress, multiple leadership roles with clear impact. Your 3.8 GPA and 513 MCAT put you in competitive range across school types. Well-rounded without singular strength. That's flexibility. Two years out means time to decide whether to lean into research, clinical depth, or community focus based on where you want to land."
+
+====== END NEW EXAMPLES ======
