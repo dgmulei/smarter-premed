@@ -7,6 +7,81 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.1] - 2026-01-21
+
+### 🔧 Reliability & Monitoring Improvements
+
+**Goal**: Fix intermittent timeout errors and establish production monitoring capabilities.
+
+### Added
+
+#### Client-Side Reliability
+- **Extended timeout**: Increased from browser default (30s) to 90 seconds for `/api/analyze`
+- **Automatic retry logic**: 2 attempts with 2-second delay between retries
+- **Better error messages**: User-friendly messages for timeout vs network errors
+- **AbortController**: Proper timeout handling with cleanup
+
+#### Server-Side Performance Logging
+- **Request lifecycle tracking**: `[ANALYZE]` prefix on all API logs
+- **Timing metrics**:
+  - API call duration logged in milliseconds and seconds
+  - Total request duration from start to completion
+  - Timestamps for all major events
+- **Error tracking**: Enhanced error logging with duration context
+
+#### Monitoring Tools
+- **`monitor-logs.sh`**: Formatted, color-coded live log viewer for Vercel CLI
+- **`test-production-api.js`**: End-to-end API test with realistic questionnaire data
+- **`test-vercel-endpoint.sh`**: Quick health check for production endpoint
+
+#### Documentation
+- **`docs/MONITORING.md`**: Comprehensive guide for production monitoring
+  - Accessing logs via CLI vs Dashboard
+  - CLI limitations (live logs only, no historical)
+  - Tool usage instructions
+  - Common issues and solutions
+  - Log format reference
+  - Performance benchmarks
+
+### Changed
+
+#### Results Page (`app/results/page.tsx`)
+- Wrapped fetch call with retry logic and timeout handling
+- Better error state management with specific messages
+- Console logging for debugging retry attempts
+
+#### API Route (`app/api/analyze/route.ts`)
+- Added performance timing throughout request lifecycle
+- Structured logging with consistent `[ANALYZE]` prefix
+- Duration tracking for Anthropic API calls
+
+### Fixed
+
+- **Intermittent "Failed to fetch" errors**: Cold start (2-5s) + Claude API latency (15-30s) was exceeding browser's 30s default timeout
+- **Improved first-request success rate**: Retry logic handles edge cases where first attempt times out
+- **Better observability**: Can now diagnose production issues through logs
+
+### Technical Details
+
+**Before:**
+- No explicit timeout → browser default ~30s
+- No retry logic → single failure = error to user
+- Minimal logging → hard to diagnose issues
+- No monitoring tools
+
+**After:**
+- 90-second timeout with AbortController
+- 2 automatic retries with backoff
+- Detailed logging with timing data
+- Full monitoring toolkit + documentation
+
+**Typical Request Times:**
+- Cold start: 2-5 seconds
+- Claude API: 15-30 seconds
+- Total: 18-35 seconds (comfortably under 90s timeout)
+
+---
+
 ## [1.4.0] - 2026-01-21
 
 ### 📱 Screenshot Virality Optimizations

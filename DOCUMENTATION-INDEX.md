@@ -36,6 +36,7 @@ New to the project? Start here:
 | File | Purpose | When to Use |
 |------|---------|-------------|
 | `DAY-FIVE-COMPLETE.md` | Day Five summary (deployment + prompt engineering) | Reference for production launch |
+| `MONITORING.md` | Production monitoring and log access | Debugging production issues |
 | `PROMPT-ENGINEERING.md` | AI prompt design and iteration guide | Refining prompt quality |
 | `TESTING.md` | Testing workflow and prompt validation | Testing AI outputs collaboratively |
 | `COHORT_FRAMEWORK.md` | Whitecoat Framework specifications | Understanding the 5 cohorts |
@@ -103,6 +104,12 @@ Archived content from development iterations:
 1. Read `docs/API_DESIGN.md`
 2. Review `DAY-FOUR-KICKOFF.md` → "Implementation Plan"
 3. Check environment setup in `DEVELOPMENT.md`
+
+### "I need to debug a production issue"
+1. Read `docs/MONITORING.md` → "Accessing Logs"
+2. Use Vercel Dashboard for historical errors
+3. Use `./monitor-logs.sh` for live debugging
+4. Check `docs/MONITORING.md` → "Common Issues"
 
 ---
 

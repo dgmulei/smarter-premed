@@ -150,6 +150,7 @@ smarter-premed/
 ## Documentation
 
 - **Project Status:** `PROJECT-STATUS.md`
+- **Production Monitoring:** `docs/MONITORING.md` (see also: `MONITORING-QUICK-REFERENCE.md`)
 - **Day Four Plan:** `docs/DAY-FOUR-PLAN.md`
 - **Architecture:** `ARCHITECTURE.md`
 - **Development Setup:** `DEVELOPMENT.md`
@@ -196,4 +197,4 @@ Proprietary - All rights reserved
 
 ---
 
-**Last Updated:** January 20, 2025 (End of Day Three)
+**Last Updated:** January 21, 2026 (v1.4.1 - Reliability & Monitoring)
