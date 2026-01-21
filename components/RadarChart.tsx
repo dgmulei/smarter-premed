@@ -46,7 +46,7 @@ export default function RadarChart({ userScores, cohortScores, showComparison = 
     'Leadership & Service',
     'Hands-On',
     'Clinical',
-    'Research Activities',
+    'Research',
     'Academics',
     'Path Clarity',
   ];
