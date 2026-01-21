@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Positioned by Smarter Premed | Medical School Assessment",
-  description: "See where you stand. Focus on what matters. Free 10-minute assessment analyzing your strengths across 6 core competencies and 5 school types.",
+  description: "See where you stand. Focus on what matters. Free assessment analyzing your strengths across 6 core competencies and 5 school types.",
 };
 
 export default function RootLayout({

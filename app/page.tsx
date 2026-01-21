@@ -24,7 +24,7 @@ export default function Home() {
         {/* Header Card */}
         <div className="form-card text-center mb-6 animate-fadeUp" style={{ padding: '48px 32px' }}>
           <div className="inline-flex items-center gap-1.5 mb-6">
-            <span className="text-xs font-medium tracking-wide text-[#86868b]">Free 10-minute assessment</span>
+            <span className="text-xs font-medium tracking-wide text-[#86868b]">Free assessment</span>
           </div>
 
           <h1 className="text-5xl font-bold tracking-tight text-[#1d1d1f] mb-4" style={{ fontFamily: 'Georgia, serif' }}>

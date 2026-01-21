@@ -2,7 +2,7 @@
 
 **See Where You Stand. Focus On What Matters.**
 
-A free 10-minute assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and career goals.
+A free assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and career goals.
 
 ---
 

@@ -8,7 +8,7 @@ Last Updated: January 21, 2026 (Rebranding to Positioned)
 
 ## Product Overview
 
-**Positioned** is a free 10-minute assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and goals. Built on the Whitecoat Framework—a research-based classification of 173 AAMC-accredited medical schools.
+**Positioned** is a free assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and goals. Built on the Whitecoat Framework—a research-based classification of 173 AAMC-accredited medical schools.
 
 **Tagline:** See Where You Stand. Focus On What Matters.
 
