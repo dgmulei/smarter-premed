@@ -2,7 +2,7 @@
 
 **by Smarter Premed**
 
-Last Updated: January 21, 2026 (Screenshot Virality Optimizations)
+Last Updated: January 21, 2026 (Scroll Nudge Bars + UX Polish)
 
 ---
 
@@ -275,6 +275,22 @@ smarter-premed/
    - try-catch around sessionStorage access
    - Separate JSON.parse error handling
    - Optional chaining on API response data
+
+---
+
+## Recent UX Enhancements (January 21, 2026)
+
+**Focus:** Results page scroll encouragement and visual flow
+
+### Scroll Nudge Bars
+1. ✅ Added two teal divider bars between major sections
+2. ✅ First bar: Between profile summary and chart ("COMPARE YOUR FIT ACROSS 5 SCHOOL TYPES")
+3. ✅ Second bar: Between chart and fit analysis ("SEE YOUR FIT ANALYSIS FOR EACH TYPE")
+4. ✅ Styling: Teal background (#86cac4), white down arrows, uppercase text, 70% opacity
+5. ✅ Animation: Fade-in with sequential timing (0.11s and 0.14s delays)
+6. ✅ Spacing: Zero-gap integration with cards for seamless visual flow
+
+**Purpose:** Encourage users to scroll through all results sections, improving engagement and ensuring they see their full analysis.
 
 ---
 

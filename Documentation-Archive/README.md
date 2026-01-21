@@ -28,6 +28,12 @@ This folder contains historical documentation from the Smarter Pre-Med developme
 - **README_FIRST.md**: Old project overview
 - **WHATS_NEW.md**: Day One feature summary
 
+### Implementation Specs (Completed)
+- **SCROLL_NUDGE_IMPLEMENTATION.md**: Scroll nudge bar spec (implemented January 21, 2026)
+
+### Screenshots
+- **screenshots/**: Historical screenshots and design references
+
 ---
 
 ## Why Archived?
@@ -54,5 +60,6 @@ If you need information from archived docs:
 ---
 
 **Archive created**: January 19, 2025
+**Last updated**: January 21, 2026 (added scroll nudge spec + screenshots)
 **Purpose**: Historical reference
 **Status**: Read-only, not maintained

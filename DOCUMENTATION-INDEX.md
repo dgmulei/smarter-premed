@@ -1,6 +1,6 @@
 # Positioned Documentation Index
 
-**Last Updated:** January 21, 2026 (Screenshot Virality Optimizations)
+**Last Updated:** January 21, 2026 (Scroll Nudge Bars + Documentation Cleanup)
 
 ---
 
