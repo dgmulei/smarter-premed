@@ -303,6 +303,16 @@ export default function Results() {
         {/* Content */}
         <div className="flex flex-col">
 
+          {/* Branded Header */}
+          <div className="bg-white px-6 py-8 text-center mb-8 animate-fadeUp">
+            <h1 className="text-6xl font-semibold text-[#1d1d1f] mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Fitfinder
+            </h1>
+            <p className="text-lg text-[#0d9488]" style={{ fontFamily: 'Georgia, serif' }}>
+              by Smarter Premed
+            </p>
+          </div>
+
           {/* Profile Summary */}
           {analysisData?.profileSummary && (
             <div className="form-card mb-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
