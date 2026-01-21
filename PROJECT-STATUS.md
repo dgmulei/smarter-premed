@@ -1,14 +1,14 @@
-# Fitfinder - Project Status
+# Positioned - Project Status
 
 **by Smarter Premed**
 
-Last Updated: January 21, 2026 (Day Five - Production Launch Complete)
+Last Updated: January 21, 2026 (Rebranding to Positioned)
 
 ---
 
 ## Product Overview
 
-**Fitfinder** is a free 10-minute assessment that helps pre-med students discover which medical school cohorts align with their strengths and goals. Built on the Whitecoat Framework—a research-based classification of 173 AAMC-accredited medical schools.
+**Positioned** is a free 10-minute assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and goals. Built on the Whitecoat Framework—a research-based classification of 173 AAMC-accredited medical schools.
 
 **Tagline:** See Where You Stand. Focus On What Matters.
 
@@ -157,7 +157,7 @@ smarter-premed/
 ### UX Refinements
 - ✅ Put landing page header in card with generous padding
 - ✅ Added "Questionnaire" header with instructions
-- ✅ Rebranded from "Whitecoat Profile" to "Fitfinder"
+- ✅ Rebranded from "Whitecoat Profile" to "Positioned" (interim name: Fitfinder)
 - ✅ Updated tagline to "See Where You Stand. Focus On What Matters."
 - ✅ Restructured feature bullets (personal profile, 6 competencies, 5 school types)
 

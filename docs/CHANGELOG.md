@@ -1,9 +1,27 @@
 # Changelog
 
-All notable changes to Smarter Pre-Med will be documented in this file.
+All notable changes to Positioned will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [1.3.0] - 2026-01-21
+
+### 🎯 Rebranding: Fitfinder → Positioned
+
+**Rationale**: "Positioned" better reflects the strategic advisory nature of the tool and aligns with the Dr. Deb voice refinements. The name emphasizes understanding your positioning (strategic) vs finding a fit (transactional).
+
+### Changed
+- **App name**: Fitfinder → Positioned
+- **Metadata**: Updated page titles and descriptions
+- **Documentation**: Updated all active docs (README, PROJECT-STATUS, DOCUMENTATION-INDEX)
+- **CHANGELOG**: Updated project reference from "Smarter Pre-Med" to "Positioned"
+
+### Note
+- Archive files retain "Fitfinder" references as historical records
+- Core functionality unchanged, branding-only update
 
 ---
 
@@ -50,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### UI/UX Improvements
 - **Header system**: 24px teal accent bar (lighter #86cac4, 50% opacity → solid)
-- **Branded header card** on results page ("Fitfinder by Smarter Premed")
+- **Branded header card** on results page (app branding)
 - **Square card edges** (replaced rounded corners for flush stacking)
 - **iOS-specific fixes** for notch/dynamic island cutoff issues
 
@@ -92,7 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Day Three: Rebranding & UX Polish**
 
 ### Changed
-- Rebranded from "Whitecoat Profile" to **Fitfinder**
+- Rebranded from "Whitecoat Profile" (interim name: "Fitfinder", now "Positioned")
 - Updated tagline: "See Where You Stand. Focus On What Matters."
 - Header card redesign with generous padding
 - Cohort short names: Discover, Translate, Bedside, Community, Mission

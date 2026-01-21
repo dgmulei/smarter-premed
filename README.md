@@ -1,14 +1,14 @@
-# Fitfinder by Smarter Premed
+# Positioned by Smarter Premed
 
 **See Where You Stand. Focus On What Matters.**
 
-A free 10-minute assessment that helps pre-med students discover which medical school cohorts align with their strengths and career goals.
+A free 10-minute assessment that helps pre-med students understand their strategic positioning and discover which medical school cohorts align with their strengths and career goals.
 
 ---
 
-## What is Fitfinder?
+## What is Positioned?
 
-Fitfinder uses the **Whitecoat Framework**—a research-based classification system analyzing 173 AAMC-accredited U.S. and Canadian medical schools—to help students identify schools where their profile naturally fits.
+Positioned uses the **Whitecoat Framework**—a research-based classification system analyzing 173 AAMC-accredited U.S. and Canadian medical schools—to help students identify schools where their profile naturally fits.
 
 Built on data from the Medical School Admission Requirements (MSAR) database, institutional websites, and published mission statements, the framework categorizes schools into five cohorts based on measurable institutional priorities and applicant expectations.
 

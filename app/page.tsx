@@ -28,7 +28,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-5xl font-bold tracking-tight text-[#1d1d1f] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-            Fitfinder
+            Positioned
           </h1>
 
           <p className="text-base text-[#0d9488] mb-6">

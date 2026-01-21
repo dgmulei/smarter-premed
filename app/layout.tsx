@@ -3,8 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: "Smarter Pre-Med | Find Your Medical School Cohort",
-  description: "Discover your competitive profile and ideal medical school cohort in 60 seconds",
+  title: "Positioned by Smarter Premed | Medical School Assessment",
+  description: "See where you stand. Focus on what matters. Free 10-minute assessment analyzing your strengths across 6 core competencies and 5 school types.",
 };
 
 export default function RootLayout({

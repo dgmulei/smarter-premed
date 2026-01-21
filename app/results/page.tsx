@@ -306,7 +306,7 @@ export default function Results() {
           {/* Branded Header */}
           <div className="bg-white px-6 py-8 text-center mb-8 animate-fadeUp">
             <h1 className="text-6xl font-semibold text-[#1d1d1f] mb-2" style={{ fontFamily: 'Georgia, serif' }}>
-              Fitfinder
+              Positioned
             </h1>
             <p className="text-lg text-[#0d9488]" style={{ fontFamily: 'Georgia, serif' }}>
               by Smarter Premed
