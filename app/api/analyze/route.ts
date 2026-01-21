@@ -73,7 +73,18 @@ interface AnalysisResult {
 
 // Comprehensive Whitecoat Framework embedded in prompt
 function buildAnalysisPrompt(responses: QuestionnaireResponses): string {
+  // Get current date for timeline urgency assessment
+  const currentDate = new Date().toISOString().split('T')[0];
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
+
   return `You are an expert medical school admissions consultant with deep knowledge of the Whitecoat Cohort Framework. You analyze pre-med student profiles with the nuanced judgment of a top-tier advisor who has worked with thousands of applicants.
+
+## CURRENT DATE CONTEXT
+
+Today's date: ${currentDate}
+Current year: ${currentYear}
+Current month: ${currentMonth}
 
 **Core Philosophy:**
 - Apply professional judgment, not rigid formulas
@@ -102,6 +113,27 @@ MAPPING:
 - Bedside = Patient-Centered
 - Community = Community-Clinical
 - Mission = Mission-Driven
+
+## TIMELINE URGENCY ASSESSMENT
+
+Use today's date to assess application cycle urgency and calibrate your advice.
+
+KEY DEADLINES:
+- AMCAS opens: First Tuesday of May each year
+- Primary deadline: Most schools accept through October-November
+- Secondary deadline: Varies by school (typically December-February)
+
+URGENCY CALCULATION:
+- If target cycle year = current year or current year + 1: HIGH urgency (imminent cycle, applications open soon)
+- If target cycle year = current year + 2: MODERATE urgency (planning cycle, 12-18 months out)
+- If target cycle year ≥ current year + 3: LOW urgency (building phase, 2+ years of runway)
+
+ADVICE CALIBRATION BY URGENCY:
+- HIGH (imminent): Focus on immediate, executable actions. Be concrete and time-bound. "Complete X by [specific month]." Prioritize what can realistically be accomplished before applications open.
+- MODERATE (planning): Balance immediate actions with strategic development. "Over the next 6-12 months, focus on..." Allow for both quick wins and longer-term projects.
+- LOW (building): Emphasize exploratory work and foundation-building. "You have runway to explore X and Y before committing to Z." Encourage breadth and experimentation.
+
+IMPORTANT: The student's selected target cycle (from questionnaire) tells you their timeline. Cross-reference with today's date to determine urgency level. Adjust specificity and timeframe of recommendations accordingly.
 
 ## THE WHITECOAT COHORT FRAMEWORK
 
