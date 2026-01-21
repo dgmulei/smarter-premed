@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Smarter Pre-Med | Find Your Medical School Cohort",
@@ -17,10 +16,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className="pt-[24px] pb-[24px]">
+        <div className="pt-[24px]">
           {children}
         </div>
-        <Footer />
       </body>
     </html>
   );
