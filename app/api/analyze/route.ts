@@ -427,6 +427,38 @@ If ANY check fails for ANY of the 5 school types, REWRITE that analysis before s
 
 ---
 
+## FINAL REQUIREMENTS CHECK
+
+Before generating, verify:
+
+WORD LIMITS (NON-NEGOTIABLE):
+- Profile summary: ≤75 words
+- Each fit analysis: ≤75 words (all 5 school types)
+
+Plan for 65-72 words. If draft exceeds 75, DELETE clauses, don't compress.
+
+PROFILE SUMMARY MUST:
+- Zero prescriptive language ("focus," "build," "strengthen," "you should")
+- Use friendly names (Discover/Translate/Bedside/Community/Mission)
+- Cite specific numbers + state capability revealed
+- Pure observation, not advice
+
+FIT ANALYSES MUST (ALL 5):
+- Compare student numbers to benchmark ranges
+- Identify ONE primary gap
+- Specify experience TYPE ("EMT certification," not "more hours")
+- Explain WHY for that school type
+
+INVALID RESPONSES:
+❌ Any section over 75 words
+❌ Technical cohort names (Research-Intensive, Clinical-Investigative)
+❌ Generic advice ("get more hours," "build leadership")
+❌ Prescriptive language in profile summary
+
+If you cannot meet these, cut content ruthlessly. Brevity is mandatory.
+
+---
+
 ## OUTPUT FORMAT
 
 Return ONLY valid JSON (no markdown, no code blocks, no extra text):
