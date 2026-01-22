@@ -723,36 +723,17 @@ export default function Results() {
             </button>
           </div>
 
-          {/* Methodology Expandable */}
+          {/* Methodology Button */}
           <div className="mt-6 animate-fadeUp" style={{ animationDelay: '0.24s' }}>
             <div className="flex justify-end">
               <button
-                onClick={() => setShowMethodology(!showMethodology)}
-                className="flex items-center gap-2 px-4 py-2 text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-lg bg-white hover:bg-black/[0.02] transition-all duration-200"
+                onClick={() => setShowMethodology(true)}
+                className="flex items-center gap-2 px-4 py-2 text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-lg bg-transparent hover:bg-black/[0.02] transition-all duration-200"
+                style={{ fontFamily: 'Georgia, serif' }}
               >
                 About the Whitecoat Framework
-                <svg
-                  className={`w-4 h-4 transition-transform duration-200 ${showMethodology ? 'rotate-180' : ''}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
               </button>
             </div>
-
-            {showMethodology && (
-              <div className="form-card mt-4 animate-fadeUp">
-                <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                  About the Whitecoat Cohort System
-                </h3>
-                <p className="text-[13px] text-[#515154] leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
-                  The Whitecoat Framework is a research-based classification system developed through systematic analysis of 173 AAMC-accredited U.S. and Canadian medical schools. Using data from the Medical School Admission Requirements (MSAR) database, institutional websites, and published mission statements, Smarter Premed categorized schools into five cohorts based on measurable institutional priorities and applicant expectations. Each cohort reflects what schools actually prioritize—not prestige rankings. Mission-Driven ("Mission") schools emphasize health equity and community engagement. Patient-Centered ("Bedside") schools focus on communication and longitudinal clinical experiences. Community-Clinical ("Community") schools integrate primary care with public health. Clinical-Investigative ("Translate") schools bridge research and patient care. Research-Intensive ("Discover") schools advance medical science through high NIH funding and MD-PhD programs. Schools were validated against quantitative benchmarks (median GPA/MCAT ranges, expected clinical hours, research outputs, NIH funding levels) and qualitative institutional indicators (curriculum structure, research programs, community partnerships). This evidence-based system helps students identify schools aligned with their demonstrated strengths and career goals.
-                </p>
-              </div>
-            )}
           </div>
 
         </div>
@@ -834,6 +815,53 @@ export default function Results() {
                     )}
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Methodology Modal */}
+      {showMethodology && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 animate-fadeUp"
+          onClick={() => setShowMethodology(false)}
+        >
+          <div
+            className="bg-white rounded-none max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+          >
+            <div className="p-6 sm:p-8">
+              {/* Header */}
+              <div className="flex items-start justify-between mb-6">
+                <h3
+                  className="text-2xl font-semibold text-[#1d1d1f]"
+                  style={{ fontFamily: 'Georgia, serif' }}
+                >
+                  About the Whitecoat Framework
+                </h3>
+                <button
+                  onClick={() => setShowMethodology(false)}
+                  className="text-[#86868b] hover:text-[#1d1d1f] transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="bg-black/[0.02] rounded-none" style={{ padding: '24px' }}>
+                <p className="text-[13px] text-[#515154] leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                  The Whitecoat Framework is a research-based classification system developed through systematic analysis of 173 AAMC-accredited U.S. and Canadian medical schools. Using data from the Medical School Admission Requirements (MSAR) database, institutional websites, and published mission statements, Smarter Premed categorized schools into five cohorts based on measurable institutional priorities and applicant expectations.
+                </p>
+                <p className="text-[13px] text-[#515154] leading-relaxed mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  Each cohort reflects what schools actually prioritize—not prestige rankings. Mission-Driven ("Mission") schools emphasize health equity and community engagement. Patient-Centered ("Bedside") schools focus on communication and longitudinal clinical experiences. Community-Clinical ("Community") schools integrate primary care with public health. Clinical-Investigative ("Translate") schools bridge research and patient care. Research-Intensive ("Discover") schools advance medical science through high NIH funding and MD-PhD programs.
+                </p>
+                <p className="text-[13px] text-[#515154] leading-relaxed mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  Schools were validated against quantitative benchmarks (median GPA/MCAT ranges, expected clinical hours, research outputs, NIH funding levels) and qualitative institutional indicators (curriculum structure, research programs, community partnerships). This evidence-based system helps students identify schools aligned with their demonstrated strengths and career goals.
+                </p>
               </div>
             </div>
           </div>
