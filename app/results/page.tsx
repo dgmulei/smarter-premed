@@ -728,8 +728,8 @@ export default function Results() {
             <div className="flex justify-end">
               <button
                 onClick={() => setShowMethodology(true)}
-                className="flex items-center gap-2 px-5 py-3 text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-lg bg-white hover:bg-black/[0.02] transition-all duration-200"
-                style={{ fontFamily: 'Georgia, serif' }}
+                className="text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-md bg-white hover:bg-black/[0.02] transition-all duration-200"
+                style={{ fontFamily: 'Georgia, serif', padding: '4px 18px' }}
               >
                 About the Whitecoat Framework
               </button>
