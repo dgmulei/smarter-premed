@@ -507,7 +507,7 @@ export default function Results() {
             />
 
             {/* Radio Button Selector */}
-            <div style={{ marginTop: '32px' }}>
+            <div className="mt-4 sm:mt-8">
               <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>COMPARE ACROSS SCHOOL TYPES</p>
 
               {/* Mobile: Stack vertically */}
