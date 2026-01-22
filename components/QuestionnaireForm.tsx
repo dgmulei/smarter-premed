@@ -609,7 +609,7 @@ export default function QuestionnaireForm({
       </div>
 
       {/* Email Field */}
-      <div className="mt-8 animate-fadeUp" style={{ animationDelay: '0.77s' }}>
+      <div className="mt-8 mb-6 animate-fadeUp" style={{ animationDelay: '0.77s' }}>
         <label
           htmlFor="email"
           className="block text-[15px] text-[#1d1d1f] mb-2.5"
@@ -634,7 +634,7 @@ export default function QuestionnaireForm({
         )}
       </div>
 
-      <div className="mt-12 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
+      <div className="mt-6 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
         <button
           type="submit"
           disabled={isSubmitting}
