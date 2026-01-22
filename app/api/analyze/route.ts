@@ -355,6 +355,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check for API key
+    console.log('API Key present?', !!process.env.ANTHROPIC_API_KEY);
+    console.log('API Key value:', process.env.ANTHROPIC_API_KEY?.substring(0, 20) + '...');
     if (!process.env.ANTHROPIC_API_KEY) {
       console.error('ANTHROPIC_API_KEY is not set');
       return NextResponse.json(

@@ -455,6 +455,17 @@ export default function QuestionnaireForm({
         newErrors[q.id] = 'This field is required';
       }
     });
+
+    // Validate email
+    if (!formData.email || !formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email address';
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -594,6 +605,35 @@ export default function QuestionnaireForm({
         />
         <p className="mt-2 text-[13px] text-[#86868b] text-right">
           {(formData.additional_context?.length || 0)}/500 characters
+        </p>
+      </div>
+
+      {/* Email Field */}
+      <div className="mt-8 animate-fadeUp" style={{ animationDelay: '0.77s' }}>
+        <label
+          htmlFor="email"
+          className="block text-[15px] text-[#1d1d1f] mb-2.5"
+        >
+          <span className="font-semibold">Email address</span>
+        </label>
+        <input
+          id="email"
+          type="email"
+          value={formData.email || ''}
+          onChange={(e) => handleChange('email', e.target.value)}
+          placeholder="your.email@example.com"
+          className={`w-full px-4 py-3 text-[15px] text-[#1d1d1f] bg-white border rounded-none
+            focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent
+            transition-all duration-200
+            ${errors.email ? 'border-red-300 ring-2 ring-red-200' : 'border-[#d2d2d7]'}`}
+        />
+        {errors.email && (
+          <p className="mt-2 text-[13px] text-red-500">
+            {errors.email}
+          </p>
+        )}
+        <p className="mt-2 text-[13px] text-[#86868b]">
+          We'll send your results and personalized insights to this address.
         </p>
       </div>
 

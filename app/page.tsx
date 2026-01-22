@@ -11,10 +11,33 @@ export default function Home() {
 
   const handleSubmit = async (formData: Record<string, string>) => {
     setIsSubmitting(true);
-    sessionStorage.setItem('questionnaireResponses', JSON.stringify(formData));
-    setTimeout(() => {
-      router.push('/results');
-    }, 800);
+
+    try {
+      // Save email to database
+      const response = await fetch('/api/submit-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save email');
+      }
+
+      // Store questionnaire responses in session storage
+      sessionStorage.setItem('questionnaireResponses', JSON.stringify(formData));
+
+      // Navigate to results
+      setTimeout(() => {
+        router.push('/results');
+      }, 800);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setIsSubmitting(false);
+      alert('There was an error submitting your information. Please try again.');
+    }
   };
 
   return (
