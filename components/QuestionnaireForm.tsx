@@ -634,7 +634,7 @@ export default function QuestionnaireForm({
         )}
       </div>
 
-      <div className="mt-6 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
+      <div className="mt-6 pt-4 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
         <button
           type="submit"
           disabled={isSubmitting}
