@@ -632,9 +632,6 @@ export default function QuestionnaireForm({
             {errors.email}
           </p>
         )}
-        <p className="mt-2 text-[13px] text-[#86868b]">
-          We'll send your results and personalized insights to this address.
-        </p>
       </div>
 
       <div className="mt-8 animate-fadeUp" style={{ animationDelay: '0.8s' }}>
