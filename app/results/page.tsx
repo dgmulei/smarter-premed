@@ -487,7 +487,7 @@ export default function Results() {
             </div>
 
             {/* Legend */}
-            <div className="flex justify-center" style={{ marginTop: '24px', marginBottom: '32px' }}>
+            <div className="flex justify-center mb-4 sm:mb-8" style={{ marginTop: '24px' }}>
               <div className="inline-flex items-center gap-8 px-4 py-3 border border-black/[0.08] rounded-none">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
@@ -508,7 +508,7 @@ export default function Results() {
 
             {/* Radio Button Selector */}
             <div style={{ marginTop: '32px' }}>
-              <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>COMPARE YOUR FIT ACROSS SCHOOL TYPES</p>
+              <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>COMPARE ACROSS SCHOOL TYPES</p>
 
               {/* Mobile: Stack vertically */}
               <div className="flex flex-col gap-2.5 sm:hidden">
