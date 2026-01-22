@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import QuestionnaireForm from '@/components/QuestionnaireForm';
 
@@ -8,6 +8,7 @@ export default function Home() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showMethodology, setShowMethodology] = useState(false);
+  const methodologyRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (formData: Record<string, string>) => {
     setIsSubmitting(true);
@@ -39,6 +40,15 @@ export default function Home() {
       alert('There was an error submitting your information. Please try again.');
     }
   };
+
+  // Scroll to methodology content when it opens
+  useEffect(() => {
+    if (showMethodology && methodologyRef.current) {
+      setTimeout(() => {
+        methodologyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [showMethodology]);
 
   return (
     <main className="min-h-screen bg-atmosphere">
@@ -108,7 +118,7 @@ export default function Home() {
           </div>
 
           {showMethodology && (
-            <div className="form-card mt-4 animate-fadeUp">
+            <div ref={methodologyRef} className="form-card mt-4 animate-fadeUp">
               <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                 About the Whitecoat Cohort System
               </h3>
