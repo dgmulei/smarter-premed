@@ -743,7 +743,7 @@ export default function Results() {
       {/* Cohort Info Modal */}
       {showCohortModal && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 animate-fadeUp"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 sm:px-6 animate-fadeUp"
           onClick={() => setShowCohortModal(false)}
         >
           <div
@@ -751,7 +751,7 @@ export default function Results() {
             onClick={(e) => e.stopPropagation()}
             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
           >
-            <div className="p-6 sm:p-8">
+            <div className="p-4 sm:p-8">
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <h3
@@ -824,7 +824,7 @@ export default function Results() {
       {/* Methodology Modal */}
       {showMethodology && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 animate-fadeUp"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 sm:px-6 animate-fadeUp"
           onClick={() => setShowMethodology(false)}
         >
           <div
@@ -832,7 +832,7 @@ export default function Results() {
             onClick={(e) => e.stopPropagation()}
             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
           >
-            <div className="p-6 sm:p-8">
+            <div className="p-4 sm:p-8">
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <h3
