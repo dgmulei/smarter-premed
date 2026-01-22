@@ -14,17 +14,21 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      // Save email to database
-      const response = await fetch('/api/submit-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
+      // Skip email API call in development mode
+      if (process.env.NODE_ENV === 'production') {
+        const response = await fetch('/api/submit-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: formData.email }),
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to save email');
+        if (!response.ok) {
+          throw new Error('Failed to save email');
+        }
+      } else {
+        console.log('Development mode: Skipping email API call');
       }
 
       // Store questionnaire responses in session storage
@@ -45,8 +49,8 @@ export default function Home() {
   useEffect(() => {
     if (showMethodology && methodologyRef.current) {
       setTimeout(() => {
-        methodologyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+        methodologyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 150);
     }
   }, [showMethodology]);
 

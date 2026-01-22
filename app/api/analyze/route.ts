@@ -354,6 +354,52 @@ export async function POST(request: NextRequest) {
       responses.academic_history_flags = [];
     }
 
+    // Development mode: Return mock data when API key is not set
+    if (!process.env.ANTHROPIC_API_KEY) {
+      console.log('Development mode: Returning mock analysis data');
+
+      const mockResult: AnalysisResult = {
+        profileSummary: "You've built balanced preparation across research, clinical, and leadership domains. Your profile shows strategic flexibility without exceptional depth in any single area. This positions you well for multiple school types depending on how you frame your narrative and school list strategy.",
+        userScores: {
+          academic_rigor: 75,
+          clinical_exposure: 70,
+          research_activities: 65,
+          leadership_service: 80,
+          technical_skills: 60,
+          specialty_preparation: 70
+        },
+        rankedCohorts: [
+          {
+            name: "Patient-Centered",
+            fitScore: 85,
+            fitAnalysis: "Your balanced clinical hours and strong interpersonal focus align well with Bedside schools. These programs value well-rounded preparation and patient interaction quality over research depth. Your metrics sit comfortably in their range, though deeper clinical experience would strengthen your positioning."
+          },
+          {
+            name: "Clinical-Investigative",
+            fitScore: 78,
+            fitAnalysis: "Translate schools want bridge-builders between research and clinical care. Your mix of research and clinical experience shows you can straddle both worlds. Strengthening research outputs and clinical depth would improve your competitiveness at these programs."
+          },
+          {
+            name: "Community-Clinical",
+            fitScore: 72,
+            fitAnalysis: "Community schools value sustained engagement and primary care focus. Your service activities and clinical settings show community awareness. More longitudinal community partnerships and underserved population work would strengthen this alignment significantly."
+          },
+          {
+            name: "Research-Intensive",
+            fitScore: 60,
+            fitAnalysis: "Discover schools prioritize research depth and scientific productivity. Your research experience provides foundation but lacks the hours and outputs these programs typically expect. Significant additional research investment would be needed to compete effectively here."
+          },
+          {
+            name: "Mission-Driven",
+            fitScore: 68,
+            fitAnalysis: "Mission schools emphasize health equity commitment and underserved work. Your profile shows awareness but limited sustained engagement with underserved populations. Deeper community partnerships and explicit health equity focus would improve your positioning for these programs."
+          }
+        ]
+      };
+
+      return NextResponse.json(mockResult);
+    }
+
     // Check for API key
     console.log('API Key present?', !!process.env.ANTHROPIC_API_KEY);
     console.log('API Key value:', process.env.ANTHROPIC_API_KEY?.substring(0, 20) + '...');
