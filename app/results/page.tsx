@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import RadarChart from '@/components/RadarChart';
 import { COHORT_ARCHETYPES, MOCK_USER_PROFILE } from '@/lib/cohortData';
@@ -36,6 +36,10 @@ export default function Results() {
   const [showCohortModal, setShowCohortModal] = useState(false);
   const [showMethodology, setShowMethodology] = useState(false);
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+
+  // Refs for scroll targets
+  const chartRef = useRef<HTMLDivElement>(null);
+  const analysisRef = useRef<HTMLDivElement>(null);
 
   // Loading messages that rotate during AI analysis
   const loadingMessages = [
@@ -187,6 +191,15 @@ export default function Results() {
     };
 
     return cohortInfo[cohortName] || { description: '', schools: [], archetype: '', superpower: '' };
+  };
+
+  // Scroll functions for nudge bars
+  const scrollToChart = () => {
+    chartRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToAnalysis = () => {
+    analysisRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleCohortChange = (cohortName: string) => {
@@ -398,25 +411,27 @@ export default function Results() {
               </div>
 
               {/* Scroll nudge bar */}
-              <div
-                className="animate-fadeUp"
+              <button
+                onClick={scrollToChart}
+                className="animate-fadeUp w-full transition-opacity duration-200 hover:opacity-100"
                 style={{
                   animationDelay: '0.11s',
-                  backgroundColor: '#86cac4',
-                  height: '20px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '12px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+                  padding: '16px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
               >
-                <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
-                  <path d="M12 16l6-6H6z" />
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
 
                 <p style={{
-                  color: 'white',
+                  color: '#86868b',
                   fontSize: '10px',
                   fontWeight: '500',
                   letterSpacing: '0.08em',
@@ -428,15 +443,15 @@ export default function Results() {
                   COMPARE YOUR FIT ACROSS 5 SCHOOL TYPES
                 </p>
 
-                <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
-                  <path d="M12 16l6-6H6z" />
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
-              </div>
+              </button>
             </>
           )}
 
           {/* Chart Card */}
-          <div className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
+          <div ref={chartRef} className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
             {/* Brand Overline */}
             <p className="text-[10px] text-[#86868b] uppercase tracking-[0.2em] text-center mb-3">
               Smarter Premed
@@ -444,7 +459,7 @@ export default function Results() {
 
             {/* Best Fit Header - Three Lines */}
             <div
-              className="text-center mb-12"
+              className="text-center mb-8"
               style={{
                 opacity: isTextTransitioning ? 0 : 1,
                 transition: 'opacity 0.15s ease'
@@ -455,10 +470,13 @@ export default function Results() {
               </p>
               <button
                 onClick={() => setShowCohortModal(true)}
-                className="text-3xl font-bold underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200 cursor-pointer mb-1"
+                className="text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg"
                 style={{
                   fontFamily: 'Georgia, serif',
-                  color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)
+                  color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
+                  border: `1px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
+                  backgroundColor: 'transparent',
+                  padding: '4px 18px'
                 }}
               >
                 {getShortCohortName(selectedCohort)}
@@ -469,7 +487,7 @@ export default function Results() {
             </div>
 
             {/* Legend */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center" style={{ marginTop: '24px', marginBottom: '32px' }}>
               <div className="inline-flex items-center gap-8 px-4 py-3 border border-black/[0.08] rounded-none">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
@@ -489,8 +507,8 @@ export default function Results() {
             />
 
             {/* Radio Button Selector */}
-            <div className="mt-8">
-              <p className="text-[15px] text-[#0d9488] font-semibold mb-12 text-center">Compare with other school types</p>
+            <div style={{ marginTop: '32px' }}>
+              <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>COMPARE YOUR FIT ACROSS SCHOOL TYPES</p>
 
               {/* Mobile: Stack vertically */}
               <div className="flex flex-col gap-2.5 sm:hidden">
@@ -596,25 +614,27 @@ export default function Results() {
           </div>
 
           {/* Scroll nudge bar */}
-          <div
-            className="animate-fadeUp"
+          <button
+            onClick={scrollToAnalysis}
+            className="animate-fadeUp w-full transition-opacity duration-200 hover:opacity-100"
             style={{
               animationDelay: '0.14s',
-              backgroundColor: '#86cac4',
-              height: '20px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '12px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+              padding: '16px 0',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
-            <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
-              <path d="M12 16l6-6H6z" />
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
 
             <p style={{
-              color: 'white',
+              color: '#86868b',
               fontSize: '10px',
               fontWeight: '500',
               letterSpacing: '0.08em',
@@ -626,13 +646,14 @@ export default function Results() {
               SEE YOUR FIT ANALYSIS FOR EACH TYPE
             </p>
 
-            <svg width="13" height="13" fill="white" viewBox="0 0 24 24" style={{ opacity: 0.7 }}>
-              <path d="M12 16l6-6H6z" />
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
-          </div>
+          </button>
 
           {/* Cohort Analysis Card */}
           <div
+            ref={analysisRef}
             className="form-card animate-fadeUp"
             style={{
               animationDelay: '0.16s',
@@ -649,15 +670,19 @@ export default function Results() {
             >
               How{' '}
               <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
-                "
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className="font-bold underline decoration-1 underline-offset-2 hover:decoration-2 transition-all duration-200 cursor-pointer"
-                  style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}
+                  className="font-bold transition-all duration-200 cursor-pointer rounded-md"
+                  style={{
+                    fontFamily: 'Georgia, serif',
+                    color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
+                    border: `1px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
+                    backgroundColor: 'transparent',
+                    padding: '2px 6px'
+                  }}
                 >
                   {getShortCohortName(selectedCohort)}
                 </button>
-                "
               </span>
               {' '}Fits You
             </h3>
@@ -672,15 +697,29 @@ export default function Results() {
           </div>
 
           {/* Actions */}
-          <div className="flex justify-center mt-8 animate-fadeUp" style={{ animationDelay: '0.2s' }}>
+          <div className="flex justify-center animate-fadeUp" style={{ animationDelay: '0.2s', padding: '16px 0' }}>
             <button
-              onClick={() => router.push('/')}
-              className="flex items-center gap-2 px-4 py-3 text-[#86868b] hover:text-[#1d1d1f] text-[15px] transition-colors duration-200"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-100"
+              style={{
+                color: '#86868b',
+                fontSize: '10px',
+                fontWeight: '500',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                opacity: 0.7,
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              Back to Questionnaire
+              Back to the Top
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#86868b" strokeWidth={2} style={{ opacity: 0.5 }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
             </button>
           </div>
 
