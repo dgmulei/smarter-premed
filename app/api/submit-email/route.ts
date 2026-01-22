@@ -33,8 +33,9 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error('Error saving email:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Failed to save email' },
+      { error: 'Failed to save email', details: errorMessage },
       { status: 500 }
     );
   }
