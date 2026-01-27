@@ -96,11 +96,10 @@ export default function Home() {
               group w-full py-4 px-6 rounded-lg text-[17px] font-bold
               transition-all duration-200
               flex items-center justify-center gap-2
-              hover:shadow-md
               ${
                 isSubmitting
                   ? 'border border-[#86868b] bg-[#86868b10] cursor-not-allowed text-[#86868b]'
-                  : 'border border-[#0d9488] text-[#0d9488]'
+                  : 'border border-[#0d9488] text-[#0d9488] ghost-btn-teal'
               }
             `}
             style={{

@@ -299,6 +299,12 @@ button:active:not(:disabled) {
   transition: transform 0.1s ease-out;
 }
 
+/* Ghost button hover effect - glow + background intensify */
+.ghost-btn-teal:hover:not(:disabled) {
+  background-color: rgba(13, 148, 136, 0.15) !important;
+  box-shadow: 0 0 12px rgba(13, 148, 136, 0.4), 0 1px 3px rgba(0,0,0,0.08) !important;
+}
+
 ::selection {
   background: rgba(0, 113, 227, 0.12);
 }
