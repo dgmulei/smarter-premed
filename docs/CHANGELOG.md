@@ -7,6 +7,81 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.3] - 2026-01-27
+
+### 🎨 Ghost Buttons & Navigation Polish
+
+**Goal**: Improve button discoverability and navigation UX across the results page.
+
+### Added
+
+#### Ghost Button Styling
+- **Visual depth for cohort buttons**: Added light background fill (6% opacity of rank color) and subtle shadow to make buttons more "button-y"
+- **Hover effects**: Glow + background intensify on desktop hover (15% opacity background, 12px→14px glow radius)
+- **Pulse animation**: Continuous 3-second pulse glow for mobile where hover doesn't exist
+- **Rank-specific colors**: Each rank (1-5) has matching hover/pulse colors
+
+#### Card #3 Navigation
+- **Duplicate cohort selector**: Added "COMPARE ACROSS SCHOOL TYPES" selector to Card #3 (analysis card) so users can switch cohorts without scrolling back to chart
+- **Synced state**: Both Card #2 and Card #3 selectors use same state and stay in sync
+
+#### Color-Coded Card Borders
+- **Card #2**: Added dynamic left border (4px) that matches selected cohort's rank color
+- **Card #3**: Already had this styling, now both cards match
+
+### Changed
+
+#### Spacing Adjustments
+- **Selector spacing**: Added `<br />` tags above "COMPARE ACROSS SCHOOL TYPES" labels for better visual separation (margin wasn't working reliably)
+- **Mobile top padding**: Reduced from 24px to 16px for tighter content-to-header spacing
+
+#### Button Styling
+- **"See My Results" button**: Changed to ghost button style with teal border, light fill, and pulse animation to match cohort buttons
+- **Pulse intensity**: Increased glow radius (12px→14px) and opacity (0.4→0.46) by 15% for better visibility
+
+### Files Changed
+
+#### `app/results/page.tsx`
+- Added ghost button styling to cohort name buttons (lines ~482-495, ~685-698)
+- Added `getRankHoverClass()` helper function for dynamic CSS classes
+- Added duplicate cohort selector in Card #3 (lines ~711-810)
+- Added color-coded left border to Card #2 (line ~465)
+
+#### `app/globals.css`
+- Added `.ghost-btn-teal` hover class with glow effect
+- Added `.ghost-btn-rank1` through `.ghost-btn-rank5` hover classes
+- Added `@keyframes pulseGlow` animation
+- Added `.ghost-btn-pulse` class for continuous pulse
+- Added rank-specific `--pulse-color` CSS custom properties
+
+#### `app/page.tsx`
+- Changed "See My Results" button to ghost button style with `ghost-btn-teal ghost-btn-pulse` classes
+
+### Technical Details
+
+**Ghost Button Pattern:**
+```tsx
+<button
+  className={`ghost-btn-pulse ${getRankHoverClass(rank)}`}
+  style={{
+    border: `1px solid ${rankColor}`,
+    backgroundColor: `${rankColor}10`, // 6% opacity
+    boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+  }}
+>
+```
+
+**Pulse Animation:**
+```css
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  50% { box-shadow: 0 0 14px var(--pulse-color), 0 1px 3px rgba(0,0,0,0.08); }
+}
+.ghost-btn-pulse { animation: pulseGlow 3s ease-in-out infinite; }
+```
+
+---
+
 ## [1.4.2] - 2026-01-27
 
 ### 📱 Mobile Scroll Wobble Fix
