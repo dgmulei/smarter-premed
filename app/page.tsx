@@ -102,6 +102,7 @@ export default function Home() {
                   : 'bg-[#0d9488] hover:bg-[#0f766e] active:bg-[#115e59] text-white shadow-[0_2px_8px_rgba(13,148,136,0.35)] hover:shadow-[0_4px_12px_rgba(13,148,136,0.3)] hover:-translate-y-px active:translate-y-0'
               }
             `}
+            style={{ fontFamily: 'Georgia, serif' }}
           >
             {isSubmitting ? (
               <>
