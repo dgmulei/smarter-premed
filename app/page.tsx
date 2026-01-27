@@ -87,7 +87,7 @@ export default function Home() {
         </div>
 
         {/* Submit Button Card */}
-        <div className="form-card mt-6 animate-fadeUp" style={{ animationDelay: '0.2s' }}>
+        <div className="form-card mt-6 animate-fadeUp flex justify-center" style={{ animationDelay: '0.2s' }}>
           <button
             type="submit"
             form="questionnaire-form"
