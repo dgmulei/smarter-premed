@@ -731,7 +731,7 @@ export default function Results() {
                 className="text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-md bg-white hover:bg-black/[0.02] transition-all duration-200"
                 style={{ fontFamily: 'Georgia, serif', padding: '4px 18px' }}
               >
-                About the Whitecoat Framework
+                The Whitecoat Framework
               </button>
             </div>
           </div>
@@ -839,7 +839,7 @@ export default function Results() {
                   className="text-2xl font-semibold text-[#1d1d1f]"
                   style={{ fontFamily: 'Georgia, serif' }}
                 >
-                  About the Whitecoat Framework
+                  The Whitecoat Framework
                 </h3>
                 <button
                   onClick={() => setShowMethodology(false)}
