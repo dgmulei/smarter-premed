@@ -20,6 +20,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 /* ============================================
@@ -41,14 +43,16 @@ body {
   max-width: 540px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 0;
+  padding-right: 0;
   padding-top: 64px;
   padding-bottom: 64px;
 }
 
 @media (min-width: 640px) {
   .landing-container {
+    padding-left: 24px;
+    padding-right: 24px;
     padding-top: 80px;
     padding-bottom: 80px;
   }
@@ -62,8 +66,8 @@ body {
   max-width: 540px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: 0;
+  padding-right: 0;
   padding-top: 64px;
   padding-bottom: 64px;
 }
