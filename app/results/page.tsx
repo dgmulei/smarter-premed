@@ -89,6 +89,17 @@ export default function Results() {
     return labels[rank as keyof typeof labels] || '';
   };
 
+  const getRankHoverClass = (rank: number): string => {
+    const classes = {
+      1: 'ghost-btn-rank1',
+      2: 'ghost-btn-rank2',
+      3: 'ghost-btn-rank3',
+      4: 'ghost-btn-rank4',
+      5: 'ghost-btn-rank5',
+    };
+    return classes[rank as keyof typeof classes] || 'ghost-btn-rank5';
+  };
+
   const getShortCohortName = (cohortName: string): string => {
     const shortNames: Record<string, string> = {
       'Research-Intensive': 'Discover',
@@ -470,7 +481,7 @@ export default function Results() {
               </p>
               <button
                 onClick={() => setShowCohortModal(true)}
-                className="text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg hover:shadow-md"
+                className={`text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
                 style={{
                   fontFamily: 'Georgia, serif',
                   color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
@@ -673,7 +684,7 @@ export default function Results() {
               <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className="font-bold transition-all duration-200 cursor-pointer rounded-md hover:shadow-md"
+                  className={`font-bold transition-all duration-200 cursor-pointer rounded-md ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
                   style={{
                     fontFamily: 'Georgia, serif',
                     color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
