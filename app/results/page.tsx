@@ -389,7 +389,7 @@ export default function Results() {
         <div className="flex flex-col">
 
           {/* Branded Header */}
-          <div className="bg-white px-6 py-8 text-center mb-8 animate-fadeUp">
+          <div className="form-card px-6 py-8 text-center mb-8 animate-fadeUp">
             <h1 className="text-6xl font-semibold text-[#1d1d1f] mb-2" style={{ fontFamily: 'Georgia, serif' }}>
               Positioned
             </h1>
