@@ -383,7 +383,7 @@ export default function Results() {
 
   return (
     <main className="min-h-screen bg-atmosphere">
-      <div className="max-w-[540px] mx-auto px-8 sm:px-6 py-16 sm:py-20">
+      <div className="results-loading-container">
 
         {/* Content */}
         <div className="flex flex-col">
@@ -747,7 +747,7 @@ export default function Results() {
           onClick={() => setShowCohortModal(false)}
         >
           <div
-            className="bg-white rounded-none max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
+            className="modal-container"
             onClick={(e) => e.stopPropagation()}
             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
           >
@@ -828,7 +828,7 @@ export default function Results() {
           onClick={() => setShowMethodology(false)}
         >
           <div
-            className="bg-white rounded-none max-w-[500px] w-full max-h-[90vh] overflow-y-auto"
+            className="modal-container"
             onClick={(e) => e.stopPropagation()}
             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
           >
