@@ -33,7 +33,7 @@ interface QuestionnaireResponses {
 
   // Leadership & Service (Q19-22)
   leadership_roles_count: string;
-  service_scale: string;
+  service_nature: string;
   extracurricular_hours_weekly: string;
   service_outcomes: string;
 
@@ -185,7 +185,7 @@ These aren't disqualifiers, but they raise strategic questions committees will a
 
 **Academic:** GPA ${responses.gpa}, MCAT ${responses.mcat}, Preparedness: ${responses.academic_preparedness}, Improvement needs: ${responses.academic_improvement_areas.join(', ')}, Strengths: ${responses.academic_strengths.join(', ')}, MCAT confidence: ${responses.mcat_confidence}
 
-**Leadership/Service:** ${responses.leadership_roles_count} roles, Service scale: ${responses.service_scale}, Weekly hours: ${responses.extracurricular_hours_weekly}, Outcomes: ${responses.service_outcomes}
+**Leadership/Service:** ${responses.leadership_roles_count} roles, Service nature: ${responses.service_nature}, Weekly hours: ${responses.extracurricular_hours_weekly}, Outcomes: ${responses.service_outcomes}
 
 **Vision:** Gaps: ${responses.application_gaps.join(', ')}, Focus: ${responses.primary_focus}, Weakness: ${responses.greatest_weakness}, Future: ${responses.future_contributions.join(', ')}, Cycle: ${responses.target_cycle}, Flexibility: ${responses.timeline_flexibility}, History: ${responses.academic_history_flags.join(', ')}
 

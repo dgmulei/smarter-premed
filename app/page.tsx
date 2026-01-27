@@ -77,13 +77,60 @@ export default function Home() {
 
         {/* Form Card */}
         <div className="form-card animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-          <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-3 text-center" style={{ fontFamily: 'Georgia, serif' }}>
-            Questionnaire
+          <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-1 text-center" style={{ fontFamily: 'Georgia, serif' }}>
+            FitFinder Questionnaire
           </h2>
-          <p className="text-[15px] text-[#86868b] text-center mb-8">
-            Answer the 30 questions below to see where you stand.
+          <p className="text-[15px] text-[#86868b] text-center mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+            (30 questions)
           </p>
           <QuestionnaireForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        </div>
+
+        {/* Submit Button Card */}
+        <div className="form-card mt-6 animate-fadeUp" style={{ animationDelay: '0.2s' }}>
+          <button
+            type="submit"
+            form="questionnaire-form"
+            disabled={isSubmitting}
+            className={`
+              group w-full py-4 px-6 rounded-full text-[15px] font-medium
+              transition-all duration-200
+              flex items-center justify-center gap-2
+              ${
+                isSubmitting
+                  ? 'bg-[#e8e8ed] cursor-not-allowed text-[#86868b]'
+                  : 'bg-[#0d9488] hover:bg-[#0f766e] active:bg-[#115e59] text-white shadow-[0_2px_8px_rgba(13,148,136,0.35)] hover:shadow-[0_4px_12px_rgba(13,148,136,0.3)] hover:-translate-y-px active:translate-y-0'
+              }
+            `}
+          >
+            {isSubmitting ? (
+              <>
+                <svg
+                  className="animate-spin h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <span>Analyzing</span>
+              </>
+            ) : (
+              <span>See My Results</span>
+            )}
+          </button>
         </div>
 
       </div>
