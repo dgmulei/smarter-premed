@@ -99,7 +99,7 @@ export default function Home() {
               ${
                 isSubmitting
                   ? 'border border-[#86868b] cursor-not-allowed text-[#86868b]'
-                  : 'border border-[#0d9488] text-[#0d9488] ghost-btn-teal'
+                  : 'border border-[#0d9488] text-[#0d9488] ghost-btn-teal ghost-btn-pulse'
               }
             `}
             style={{

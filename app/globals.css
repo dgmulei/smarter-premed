@@ -267,6 +267,29 @@ strong {
   opacity: 0;
 }
 
+/* Subtle pulse glow for ghost buttons - draws attention on mobile */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  50% {
+    box-shadow: 0 0 12px var(--pulse-color, rgba(13, 148, 136, 0.4)), 0 1px 3px rgba(0,0,0,0.08);
+  }
+}
+
+.ghost-btn-pulse {
+  animation: pulseGlow 2s ease-in-out 3;
+  animation-delay: 0.5s;
+}
+
+/* Rank-specific pulse colors */
+.ghost-btn-rank1.ghost-btn-pulse { --pulse-color: rgba(13, 148, 136, 0.4); }
+.ghost-btn-rank2.ghost-btn-pulse { --pulse-color: rgba(8, 145, 178, 0.4); }
+.ghost-btn-rank3.ghost-btn-pulse { --pulse-color: rgba(107, 114, 128, 0.4); }
+.ghost-btn-rank4.ghost-btn-pulse { --pulse-color: rgba(120, 113, 108, 0.4); }
+.ghost-btn-rank5.ghost-btn-pulse { --pulse-color: rgba(168, 162, 158, 0.4); }
+.ghost-btn-teal.ghost-btn-pulse { --pulse-color: rgba(13, 148, 136, 0.4); }
+
 /* Legacy animation classes for compatibility */
 .fade-in {
   animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;

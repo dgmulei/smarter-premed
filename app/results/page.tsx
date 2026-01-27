@@ -481,7 +481,7 @@ export default function Results() {
               </p>
               <button
                 onClick={() => setShowCohortModal(true)}
-                className={`text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
+                className={`text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg ghost-btn-pulse ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
                 style={{
                   fontFamily: 'Georgia, serif',
                   color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
@@ -684,7 +684,7 @@ export default function Results() {
               <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className={`font-bold transition-all duration-200 cursor-pointer rounded-md ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
+                  className={`font-bold transition-all duration-200 cursor-pointer rounded-md ghost-btn-pulse ${getRankHoverClass(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`}
                   style={{
                     fontFamily: 'Georgia, serif',
                     color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
