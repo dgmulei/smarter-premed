@@ -709,7 +709,7 @@ export default function Results() {
             </p>
 
             {/* Cohort Selector - duplicated for Card #3 navigation */}
-            <div className="mt-8">
+            <div className="mt-12">
               <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>COMPARE ACROSS SCHOOL TYPES</p>
 
               {/* Mobile: Stack vertically */}
