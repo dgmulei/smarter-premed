@@ -470,13 +470,14 @@ export default function Results() {
               </p>
               <button
                 onClick={() => setShowCohortModal(true)}
-                className="text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg"
+                className="text-3xl font-bold transition-all duration-200 cursor-pointer mb-1 rounded-lg hover:shadow-md"
                 style={{
                   fontFamily: 'Georgia, serif',
                   color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
                   border: `1px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
-                  backgroundColor: 'transparent',
-                  padding: '4px 18px'
+                  backgroundColor: `${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}10`,
+                  padding: '4px 18px',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
                 }}
               >
                 {getShortCohortName(selectedCohort)}
@@ -672,13 +673,14 @@ export default function Results() {
               <span style={{ color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1) }}>
                 <button
                   onClick={() => setShowCohortModal(true)}
-                  className="font-bold transition-all duration-200 cursor-pointer rounded-md"
+                  className="font-bold transition-all duration-200 cursor-pointer rounded-md hover:shadow-md"
                   style={{
                     fontFamily: 'Georgia, serif',
                     color: getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1),
                     border: `1px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
-                    backgroundColor: 'transparent',
-                    padding: '2px 6px'
+                    backgroundColor: `${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}10`,
+                    padding: '2px 6px',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
                   }}
                 >
                   {getShortCohortName(selectedCohort)}
