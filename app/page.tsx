@@ -93,16 +93,21 @@ export default function Home() {
             form="questionnaire-form"
             disabled={isSubmitting}
             className={`
-              group w-full py-4 px-6 rounded-full text-[15px] font-medium
+              group w-full py-4 px-6 rounded-lg text-[17px] font-bold
               transition-all duration-200
               flex items-center justify-center gap-2
+              hover:shadow-md
               ${
                 isSubmitting
-                  ? 'bg-[#e8e8ed] cursor-not-allowed text-[#86868b]'
-                  : 'bg-[#0d9488] hover:bg-[#0f766e] active:bg-[#115e59] text-white shadow-[0_2px_8px_rgba(13,148,136,0.35)] hover:shadow-[0_4px_12px_rgba(13,148,136,0.3)] hover:-translate-y-px active:translate-y-0'
+                  ? 'border border-[#86868b] bg-[#86868b10] cursor-not-allowed text-[#86868b]'
+                  : 'border border-[#0d9488] text-[#0d9488]'
               }
             `}
-            style={{ fontFamily: 'Georgia, serif' }}
+            style={{
+              fontFamily: 'Georgia, serif',
+              backgroundColor: isSubmitting ? '#86868b10' : '#0d948810',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+            }}
           >
             {isSubmitting ? (
               <>
