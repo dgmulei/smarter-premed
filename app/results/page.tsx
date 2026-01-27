@@ -725,7 +725,7 @@ export default function Results() {
 
           {/* Methodology Button */}
           <div className="mt-6 animate-fadeUp" style={{ animationDelay: '0.24s' }}>
-            <div className="flex justify-end">
+            <div className="flex justify-center">
               <button
                 onClick={() => setShowMethodology(true)}
                 className="text-[13px] text-[#86868b] hover:text-[#1d1d1f] border border-black/[0.1] rounded-md bg-white hover:bg-black/[0.02] transition-all duration-200"
