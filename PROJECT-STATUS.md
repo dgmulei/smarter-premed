@@ -2,7 +2,7 @@
 
 **by Smarter Premed**
 
-Last Updated: January 21, 2026 (Scroll Nudge Bars + UX Polish)
+Last Updated: January 27, 2026 (Mobile Scroll Wobble Fix + CSS Cleanup)
 
 ---
 
@@ -20,7 +20,7 @@ Last Updated: January 21, 2026 (Scroll Nudge Bars + UX Polish)
 
 **Deployment**: https://smarter-premed.vercel.app/
 **Platform**: Vercel (Pro plan)
-**Last Deploy**: January 21, 2026
+**Last Deploy**: January 27, 2026
 
 ### What's Working
 - ✅ Landing page with clear value proposition
@@ -291,6 +291,26 @@ smarter-premed/
 6. ✅ Spacing: Zero-gap integration with cards for seamless visual flow
 
 **Purpose:** Encourage users to scroll through all results sections, improving engagement and ensuring they see their full analysis.
+
+---
+
+## Mobile UX Fixes (January 27, 2026)
+
+**Focus:** Fix horizontal scroll wobble on iPhone and desktop scroll issues
+
+### Mobile Scroll Wobble Fix
+1. ✅ Identified root cause: "About the Whitecoat Framework" button extending past viewport on narrow screens
+2. ✅ Shortened button text to "The Whitecoat Framework" (saved ~40px width)
+3. ✅ Changed button alignment from `justify-end` to `justify-center`
+4. ✅ Wobble eliminated on iPhone without affecting iPad or desktop
+
+### CSS Cleanup
+1. ✅ Reverted aggressive `overscroll-behavior: none` CSS that broke desktop scroll wheel
+2. ✅ Removed unnecessary `overflow-x` rules on html/body/main elements
+3. ✅ Restored native browser behaviors (pull-to-refresh, scroll wheel)
+4. ✅ Kept only essential `overflow-x: hidden` on body
+
+**Lesson Learned:** The wobble was caused by content overflow (button too wide), not missing CSS rules. Adding aggressive overflow/overscroll CSS broke other functionality. The fix was to ensure no elements extend past the viewport edge.
 
 ---
 

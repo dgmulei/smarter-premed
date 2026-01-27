@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.2] - 2026-01-27
+
+### 📱 Mobile Scroll Wobble Fix
+
+**Goal**: Fix horizontal scroll wobble on iPhone that was degrading the mobile experience.
+
+### Fixed
+
+#### Mobile Horizontal Scroll Wobble
+- **Root cause identified**: The "About the Whitecoat Framework" button was extending past the viewport edge on narrow iPhone screens, causing iOS Safari to detect horizontal scrollable content
+- **Button text shortened**: "About the Whitecoat Framework" → "The Whitecoat Framework" (saved ~40px width)
+- **Button alignment changed**: `justify-end` → `justify-center` to prevent edge overflow on any screen size
+- **Result**: Wobble eliminated on iPhone without affecting iPad or desktop
+
+#### Desktop Scroll Wheel Restored
+- **Reverted aggressive CSS**: Removed `overscroll-behavior: none` from html/body that was breaking mouse scroll wheel
+- **Removed unnecessary overflow rules**: Cleaned up redundant `overflow-x: hidden` on html and main elements
+- **Restored native behaviors**: Pull-to-refresh on mobile and scroll wheel on desktop now work correctly
+
+### Changed
+
+#### Results Page (`app/results/page.tsx`)
+- Methodology button text: "About the Whitecoat Framework" → "The Whitecoat Framework"
+- Methodology modal title: Same text change for consistency
+- Button container: `justify-end` → `justify-center`
+
+#### Global Styles (`app/globals.css`)
+- Removed `overscroll-behavior: none` from html, body
+- Removed `max-width: 100vw/100dvw` rules from html, body, main
+- Removed `-webkit-overflow-scrolling: touch` from html
+- Kept only essential `overflow-x: hidden` on body
+
+### Technical Details
+
+**Investigation Process:**
+1. Initial assumption: Missing CSS overflow properties → Added aggressive overflow/overscroll CSS
+2. Result: Broke desktop scroll wheel functionality
+3. User observation: Button appeared to extend past viewport edge in screenshot
+4. Root cause: Content overflow, not missing CSS
+5. Solution: Fix the content (shorter text + centered alignment)
+
+**Lesson Learned:** When debugging scroll issues, first check if any content extends past the viewport. Aggressive CSS overflow rules can break other browser functionality. The minimal fix is usually the correct one.
+
+---
+
 ## [1.4.1] - 2026-01-21
 
 ### 🔧 Reliability & Monitoring Improvements
@@ -453,4 +498,4 @@ Changes are grouped into:
 ---
 
 **Maintained by**: David Mulei (dgmulei@gmail.com)
-**Last Updated**: January 21, 2026
+**Last Updated**: January 27, 2026

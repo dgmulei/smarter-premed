@@ -1,6 +1,6 @@
 # Positioned Documentation Index
 
-**Last Updated:** January 21, 2026 (Scroll Nudge Bars + Documentation Cleanup)
+**Last Updated:** January 27, 2026 (Mobile Scroll Wobble Fix)
 
 ---
 
