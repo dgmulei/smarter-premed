@@ -462,7 +462,15 @@ export default function Results() {
           )}
 
           {/* Chart Card */}
-          <div ref={chartRef} className="form-card animate-fadeUp" style={{ animationDelay: '0.12s' }}>
+          <div
+            ref={chartRef}
+            className="form-card animate-fadeUp"
+            style={{
+              animationDelay: '0.12s',
+              borderLeft: `4px solid ${getRankColor(rankedCohorts.findIndex(c => c.name === selectedCohort) + 1)}`,
+              transition: 'border-left-color 0.15s ease'
+            }}
+          >
             {/* Brand Overline */}
             <p className="text-[10px] text-[#86868b] uppercase tracking-[0.2em] text-center mb-3">
               Smarter Premed
