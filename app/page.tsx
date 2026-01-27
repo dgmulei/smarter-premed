@@ -93,19 +93,20 @@ export default function Home() {
             form="questionnaire-form"
             disabled={isSubmitting}
             className={`
-              group w-full py-4 px-6 rounded-lg text-[17px] font-bold
+              group text-3xl font-bold rounded-lg
               transition-all duration-200
               flex items-center justify-center gap-2
               ${
                 isSubmitting
-                  ? 'border border-[#86868b] bg-[#86868b10] cursor-not-allowed text-[#86868b]'
+                  ? 'border border-[#86868b] cursor-not-allowed text-[#86868b]'
                   : 'border border-[#0d9488] text-[#0d9488] ghost-btn-teal'
               }
             `}
             style={{
               fontFamily: 'Georgia, serif',
               backgroundColor: isSubmitting ? '#86868b10' : '#0d948810',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+              padding: '4px 18px'
             }}
           >
             {isSubmitting ? (
