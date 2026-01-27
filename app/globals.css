@@ -278,8 +278,7 @@ strong {
 }
 
 .ghost-btn-pulse {
-  animation: pulseGlow 2s ease-in-out 3;
-  animation-delay: 0.5s;
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
 /* Rank-specific pulse colors */
