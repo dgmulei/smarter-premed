@@ -389,11 +389,11 @@ export default function Results() {
         <div className="flex flex-col">
 
           {/* Branded Header */}
-          <div className="form-card px-6 py-8 text-center mb-8 animate-fadeUp">
-            <h1 className="text-6xl font-semibold text-[#1d1d1f] mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="form-card px-6 py-6 text-center mb-8 animate-fadeUp">
+            <h1 className="text-4xl font-semibold text-[#1d1d1f] mb-1" style={{ fontFamily: 'Georgia, serif' }}>
               Positioned
             </h1>
-            <p className="text-lg text-[#0d9488]" style={{ fontFamily: 'Georgia, serif' }}>
+            <p className="text-base text-[#0d9488]" style={{ fontFamily: 'Georgia, serif' }}>
               by Smarter Premed
             </p>
           </div>
@@ -402,10 +402,10 @@ export default function Results() {
           {analysisData?.profileSummary && (
             <>
               <div className="form-card mb-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-                <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-4 text-center" style={{ fontFamily: 'Georgia, serif' }}>
+                <h2 className="text-xl font-semibold text-[#1d1d1f] mb-3 text-center" style={{ fontFamily: 'Georgia, serif' }}>
                   Where You Stand
                 </h2>
-                <p className="text-[17px] leading-relaxed text-[#1d1d1f]" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-[15px] leading-relaxed text-[#1d1d1f]" style={{ fontFamily: 'Georgia, serif' }}>
                   {analysisData.profileSummary}
                 </p>
               </div>
@@ -663,7 +663,7 @@ export default function Results() {
             }}
           >
             <h3
-              className="text-xl font-semibold mb-4 text-center"
+              className="text-lg font-semibold mb-3 text-center"
               style={{
                 fontFamily: 'Georgia, serif',
               }}
@@ -687,7 +687,7 @@ export default function Results() {
               {' '}Fits You
             </h3>
             <p
-              className="text-[17px] leading-relaxed text-[#515154]"
+              className="text-[15px] leading-relaxed text-[#515154]"
               style={{
                 fontFamily: 'Georgia, serif',
               }}
