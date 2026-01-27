@@ -707,6 +707,112 @@ export default function Results() {
             >
               {fitAnalyses[selectedCohort]}
             </p>
+
+            {/* Cohort Selector - duplicated for Card #3 navigation */}
+            <div className="mt-6 pt-6 border-t border-black/[0.06]">
+              <p className="text-[15px] text-[#0d9488] font-semibold text-center" style={{ marginBottom: '12px' }}>SEE OTHER SCHOOL TYPES</p>
+
+              {/* Mobile: Stack vertically */}
+              <div className="flex flex-col gap-2.5 sm:hidden">
+                {rankedCohorts.map((cohort, index) => {
+                  const rank = index + 1;
+                  const rankColor = getRankColor(rank);
+                  const isSelected = selectedCohort === cohort.name;
+                  const shortName = getShortCohortName(cohort.name);
+                  return (
+                    <button
+                      key={cohort.name}
+                      onClick={() => handleCohortChange(cohort.name)}
+                      className={`
+                        flex items-center gap-2 px-4 py-2.5 rounded-lg text-[14px] font-medium transition-all duration-200 w-full
+                        ${isSelected
+                          ? 'bg-[#1d1d1f] text-white'
+                          : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                        }
+                      `}
+                    >
+                      <span
+                        className="font-bold"
+                        style={{ color: isSelected ? '#ffffff' : rankColor }}
+                      >
+                        {rank}
+                      </span>
+                      <span>
+                        {shortName}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Tablet/Desktop: 2+3 grid */}
+              <div className="hidden sm:flex flex-col items-center gap-2.5">
+                {/* First row - top 2 */}
+                <div className="flex justify-center gap-2.5">
+                  {rankedCohorts.slice(0, 2).map((cohort, index) => {
+                    const rank = index + 1;
+                    const rankColor = getRankColor(rank);
+                    const isSelected = selectedCohort === cohort.name;
+                    const shortName = getShortCohortName(cohort.name);
+                    return (
+                      <button
+                        key={cohort.name}
+                        onClick={() => handleCohortChange(cohort.name)}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200
+                          ${isSelected
+                            ? 'bg-[#1d1d1f] text-white'
+                            : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                          }
+                        `}
+                      >
+                        <span
+                          className="font-bold"
+                          style={{ color: isSelected ? '#ffffff' : rankColor }}
+                        >
+                          {rank}
+                        </span>
+                        <span className="whitespace-nowrap">
+                          {shortName}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {/* Second row - bottom 3 */}
+                <div className="flex justify-center gap-2.5">
+                  {rankedCohorts.slice(2, 5).map((cohort, index) => {
+                    const rank = index + 3;
+                    const rankColor = getRankColor(rank);
+                    const isSelected = selectedCohort === cohort.name;
+                    const shortName = getShortCohortName(cohort.name);
+                    return (
+                      <button
+                        key={cohort.name}
+                        onClick={() => handleCohortChange(cohort.name)}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200
+                          ${isSelected
+                            ? 'bg-[#1d1d1f] text-white'
+                            : 'bg-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.1]'
+                          }
+                        `}
+                      >
+                        <span
+                          className="font-bold"
+                          style={{ color: isSelected ? '#ffffff' : rankColor }}
+                        >
+                          {rank}
+                        </span>
+                        <span className="whitespace-nowrap">
+                          {shortName}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Actions */}
