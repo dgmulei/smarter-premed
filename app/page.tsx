@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-atmosphere">
-      <div className="max-w-[540px] mx-auto px-6 py-16 sm:py-20">
+      <div className="landing-container">
 
         {/* Header Card */}
         <div className="form-card text-center mb-6 animate-fadeUp" style={{ padding: '48px 32px' }}>
