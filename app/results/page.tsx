@@ -990,6 +990,19 @@ export default function Results() {
           </div>
         </div>
       )}
+
+      {/* Contact Footer */}
+      <div className="text-center py-12">
+        <p className="text-[13px] text-[#86868b]">
+          Questions?{' '}
+          <a
+            href="mailto:hello@smarterpremed.com?subject=Positioned Feedback"
+            className="text-[#0d9488] hover:underline"
+          >
+            hello@smarterpremed.com
+          </a>
+        </p>
+      </div>
     </main>
   );
 }
