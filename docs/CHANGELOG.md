@@ -7,6 +7,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] - 2026-01-28
+
+### 🚀 Soft Launch Infrastructure
+
+**Goal**: Remove all friction from sharing for soft launch to ~25-50 friendlies (friends/family connections for testimonials).
+
+### Added
+
+#### Custom Domain & Branding
+- **Production URL**: `smarterpremed.com` (custom domain via Cloudflare DNS → Vercel)
+- **Open Graph image**: 1200x630 PNG with radar chart, "Positioned" branding, tagline
+- **Meta tags**: Full OG and Twitter card support for link previews in iMessage, social media
+- **Contact email**: `hello@smarterpremed.com` via Cloudflare Email Routing → Gmail
+
+#### Database Infrastructure
+- **`lib/db.ts`**: New database utilities module with TypeScript types
+- **Questionnaire storage**: Full 30-question responses stored as JSONB
+- **Top cohort tracking**: Analysis results saved for analytics
+- **Returning user support**: Foundation for future tools without re-entering data
+
+#### Messaging Blurbs
+- **Direct-to-student**: "You're putting in the work — but which med schools actually fit your profile?..."
+- **Counselor-to-counselor**: Detailed version with all 6 competencies listed
+- **Counselor-to-student**: Warm forwarding version for advisors to share with students
+
+### Changed
+
+#### API Updates
+- **`/api/submit-email`**: Now accepts `questionnaireResponses`, returns `submissionId`
+- **`/api/analyze`**: Accepts `submissionId`, saves `top_cohort` after Claude analysis
+- **Frontend flow**: Passes questionnaire data and submissionId through session storage
+
+#### Database Schema
+- Added `questionnaire_responses` column (JSONB)
+- Added `top_cohort` column (VARCHAR)
+
+### Technical Details
+
+**Domain Setup:**
+- Cloudflare DNS: A record → 76.76.21.21, CNAME www → cname.vercel-dns.com
+- Cloudflare Email Routing: hello@ → dgmulei@gmail.com
+- Domain transferred from Namecheap to Cloudflare
+
+**Data Flow:**
+1. User completes questionnaire → email + responses saved → submissionId returned
+2. Results page calls analyze with submissionId → Claude runs → top_cohort saved
+3. Returning users can be looked up by email for future tools
+
+### Files Changed
+- `lib/db.ts` (new)
+- `app/api/submit-email/route.ts`
+- `app/api/analyze/route.ts`
+- `app/page.tsx`
+- `app/results/page.tsx`
+- `app/layout.tsx` (meta tags)
+- `public/og-image.png` (new)
+
+---
+
 ## [1.4.3] - 2026-01-27
 
 ### 🎨 Ghost Buttons & Navigation Polish
@@ -573,4 +632,4 @@ Changes are grouped into:
 ---
 
 **Maintained by**: David Mulei (dgmulei@gmail.com)
-**Last Updated**: January 27, 2026
+**Last Updated**: January 28, 2026

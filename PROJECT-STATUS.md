@@ -2,7 +2,7 @@
 
 **by Smarter Premed**
 
-Last Updated: January 27, 2026 (Mobile Scroll Wobble Fix + CSS Cleanup)
+Last Updated: January 28, 2026 (Soft Launch Infrastructure Complete)
 
 ---
 
@@ -18,9 +18,9 @@ Last Updated: January 27, 2026 (Mobile Scroll Wobble Fix + CSS Cleanup)
 
 🚀 **Status: LIVE IN PRODUCTION**
 
-**Deployment**: https://smarter-premed.vercel.app/
-**Platform**: Vercel (Pro plan)
-**Last Deploy**: January 27, 2026
+**Production URL**: https://smarterpremed.com
+**Deployment**: Vercel (Pro plan)
+**Last Deploy**: January 28, 2026
 
 ### What's Working
 - ✅ Landing page with clear value proposition
@@ -38,9 +38,8 @@ Last Updated: January 27, 2026 (Mobile Scroll Wobble Fix + CSS Cleanup)
 - ✅ Personalized cohort rankings and fit analyses
 
 ### What's Not Built Yet
-- ❌ Data persistence beyond session
 - ❌ User accounts
-- ❌ Result sharing functionality
+- ❌ Result sharing functionality (URL-based)
 - ❌ Analytics tracking
 - ❌ Admin dashboard
 
@@ -69,8 +68,9 @@ Last Updated: January 27, 2026 (Mobile Scroll Wobble Fix + CSS Cleanup)
 
 ### Data Structure
 - `lib/cohortData.ts` - Cohort definitions and mock profiles
-- Session storage for questionnaire responses
-- No backend database (yet)
+- `lib/db.ts` - Database utilities for Vercel Postgres
+- Session storage for questionnaire responses (client-side)
+- Vercel Postgres database storing: email, questionnaire_responses (JSONB), top_cohort
 
 ---
 
@@ -129,20 +129,26 @@ smarter-premed/
 │   ├── results/page.tsx         # Results page
 │   ├── globals.css              # Global styles
 │   └── api/
-│       └── analyze/route.ts     # Claude API integration
+│       ├── analyze/route.ts     # Claude API integration
+│       ├── submit-email/route.ts # Email + questionnaire storage
+│       └── setup-db/route.ts    # Database setup utility
 ├── components/
 │   ├── QuestionnaireForm.tsx    # Main questionnaire
 │   └── RadarChart.tsx           # D3 radar chart
 ├── lib/
-│   └── cohortData.ts            # Cohort definitions and mock data
+│   ├── cohortData.ts            # Cohort definitions and mock data
+│   └── db.ts                    # Database utilities (Vercel Postgres)
+├── public/
+│   └── og-image.png             # Open Graph image for link previews
 ├── docs/
-│   ├── DAY-THREE-REVISION-PLAN.md  # Completed Day 3 tasks
-│   ├── DAY-FOUR-PLAN.md            # Next steps
-│   ├── COHORT_FRAMEWORK.md         # Framework documentation
-│   ├── QUESTIONNAIRE.md            # Question design
-│   ├── API_DESIGN.md               # API architecture
-│   └── CHANGELOG.md                # Version history
-│   └── archives/                   # Old documentation
+│   ├── CHANGELOG.md             # Version history
+│   ├── COHORT_FRAMEWORK.md      # Framework documentation
+│   ├── QUESTIONNAIRE.md         # Question design
+│   ├── API_DESIGN.md            # API architecture
+│   ├── MONITORING.md            # Production monitoring guide
+│   ├── SESSION-2026-01-27.md    # Session log
+│   ├── SESSION-2026-01-28.md    # Session log (soft launch prep)
+│   └── archives/                # Old documentation
 ├── Documentation-Archive/       # Historical docs (pre-cleanup)
 ├── README.md                    # Project overview
 ├── ARCHITECTURE.md              # System architecture
@@ -314,15 +320,43 @@ smarter-premed/
 
 ---
 
-## Next Steps (v1.5+)
+## January 28, 2026 - Soft Launch Infrastructure
+
+**Primary Goal:** ✅ Remove all friction from sharing for soft launch to ~25-50 friendlies
+
+### Custom Domain & Branding
+1. ✅ Custom domain `smarterpremed.com` configured (Cloudflare DNS → Vercel)
+2. ✅ Open Graph image created (1200x630, radar chart + branding)
+3. ✅ Meta tags for link previews (OG + Twitter cards)
+4. ✅ Contact email `hello@smarterpremed.com` via Cloudflare Email Routing
+
+### Database Infrastructure
+1. ✅ Vercel Postgres schema extended: `questionnaire_responses` (JSONB), `top_cohort` (VARCHAR)
+2. ✅ `lib/db.ts` created with database utilities
+3. ✅ Submit-email API updated to store questionnaire responses
+4. ✅ Analyze API updated to save top_cohort after Claude analysis
+5. ✅ Frontend updated to pass submissionId through flow
+
+### Messaging Blurbs (Ready for Distribution)
+- **Direct-to-student:** "You're putting in the work — but which med schools actually fit your profile? Positioned maps your strengths across 6 competencies and shows where you're built to stand out. Free, no account needed."
+- **Counselor-to-counselor:** Detailed version listing all 6 competencies
+- **Counselor-to-student:** Warm forwarding version ("Found this tool called 'Positioned'...")
+
+### Strategic Decision
+- ✅ Confirmed: Positioned remains standalone single-purpose tool (Option A)
+- Future features parked: Personalized Profile Report, Custom Action Plan, Detailed School List, Prereq Check-Up
+
+---
+
+## Next Steps (v1.6+)
 
 **Future enhancements:**
 1. Personalized phrase with refresh (slot machine engagement)
 2. Result sharing (URL-based)
 3. Vercel Analytics integration
-4. Meta tags and OG images
-5. User feedback collection
-6. Performance optimizations (streaming, caching)
+4. User feedback collection
+5. Performance optimizations (streaming, caching)
+6. Prereq Check-Up tool (leveraging stored questionnaire data)
 
 ---
 

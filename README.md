@@ -65,21 +65,20 @@ The assessment evaluates students across:
 
 ## Current Status
 
-**Version:** End of Day Three (MVP Complete)
+**Version:** 1.5.0 (Soft Launch Ready)
+**Live at:** https://smarterpremed.com
 
 ### What's Working
 ✅ Landing page with clear value proposition
 ✅ 30-question questionnaire with free response field
+✅ Claude AI-powered profile analysis (claude-sonnet-4-5-20250929)
 ✅ Results page with radar chart visualization
 ✅ Five cohort modals with detailed school information
 ✅ Methodology section explaining the framework
 ✅ Responsive design (540px max-width, mobile-optimized)
-
-### What's Next (Day Four)
-⏳ Claude API integration for real analysis
-⏳ Personalized profile summaries
-⏳ Dynamic cohort fit scoring
-⏳ Loading states and error handling
+✅ Custom domain with Open Graph meta tags for link previews
+✅ Contact email (hello@smarterpremed.com)
+✅ Database storage for questionnaire responses and results
 
 See `PROJECT-STATUS.md` for detailed status.
 
@@ -87,11 +86,14 @@ See `PROJECT-STATUS.md` for detailed status.
 
 ## Tech Stack
 
-- **Framework:** Next.js 15 (App Router)
+- **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Charts:** D3.js
-- **AI:** Claude API (Anthropic) - *integration pending*
+- **AI:** Claude API (Anthropic) - claude-sonnet-4-5-20250929
+- **Database:** Vercel Postgres
+- **Hosting:** Vercel (Pro plan)
+- **DNS/Email:** Cloudflare
 
 ---
 
@@ -131,14 +133,19 @@ smarter-premed/
 ├── app/
 │   ├── page.tsx              # Landing page
 │   ├── results/page.tsx      # Results page
-│   └── api/                  # API routes (to be built)
+│   └── api/
+│       ├── analyze/          # Claude AI analysis
+│       └── submit-email/     # Email + data storage
 ├── components/
 │   ├── QuestionnaireForm.tsx # Main questionnaire
 │   └── RadarChart.tsx        # D3 radar chart
 ├── lib/
-│   └── cohortData.ts         # Cohort definitions
+│   ├── cohortData.ts         # Cohort definitions
+│   └── db.ts                 # Database utilities
+├── public/
+│   └── og-image.png          # Open Graph image
 ├── docs/
-│   ├── DAY-FOUR-PLAN.md      # Development roadmap
+│   ├── CHANGELOG.md          # Version history
 │   ├── COHORT_FRAMEWORK.md   # Framework documentation
 │   ├── QUESTIONNAIRE.md      # Question design
 │   └── API_DESIGN.md         # API architecture
@@ -150,14 +157,13 @@ smarter-premed/
 ## Documentation
 
 - **Project Status:** `PROJECT-STATUS.md`
-- **Production Monitoring:** `docs/MONITORING.md` (see also: `MONITORING-QUICK-REFERENCE.md`)
-- **Day Four Plan:** `docs/DAY-FOUR-PLAN.md`
+- **Changelog:** `docs/CHANGELOG.md`
+- **Production Monitoring:** `docs/MONITORING.md`
 - **Architecture:** `ARCHITECTURE.md`
 - **Development Setup:** `DEVELOPMENT.md`
 - **Whitecoat Framework:** `docs/COHORT_FRAMEWORK.md`
 - **Questionnaire Design:** `docs/QUESTIONNAIRE.md`
 - **API Design:** `docs/API_DESIGN.md`
-- **Changelog:** `docs/CHANGELOG.md`
 
 ---
 
@@ -197,4 +203,4 @@ Proprietary - All rights reserved
 
 ---
 
-**Last Updated:** January 21, 2026 (v1.4.1 - Reliability & Monitoring)
+**Last Updated:** January 28, 2026 (v1.5.0 - Soft Launch Infrastructure)
