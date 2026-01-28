@@ -1,9 +1,10 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
+import { QuestionnaireResponses } from '@/lib/db';
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, questionnaireResponses } = await request.json();
 
     if (!email || !email.trim()) {
       return NextResponse.json(
@@ -21,14 +22,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // Insert email into database
-    await sql`
-      INSERT INTO submissions (email)
-      VALUES (${email.toLowerCase().trim()})
+    // Insert email and questionnaire responses into database
+    const result = await sql`
+      INSERT INTO submissions (email, questionnaire_responses, created_at)
+      VALUES (
+        ${email.toLowerCase().trim()},
+        ${questionnaireResponses ? JSON.stringify(questionnaireResponses) : null}::jsonb,
+        NOW()
+      )
+      RETURNING id
     `;
 
+    const submissionId = result.rows[0].id;
+
     return NextResponse.json(
-      { success: true, message: 'Email saved successfully' },
+      { success: true, message: 'Email saved successfully', submissionId },
       { status: 200 }
     );
   } catch (error) {

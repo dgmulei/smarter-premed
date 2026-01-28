@@ -12,21 +12,29 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      // Save email to database
+      // Save email and questionnaire responses to database
       const response = await fetch('/api/submit-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: formData.email }),
+        body: JSON.stringify({
+          email: formData.email,
+          questionnaireResponses: formData
+        }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to save email');
       }
 
-      // Store questionnaire responses in session storage
+      const { submissionId } = await response.json();
+
+      // Store questionnaire responses and submission ID in session storage
       sessionStorage.setItem('questionnaireResponses', JSON.stringify(formData));
+      if (submissionId) {
+        sessionStorage.setItem('submissionId', String(submissionId));
+      }
 
       // Navigate to results
       setTimeout(() => {

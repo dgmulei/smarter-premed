@@ -249,8 +249,10 @@ export default function Results() {
       }
 
       let responses: string | null = null;
+      let submissionId: string | null = null;
       try {
         responses = sessionStorage.getItem('questionnaireResponses');
+        submissionId = sessionStorage.getItem('submissionId');
       } catch {
         // sessionStorage access failed (private browsing, etc.)
         router.push('/');
@@ -268,6 +270,7 @@ export default function Results() {
       } catch {
         // Corrupted sessionStorage data
         sessionStorage.removeItem('questionnaireResponses');
+        sessionStorage.removeItem('submissionId');
         router.push('/');
         return;
       }
@@ -290,7 +293,10 @@ export default function Results() {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ responses: parsedResponses }),
+              body: JSON.stringify({
+                responses: parsedResponses,
+                submissionId: submissionId ? parseInt(submissionId, 10) : undefined
+              }),
               signal: controller.signal,
             });
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { updateSubmissionTopCohort } from '@/lib/db';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -317,6 +318,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const responses = body.responses as QuestionnaireResponses;
+    const submissionId = body.submissionId as number | undefined;
 
     // Validate required fields
     if (!responses || typeof responses !== 'object') {
@@ -506,6 +508,17 @@ export async function POST(request: NextRequest) {
       userScores,
       rankedCohorts,
     };
+
+    // Save top cohort to database if we have a submission ID
+    if (submissionId && rankedCohorts.length > 0) {
+      try {
+        await updateSubmissionTopCohort(submissionId, rankedCohorts[0].name);
+        console.log(`[ANALYZE] Saved top_cohort "${rankedCohorts[0].name}" for submission ${submissionId}`);
+      } catch (dbError) {
+        // Log but don't fail the request if DB update fails
+        console.error('[ANALYZE] Failed to save top_cohort:', dbError);
+      }
+    }
 
     const totalDuration = Date.now() - startTime;
     console.log(`[ANALYZE] Request completed successfully in ${totalDuration}ms (${(totalDuration/1000).toFixed(1)}s)`);
